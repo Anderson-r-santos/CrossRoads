@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 46, 0.22, 25 )
+
+[node name="roadCollisionShap" type="StaticBody"]
+collision_layer = 256
+collision_mask = 0
+
+[node name="roadCollision" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="roadCollision2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="roadCollision3" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -92, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="localX" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -138, 0, 0 )
+
+[node name="localX2" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 138, 0, 0 )
+
+[node name="localZ" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24 )
+
+[node name="localZ2" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24 )

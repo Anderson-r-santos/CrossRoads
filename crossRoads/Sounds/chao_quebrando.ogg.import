@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/chao_quebrando.ogg-b9028d2cb935dbfd2b63f494b1dbd53e.oggstr"
+
+[deps]
+
+source_file="res://Sounds/chao_quebrando.ogg"
+dest_files=[ "res://.import/chao_quebrando.ogg-b9028d2cb935dbfd2b63f494b1dbd53e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,264 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
+[ext_resource path="res://Prefabs/meshPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Actions.cs" type="Script" id=3]
+[ext_resource path="res://Sounds/rainSound.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Prefabs/UI/cameraUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sounds/wind.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Scripts/playerState.cs" type="Script" id=8]
+[ext_resource path="res://Sounds/STEP.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Sounds/bad-contact.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Sounds/ataque.ogg" type="AudioStream" id=11]
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera/Control/HBoxContainer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.235294, 0.196078, 0.196078, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera:transform")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Transform( -1, -2.99003e-08, 8.21506e-08, 2.30926e-14, 0.939693, 0.34202, -8.74228e-08, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("umbrellaLight:light_energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "damageReceiver"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera/Control/HBoxContainer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.235294, 0.196078, 0.196078, 0 ), Color( 0.235294, 0.196078, 0.196078, 0.803922 ), Color( 0.235294, 0.196078, 0.196078, 0 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "lightBlink"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("umbrellaLight:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.6, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 2.0, 0.0, 2.0, 0.0, 2.0, 0.0, 0.2, 2.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "msgDeAviso"
+length = 3.0
+
+[sub_resource type="Animation" id=9]
+resource_name = "tremer"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera:transform")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Transform( -1, 2.99004e-08, -8.21505e-08, 0, 0.939693, 0.34202, 8.74228e-08, 0.34202, -0.939693, -4.15671, 7.94042, -10.8842 ), Transform( -0.999821, 0.0189008, -1.42453e-07, 0.0177609, 0.939525, 0.34202, 0.00646461, 0.341959, -0.939693, -4.15671, 8.12118, -10.8184 ), Transform( -0.999107, 0.0422593, -1.43149e-07, 0.0397107, 0.938853, 0.34202, 0.0144537, 0.341715, -0.939693, -3.9489, 8.20079, -10.7894 ), Transform( -1, 2.99004e-08, -8.21505e-08, 0, 0.939693, 0.34202, 8.74228e-08, 0.34202, -0.939693, -4.15671, 7.58146, -11.0149 ), Transform( -0.999967, -0.00809819, -1.42122e-07, -0.00760986, 0.939662, 0.34202, -0.00276961, 0.342009, -0.939693, -4.43048, 7.55771, -11.0235 ), Transform( -0.999909, -0.0134909, -1.41953e-07, -0.0126774, 0.939607, 0.34202, -0.00461404, 0.341989, -0.939693, -4.15671, 7.61074, -11.0042 ), Transform( -1, 2.99004e-08, -8.21505e-08, 0, 0.939693, 0.34202, 8.74228e-08, 0.34202, -0.939693, -4.15671, 7.94042, -10.8842 ) ]
+}
+
+[sub_resource type="CapsuleShape" id=1]
+height = 4.93118
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 1.5, 0.3, 1.5 )
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, -5, 0 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.643137, 0.807843, 1, 0.0352941 )
+
+[sub_resource type="SphereMesh" id=5]
+material = SubResource( 4 )
+radius = 0.2
+height = 0.5
+radial_segments = 6
+rings = 4
+
+[sub_resource type="SphereShape" id=6]
+radius = 18.0
+
+[node name="Player" type="KinematicBody"]
+collision_mask = 14
+script = ExtResource( 1 )
+
+[node name="rayToGround" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38612, 0 )
+enabled = true
+cast_to = Vector3( 0, -5, 0 )
+collision_mask = 930
+collide_with_areas = true
+
+[node name="AnimationPlayerActions" type="AnimationPlayer" parent="."]
+playback_speed = 0.5
+anims/RESET = SubResource( 7 )
+anims/damageReceiver = SubResource( 8 )
+anims/lightBlink = SubResource( 10 )
+anims/msgDeAviso = SubResource( 11 )
+anims/tremer = SubResource( 9 )
+
+[node name="umbrellaLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.741963, 11.1661, 0.538226 )
+light_color = Color( 1, 0.976471, 0.631373, 1 )
+light_energy = 2.0
+light_specular = 5.2
+shadow_enabled = true
+omni_range = 25.0
+omni_attenuation = 1.8025
+
+[node name="meshPlayer" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0572, 3.06947, -4.09263 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.00583005, 3.20471, -0.00687657 )
+shape = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, -2.99003e-08, 8.21506e-08, 2.30926e-14, 0.939693, 0.34202, -8.74228e-08, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 )
+current = true
+far = 300.0
+
+[node name="Control" parent="Camera" instance=ExtResource( 6 )]
+
+[node name="RayCast" type="RayCast" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -25 )
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="cube" type="MeshInstance" parent="."]
+visible = false
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="umbrellaParticles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.72979, 7.07066, 0.720546 )
+amount = 10
+lifetime = 0.02
+speed_scale = 0.3
+explosiveness = 1.0
+process_material = SubResource( 3 )
+draw_pass_1 = SubResource( 5 )
+
+[node name="Actions" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="lighBlink" type="Node" parent="."]
+
+[node name="targetToEnemy" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38612, 0 )
+
+[node name="areaAttack" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.80222, 0 )
+collision_layer = 16
+collision_mask = 20
+
+[node name="CollisionShape" type="CollisionShape" parent="areaAttack"]
+shape = SubResource( 6 )
+
+[node name="playerState" type="Node" parent="."]
+script = ExtResource( 8 )
+
+[node name="TimerRestartScene" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="TimerHit" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="TimerIncreaseTemperature" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerDecreaseTemperature" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerAttackON" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerUmbrellaRay" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="rain" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 5 )
+volume_db = 10.0
+autoplay = true
+
+[node name="stepSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 9 )
+volume_db = 15.29
+pitch_scale = 0.8
+
+[node name="lightBlink" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 10 )
+volume_db = 3.0
+
+[node name="attack" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 11 )
+
+[node name="wind" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( -1, 0 )
+stream = ExtResource( 7 )
+volume_db = -10.0
+autoplay = true
+
+[connection signal="area_entered" from="areaAttack" to="." method="enemyEnteredAttackArea"]
+[connection signal="area_exited" from="areaAttack" to="." method="enemyExitedAttackArea"]
+[connection signal="timeout" from="TimerRestartScene" to="." method="restartScene"]
+[connection signal="timeout" from="TimerIncreaseTemperature" to="playerState" method="endTimerIncreaseTemperature"]
+[connection signal="timeout" from="TimerDecreaseTemperature" to="playerState" method="endTimerDecreaseTemperature"]
+[connection signal="timeout" from="TimerUmbrellaRay" to="." method="endTimerRayUmbrellaEnable"]

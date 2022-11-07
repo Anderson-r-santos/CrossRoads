@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qHyRYbbmcNJ8vAby89yrc6DussCIDqfYJ0PDarG4FW8DBiaFeZ9hpo89kZAaqkbmhH/+TU7DKNUT5/qu036Vzg==",
+  "success": true,
+  "projectFilePath": "/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/Cross Roads.csproj",
+  "expectedPackageFiles": [
+    "/home/anderson/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.2/microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "/home/anderson/.nuget/packages/microsoft.netframework.referenceassemblies.net472/1.0.2/microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

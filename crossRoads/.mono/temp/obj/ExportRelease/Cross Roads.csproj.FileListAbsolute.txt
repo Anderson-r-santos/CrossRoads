@@ -1,0 +1,9 @@
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/bin/ExportRelease/Cross Roads.dll
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/bin/ExportRelease/Cross Roads.pdb
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.csproj.AssemblyReference.cache
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.GeneratedMSBuildEditorConfig.editorconfig
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.AssemblyInfoInputs.cache
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.AssemblyInfo.cs
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.csproj.CoreCompileInputs.cache
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.dll
+/home/anderson/Documentos/Projeto/gameJam_multiUse/crossRoads/.mono/temp/obj/ExportRelease/Cross Roads.pdb

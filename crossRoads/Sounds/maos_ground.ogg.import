@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/maos_ground.ogg-7e42db707d7daeb46149378ea36986a1.oggstr"
+
+[deps]
+
+source_file="res://Sounds/maos_ground.ogg"
+dest_files=[ "res://.import/maos_ground.ogg-7e42db707d7daeb46149378ea36986a1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

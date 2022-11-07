@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/EnemyHandler.cs" type="Script" id=1]
+[ext_resource path="res://Prefabs/testTargetToEnemy.tscn" type="PackedScene" id=2]
+
+[sub_resource type="SpatialMaterial" id=29]
+albedo_color = Color( 0.141176, 0.0784314, 0.690196, 1 )
+
+[sub_resource type="PrismMesh" id=28]
+material = SubResource( 29 )
+
+[sub_resource type="SphereShape" id=26]
+radius = 40.0
+
+[node name="SpawEnemy" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="marcacao visual azul" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
+mesh = SubResource( 28 )
+material/0 = null
+
+[node name="rangeArea" type="Area" parent="."]
+collision_layer = 4
+collision_mask = 257
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="rangeArea"]
+shape = SubResource( 26 )
+
+[node name="EnemyFloatCircle" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
+
+[node name="Slot1" type="Spatial" parent="EnemyFloatCircle"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5194, 0, 7.53352 )
+
+[node name="Slot2" type="Spatial" parent="EnemyFloatCircle"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6186, 0, -9.381 )
+
+[node name="Slot3" type="Spatial" parent="EnemyFloatCircle"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.719569, 0, 15.9886 )
+
+[node name="Slot4" type="Spatial" parent="EnemyFloatCircle"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.168513, 0, -16.6006 )
+
+[node name="Slot5" type="Spatial" parent="EnemyFloatCircle"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0122, 0, -8.29001 )
+
+[node name="Slot6" type="Spatial" parent="EnemyFloatCircle"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7244, 0, 8.56496 )
+
+[node name="TimerToSpawnEnemy" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimertoInstanceNewSpawn" type="Timer" parent="."]
+
+[node name="TimerToEnemyPursuit" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19, 27 )
+
+[connection signal="body_entered" from="rangeArea" to="." method="playerEnteredArea"]
+[connection signal="body_exited" from="rangeArea" to="." method="playerExitedArea"]
+[connection signal="timeout" from="TimertoInstanceNewSpawn" to="." method="endTimerInstanceNewSpawn"]
+[connection signal="timeout" from="TimerToEnemyPursuit" to="." method="authorizeEnemyPursuit"]

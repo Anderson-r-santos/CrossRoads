@@ -1,0 +1,76 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+[application]
+
+config/name="Cross Roads"
+run/main_scene="res://Scenes/mainScene.scn"
+config/icon="res://icon.png"
+
+[display]
+
+window/vsync/use_vsync=false
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[input]
+
+moveFront={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+moveBack={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+moveLeft={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+moveRight={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+run={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="world"
+3d_physics/layer_3="Enemy"
+3d_physics/layer_4="interactiveArea"
+3d_physics/layer_5="areaAttack"
+3d_physics/layer_6="outRoad"
+3d_physics/layer_7="umbrellaRange"
+3d_physics/layer_8="interativeArea"
+3d_physics/layer_9="Road"
+3d_physics/layer_10="groundNeutro"
+
+[mono]
+
+project/assembly_name="Cross Roads"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+3d/enable_pause_aware_picking=false
+
+[rendering]
+
+threads/thread_model=2
+environment/default_environment="res://default_env.tres"
