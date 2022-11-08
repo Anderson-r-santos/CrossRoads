@@ -57,7 +57,7 @@ public class Actions : Node
         audioPlayer = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/stepSound");
         audioAttack = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/attack");
 
-        attackParticles = GetParent().GetNode<Particles>("meshPlayer/attack_Particles");
+        attackParticles = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles");
          
         playerCamera = GetParent().GetNode<Camera>("Camera");
         fallGravity = defaultGravity * 40;

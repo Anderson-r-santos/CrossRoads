@@ -182,7 +182,6 @@ collide_with_bodies = false
 [node name="cube" type="MeshInstance" parent="."]
 visible = false
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="umbrellaParticles" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.72979, 7.07066, 0.720546 )
