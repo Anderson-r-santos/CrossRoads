@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/meshPlayer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Actions.cs" type="Script" id=3]
+[ext_resource path="res://Prefabs/UI/TipsUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Sounds/rainSound.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Prefabs/UI/cameraUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Sounds/wind.ogg" type="AudioStream" id=7]
@@ -171,6 +172,8 @@ current = true
 far = 300.0
 
 [node name="Control" parent="Camera" instance=ExtResource( 6 )]
+
+[node name="Control" parent="Camera/Control" instance=ExtResource( 4 )]
 
 [node name="RayCast" type="RayCast" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, 0 )
