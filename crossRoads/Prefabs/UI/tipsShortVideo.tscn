@@ -1,22 +1,59 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Tutorial/testVideo.webm" type="VideoStream" id=1]
 [ext_resource path="res://Tutorial/backgroundTipsVideo.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/TipsVideo.cs" type="Script" id=3]
+[ext_resource path="res://00233_7days.ttf" type="DynamicFontData" id=4]
 
-[node name="Control" type="Control"]
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 10, 10, 10 )
+
+[sub_resource type="Theme" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+size = 12
+outline_size = 1
+outline_color = Color( 1, 0.992157, 0.388235, 1 )
+font_data = ExtResource( 4 )
+
+[node name="AreaTipsVideo" type="Area"]
+collision_layer = 128
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+pause_mode = 2
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
 expand = true
 
-[node name="VideoPlayer" type="VideoPlayer" parent="."]
-margin_left = 512.0
-margin_top = 87.0
-margin_right = 934.0
-margin_bottom = 531.0
+[node name="VideoPlayer" type="VideoPlayer" parent="Control"]
+margin_left = 574.0
+margin_top = 186.0
+margin_right = 878.0
+margin_bottom = 444.0
 stream = ExtResource( 1 )
-autoplay = true
+
+[node name="Button" type="Button" parent="Control/VideoPlayer"]
+modulate = Color( 1, 1, 1, 0.431373 )
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -14.0
+margin_right = 6.0
+theme = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
+text = "Ok"
+
+[connection signal="body_entered" from="." to="." method="showTipsVideo"]
+[connection signal="pressed" from="Control/VideoPlayer/Button" to="." method="deleteTipsVideo"]
