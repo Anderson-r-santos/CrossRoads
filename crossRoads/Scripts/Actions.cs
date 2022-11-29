@@ -44,6 +44,7 @@ public class Actions : Node
     public override void _Ready()
     {
         animPlayer = GetParent().GetNode<AnimationPlayer>("meshPlayer/AnimationPlayer");
+
         player = GetParent().GetNode<KinematicBody>(".");
 
         //Node nodePlayerState = player.GetNode<playerState>(".");
@@ -165,12 +166,15 @@ public class Actions : Node
     }
     public override void _PhysicsProcess(float delta)
     {
-        direction.y = 0;
-        direction.z *= currentMoveSpeed * delta;
-        direction.x *= currentMoveSpeed * delta;
+        if(!playerDie)
+        {
+            direction.y = 0;
+            direction.z *= currentMoveSpeed * delta;
+            direction.x *= currentMoveSpeed * delta;
 
-        direction.y -= currentGravity * delta;
-        player.MoveAndSlide(direction,Vector3.Up);
+            direction.y -= currentGravity * delta;
+            player.MoveAndSlide(direction,Vector3.Up);
+        }
 
     }
     public override void _Input(InputEvent inputEvent)

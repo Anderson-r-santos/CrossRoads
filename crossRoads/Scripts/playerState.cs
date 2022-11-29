@@ -5,7 +5,7 @@ public class playerState : Node
 {
 
     public static bool playerHasFloor = true;
-    
+    private bool umbrellaIsUp = true;
 
 
 
@@ -24,7 +24,9 @@ public class playerState : Node
     private static Actions scActions;
 
 
-     private AnimationPlayer animPlayer;
+    private AnimationPlayer animPlayer;
+    private AnimationPlayer animPlayerTemperature;
+
 
     private static STATE_PLAYER currentStatePlayer;
     public static STATE_PLAYER CurrentStatePlayer{
@@ -52,6 +54,7 @@ public class playerState : Node
         umbrellaParticles = GetParent().GetNode<Particles>("umbrellaParticles");
         lightUmbrella = GetParent().GetNode<Light>("umbrellaLight");
         animPlayer = GetParent().GetNode<AnimationPlayer>("meshPlayer/AnimationPlayer");
+        animPlayerTemperature = GetParent().GetNode<AnimationPlayer>("meshPlayer/AnimationPlayerTemperature");
         currentStatePlayer = STATE_PLAYER.STOP;
         currentStateUmbrella = STATE_UMBRELLA.UP_UMBRELLA;
     }
@@ -73,85 +76,98 @@ public class playerState : Node
     }
     private void umbrellaUp()
     {
-
-        umbrellaParticles.Emitting = true;
-        lightUmbrella.Visible = true;
+        if(!umbrellaIsUp)
+        {
+            umbrellaParticles.Emitting = true;
+            lightUmbrella.Visible = true;
+            animPlayerTemperature.PlayBackwards("countBackToBrief");
+            scPlayer.currentAmountDegrees = scPlayer.defaultAmountDegrees;
+            umbrellaIsUp = true;
+        }
         
     }
     private void umbrellaDown()
     {
 
-        umbrellaParticles.Emitting = false;
-        lightUmbrella.Visible = false;
-  
+        if(umbrellaIsUp)
+        {
+            umbrellaParticles.Emitting = false;
+            lightUmbrella.Visible = false;
+            animPlayerTemperature.Play("countFaceToPlayer");
+            scPlayer.currentAmountDegrees = scPlayer.defaultAmountDegrees;
+            umbrellaIsUp = false;
+        }
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
  public override void _Process(float delta)
  {
-     if(currentStateUmbrella == STATE_UMBRELLA.UP_UMBRELLA)
-     {
-       // animPlayer.PlaybackSpeed = 1;
-        umbrellaUp();
-        if(currentStatePlayer == STATE_PLAYER.WALK)
+
+    if(currentStatePlayer != STATE_PLAYER.DIE){
+        if(currentStateUmbrella == STATE_UMBRELLA.UP_UMBRELLA)
         {
-            if(playerHasFloor)
+        // animPlayer.PlaybackSpeed = 1;
+            umbrellaUp();
+            if(currentStatePlayer == STATE_PLAYER.WALK)
             {
-                scActions.moviment();
-            }
-            animPlayer.Play("walk");
+                if(playerHasFloor)
+                {
+                    scActions.moviment();
+                }
+                animPlayer.Play("walk");
 
-        }else if(currentStatePlayer == STATE_PLAYER.STOP)
-        {
-            scActions.audioPlayer.Stop();
-            animPlayer.Play("stop");
-
-        }else if(currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY)
-        {
-
-            scPlayer.damageReceived("enemy");
-
-        }else if(currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY)
-        {
-
-            scPlayer.damageReceived("hand",2);
-
-        }else if(currentStatePlayer == STATE_PLAYER.FLY)
-        {
-            scActions.currentGravity = scActions.flyGravity;
-            
-
-        }else if(currentStatePlayer == STATE_PLAYER.PUSHED_OUT)
-        {
-            scActions.pushOutPlayer(delta);
-
-        }
-        else if(currentStatePlayer == STATE_PLAYER.FALL)
-        {
-            scActions.currentGravity = scActions.fallGravity;
-            GD.Print("caindo........");
-        }
-
-     }else if(currentStateUmbrella == STATE_UMBRELLA.DOWN_UMBRELLA)
+            }else if(currentStatePlayer == STATE_PLAYER.STOP)
             {
+                scActions.audioPlayer.Stop();
+                animPlayer.Play("stop");
+
+            }else if(currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY)
+            {
+
+                scPlayer.damageReceived("enemy");
+
+            }else if(currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY)
+            {
+
+                scPlayer.damageReceived("hand",2);
+
+            }else if(currentStatePlayer == STATE_PLAYER.FLY)
+            {
+                scActions.currentGravity = scActions.flyGravity;
                 
-                umbrellaDown();
-                if(currentStatePlayer == STATE_PLAYER.WALK)
-                {
-                    animPlayer.Play("walk_closeUmbrella");
 
-                }else if(currentStatePlayer == STATE_PLAYER.STOP)
+            }else if(currentStatePlayer == STATE_PLAYER.PUSHED_OUT)
+            {
+                scActions.pushOutPlayer(delta);
+
+            }
+            else if(currentStatePlayer == STATE_PLAYER.FALL)
+            {
+                scActions.currentGravity = scActions.fallGravity;
+                GD.Print("caindo........");
+            }
+
+        }else if(currentStateUmbrella == STATE_UMBRELLA.DOWN_UMBRELLA)
                 {
-                    scActions.stop();
-                }else if(currentStatePlayer == STATE_PLAYER.ATTACK)
-                {
-                    scActions.attack1();
-                    if(!animPlayer.IsPlaying()){
-                        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+                    
+                    umbrellaDown();
+                    if(currentStatePlayer == STATE_PLAYER.WALK)
+                    {
+                        animPlayer.Play("walk_closeUmbrella");
+
+                    }else if(currentStatePlayer == STATE_PLAYER.STOP)
+                    {
+                        scActions.stop();
+                    }else if(currentStatePlayer == STATE_PLAYER.ATTACK)
+                    {
+                        scActions.attack1();
+                        if(!animPlayer.IsPlaying()){
+                            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+                        }
                     }
                 }
-            }
 
+    }
  }
 
 }

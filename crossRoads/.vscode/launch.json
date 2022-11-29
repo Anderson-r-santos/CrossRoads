@@ -16,7 +16,7 @@
             "request": "launch",
             "mode": "executable",
             "preLaunchTask": "build",
-            "executable": "/home/anderson/Godot_3.4.4/Godot",
+            "executable": "/home/anderson/Documentos/Godot_v3.5.1/Godot",
             "executableArguments": [
                 "--path",
                 "${workspaceRoot}"
@@ -28,7 +28,7 @@
             "request": "launch",
             "mode": "executable",
             "preLaunchTask": "build",
-            "executable": "/home/anderson/Godot_3.4.4/Godot",
+            "executable": "/home/anderson/Documentos/Godot_v3.5.1/Godot",
             "executableArguments": [
                 "--path",
                 "${workspaceRoot}",

@@ -21,7 +21,6 @@ public class Player : KinematicBody
     public RayCast rayUmbrella;
     private int bodyTemperature = 8;
 
-    private TextureRect temperatureIndicator;
     private cenario scSenario;
     private Area attackArea;
 
@@ -31,6 +30,7 @@ public class Player : KinematicBody
 
     private AnimationPlayer animationPlayer;
     private AnimationPlayer AnimationPlayerActions;
+    private AnimationPlayer animationPlayerUI;
 
     private string whoAttack;
 
@@ -46,6 +46,14 @@ public class Player : KinematicBody
 
     public StaticBody currentRoadPlayerOnTop = null;
 
+    private Label countDegrees;
+    private MeshInstance verticalBarTemperature;
+    private float sizeBarChunks;
+
+    public int defaultAmountDegrees = 1;
+    public int currentAmountDegrees;
+
+
     public override void _Ready()
     {
         //Input.SetMouseMode(mode:Input.MouseMode.Captured);
@@ -56,13 +64,19 @@ public class Player : KinematicBody
 
         AnimationPlayerActions = GetNode<AnimationPlayer>("AnimationPlayerActions");
         animationPlayer = GetNode<AnimationPlayer>("meshPlayer/AnimationPlayer");
+        animationPlayerUI = GetNode<AnimationPlayer>("Camera/AnimationPlayerUI");
+
+        countDegrees = GetNode<Label>("meshPlayer/Armature/Skeleton/BoneAttachBriefCase/CountDegrees/Viewport/Label");
+
+        verticalBarTemperature = GetNode<MeshInstance>("meshPlayer/Armature/Skeleton/BoneAttachBriefCase/barTemperatureIndicator");
+
         rayToGround = GetNode<RayCast>("rayToGround");
         //rayAttack = GetNode<RayCast>("meshPlayer/RayCast");
         lightUmbrella = GetNode<OmniLight>("umbrellaLight");
         timerIncreaseTemperature = GetNode<Timer>("TimerIncreaseTemperature");
         timerDecreaseTemperature = GetNode<Timer>("TimerDecreaseTemperature");
         timerUmbrellaRay = GetNode<Timer>("TimerUmbrellaRay");
-        temperatureIndicator = GetNode<TextureRect>("Camera/Control/ninePatchRect/TextureRect2");
+
         scSenario = GetParent().GetNode<cenario>("cenarioInicial");
         outRoad = GetTree().Root.GetNode<AudioStreamPlayer2D>("rootTree/cenarioInicial/outRoad");
         crackedGround = GetTree().Root.GetNode<AudioStreamPlayer2D>("rootTree/cenarioInicial/crackedGround");
@@ -70,34 +84,62 @@ public class Player : KinematicBody
 
         scPlayerState = GetNode<playerState>("playerState");
         rayUmbrella = GetNode<RayCast>("Camera/RayCast");
-
+ 
+        sizeBarChunks = verticalBarTemperature.Scale.y / amountDamageLeft - 0.01f; // 0.1 so pra escala nao ser 0 e bugar
+        currentAmountDegrees = defaultAmountDegrees;
     }
 
     private void playMsgWarning()
     {
-        AnimationPlayerActions.Play("msgDeAviso");
+        AnimationPlayerActions.Play("damageReceiver");
     }
     public void hitReceived()
     {
         canReceiverDamage = true;
     }
+    private void setCountTemperature(int amountDegrees,bool increase = true)
+    {
+        string splitCountText = countDegrees.Text.Substring(0,countDegrees.Text.IndexOf(" "));
+        int countText = splitCountText.ToInt();
+        if(increase)
+        {
+            countText += amountDegrees;
+        }else{
+            countText -= amountDegrees;
+        }
+        
+        countDegrees.Text = countText.ToString() + " ° c";
+         
+    }
     public void decreaseTemperature()
     {
-        if(bodyTemperature > 0)
+          setCountTemperature(currentAmountDegrees,false);
+            currentAmountDegrees += 1;
+        if(bodyTemperature > -9)
         {
-            bodyTemperature -= 1;
-            temperatureIndicator.RectScale = new Vector2(temperatureIndicator.RectScale.x,temperatureIndicator.RectScale.y - 0.2f);
+            bodyTemperature -= currentAmountDegrees;
+          
         }
         else{
-            damageReceived("temperature");
+            if(amountDamageLeft >= 0)
+            {
+                damageReceived("temperature");
+               
+                Vector3 scaleBarTemperature = verticalBarTemperature.Scale; 
+                if(scaleBarTemperature.y > 0.1f){
+                    scaleBarTemperature.y -= sizeBarChunks;
+                    verticalBarTemperature.Scale = scaleBarTemperature;
+                }
+            }
         }
     }
     public void increaseTemperature()
     {
-        if(bodyTemperature < 8)
+          if(bodyTemperature < 8)
         {
-            bodyTemperature +=1;
-            temperatureIndicator.RectScale = new Vector2(0.2f,temperatureIndicator.RectScale.y + 0.02f);
+            bodyTemperature += currentAmountDegrees;
+            setCountTemperature(currentAmountDegrees);
+            currentAmountDegrees += 1;
         }
     }
     private void endTimerRayUmbrellaEnable()
@@ -142,8 +184,8 @@ public class Player : KinematicBody
     
     private void playerIsOutRoad(Vector3 hitPoint)
     {
-
         AnimationPlayerActions.Play("tremer",-1,10);
+
         scSenario.startTimer(hitPoint);
 
         if(!crackedGround.Playing)
@@ -162,6 +204,7 @@ public class Player : KinematicBody
         outRoad.Stop();
        // AnimationPlayerActions.Stop();
         scSenario.playerIsNotInGround();
+       AnimationPlayerActions.Stop();
     }
 
     public void damageReceived(string whoAttack,int damage =1)
@@ -182,6 +225,8 @@ public class Player : KinematicBody
             {
                 return;
             }
+
+
             animationPlayer.Play("damageEnemyGround");
         }
       
@@ -189,16 +234,15 @@ public class Player : KinematicBody
         {
             amountDamageLeft -=damage;
             canReceiverDamage = false;
-            AnimationPlayerActions.Stop();
-            AnimationPlayerActions.Play("damageReceiver");
+
+            animationPlayerUI.Play("damageReceiver");
 
         }else
         {
            scActions.die();
         }
-        animationPlayer.PlaybackSpeed = 6;
         timerHit.Start();
-            }
+    }
 
     private void restartScene()
     {

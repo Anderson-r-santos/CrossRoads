@@ -11,11 +11,12 @@ public class cenario : Spatial
     bool startedTimer = false;
     private float rotation;
     private RayCast ray;
+    private KinematicBody player;
 
     public override void _Ready()
     {
         timerInstance = GetNode<Timer>("TimerToInstanceHand");
-
+        player = GetTree().Root.GetNode<KinematicBody>("rootTree/Player");
         
     }
     public void startTimer(Vector3 initPos)
@@ -32,10 +33,11 @@ public class cenario : Spatial
     {
         timerInstance.Stop();
         startedTimer = false;
+        
     }
     public void instanceHand()
     {
-     GD.Print("INSTANCIANDO UMA MAO");
+      GD.Print("INSTANCIANDO UMA MAO");
       RigidBody node = (RigidBody)hand.Instance();
       GetTree().Root.AddChild(node);
       AnimationPlayer animPlayer = node.GetNode<AnimationPlayer>("AnimationPlayer");
@@ -44,6 +46,12 @@ public class cenario : Spatial
       rotation+=10;
       ray = node.GetNode<RayCast>("RayCast");
       animPlayer.Play("agarrar");
+      
+    }
+    public void deleteHand(Node hand)
+    {
+        hand.QueueFree();
+        ray = null;
     }
  // Called every frame. 'delta' is the elapsed time since the previous frame.
  public override void _Process(float delta)
@@ -51,9 +59,14 @@ public class cenario : Spatial
 
     if(ray != null)
     {
-        KinematicBody player =(KinematicBody) ray.GetCollider();
-        if(player != null)
+ 
+        
+        //player = ray.IsColliding() ? (KinematicBody) : null;
+        
+        if(ray.IsColliding() && ray.GetCollider()!= null)
+        
         {
+            KinematicBody player = (KinematicBody)ray.GetCollider();
             if(player.Name == "Player"){
                 Player scPlayer = GetTree().Root.GetNode<Player>("rootTree/Player");
                 playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY;

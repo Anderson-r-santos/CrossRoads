@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/line.png-172169366202c1600c6fdd8457c4ec18.image"
+
+[deps]
+
+source_file="res://textures/UI/line.png"
+dest_files=[ "res://.import/line.png-172169366202c1600c6fdd8457c4ec18.image" ]
+
+[params]
+

@@ -30,25 +30,25 @@ volume_db = 11.617
 wait_time = 0.5
 
 [node name="roadCollisionShap" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 211.72, 0, 23.3426 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 211.72, 1.07, 23.3426 )
 
 [node name="roadCollisionShap2" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -61.4762, 0, 23.343 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -61.4762, 1.07, 23.343 )
 
 [node name="roadCollisionShap3" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -178.714, 0, 245.713 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -178.714, 1.07, 245.713 )
 
 [node name="roadCollisionShap4" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -175.902, 0, -23.7768 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -175.902, 1.07, -23.7768 )
 
 [node name="LightPoste" parent="roadCollisionShap4" instance=ExtResource( 6 )]
 transform = Transform( 0.872476, 0.214734, -0.438947, 0.00161187, 0.897003, 0.442021, 0.488654, -0.38636, 0.782268, -22.8615, 31.4484, -18.3226 )
 
 [node name="roadCollisionShap5" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -143.547, 0, -135.093 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -143.547, 1.07, -135.093 )
 
 [node name="roadCollisionShap6" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -395.945, 0, -135.093 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -395.945, 1.07, -135.093 )
 
 [node name="cenario1" parent="." instance=ExtResource( 1 )]
 
@@ -82,31 +82,31 @@ shape = SubResource( 4 )
 [node name="groundColision" type="Spatial" parent="."]
 
 [node name="leftGroundCollisionShape" parent="groundColision" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0836, 0, 76 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0836, 1.07, 76 )
 
 [node name="rightGroundCollisionShape" parent="groundColision" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0836, 0, -29 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0836, 1.07, -29 )
 
 [node name="leftGroundCollisionShape3" parent="groundColision" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 262.803, 0, 76 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 262.803, 1.07, 76 )
 
 [node name="rightGroundCollisionShape3" parent="groundColision" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 262.803, 0, -29 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 262.803, 1.07, -29 )
 
 [node name="leftGroundCollisionShape2" parent="groundColision" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0769, 0, -82.8838 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0769, 1.07, -82.8838 )
 
 [node name="rightGroundCollisionShape2" parent="groundColision" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0769, 0, -187.884 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0769, 1.07, -187.884 )
 
 [node name="leftGroundCollisionShape4" parent="groundColision" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -338.164, 0, -82.8838 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -338.164, 1.07, -82.8838 )
 
 [node name="leftGroundCollisionShape5" parent="groundColision" instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -227.728, 0, 81.0301 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -227.728, 1.07, 81.0301 )
 
 [node name="rightGroundCollisionShape4" parent="groundColision" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -338.164, 0, -187.884 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -338.164, 1.07, -187.884 )
 
 [node name="groundGasStation" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -976.056, 0, 0 )
