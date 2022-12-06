@@ -13,6 +13,7 @@ public class Player : KinematicBody
     private Timer timerDecreaseTemperature;
     public Timer timerUmbrellaRay; //tempo em que fica ativo o ray que detecta o inmigo
     private int amountDamageLeft = 4;
+    private int lifeTotal;
 
     
     private OmniLight lightUmbrella;
@@ -56,6 +57,7 @@ public class Player : KinematicBody
 
     public override void _Ready()
     {
+        lifeTotal = amountDamageLeft;
         //Input.SetMouseMode(mode:Input.MouseMode.Captured);
         scActions = GetNode<Actions>("Actions");
         attackArea = GetNode<Area>("areaAttack");
@@ -87,6 +89,7 @@ public class Player : KinematicBody
  
         sizeBarChunks = verticalBarTemperature.Scale.y / amountDamageLeft - 0.01f; // 0.1 so pra escala nao ser 0 e bugar
         currentAmountDegrees = defaultAmountDegrees;
+
     }
 
     private void playMsgWarning()
@@ -111,18 +114,59 @@ public class Player : KinematicBody
         countDegrees.Text = countText.ToString() + " ° c";
          
     }
+    private Color fromGreenToRed()
+    {
+        Material material = (Material)verticalBarTemperature.Get("material/0");
+        Color colorEmission = (Color)material.Get("emission");
+        Color color8 = Color.Color8((byte)colorEmission.r8,(byte)colorEmission.g8,(byte)colorEmission.b8);
+
+
+        //cor vai de 0 a 1, e nao 255
+        int fixedSize = 255 / lifeTotal;
+       // GD.Print("fixedSize " + fixedSize);
+
+        colorEmission.r8 += fixedSize + fixedSize;
+        colorEmission.g8 -= fixedSize;
+        colorEmission.b8 = 0;
+
+        material.Set("emission",colorEmission);
+
+        return colorEmission;
+    }
+    private Color fromRedToGreen()
+    {
+        Material material = (Material)verticalBarTemperature.Get("material/0");
+        Color colorEmission = (Color)material.Get("emission");
+        Color color8 = Color.Color8((byte)colorEmission.r8,(byte)colorEmission.g8,(byte)colorEmission.b8);
+
+
+        //cor vai de 0 a 1, e nao 255
+        int fixedSize = 255 / lifeTotal;
+       // GD.Print("fixedSize " + fixedSize);
+
+        colorEmission.r8 -= fixedSize + fixedSize;
+        colorEmission.g8 += fixedSize;
+        colorEmission.b8 = 0;
+
+        material.Set("emission",colorEmission);
+
+        return colorEmission;
+    }
     public void decreaseTemperature()
     {
-          setCountTemperature(currentAmountDegrees,false);
-            currentAmountDegrees += 1;
+
+        setCountTemperature(currentAmountDegrees,false);
+        currentAmountDegrees += 1;
+
         if(bodyTemperature > -9)
         {
             bodyTemperature -= currentAmountDegrees;
+            fromGreenToRed();
           
         }
-        else{
-            if(amountDamageLeft >= 0)
+        else if(amountDamageLeft >= 0)
             {
+                
                 damageReceived("temperature");
                
                 Vector3 scaleBarTemperature = verticalBarTemperature.Scale; 
@@ -131,16 +175,30 @@ public class Player : KinematicBody
                     verticalBarTemperature.Scale = scaleBarTemperature;
                 }
             }
-        }
     }
     public void increaseTemperature()
     {
-          if(bodyTemperature < 8)
+        if(bodyTemperature < 8)
         {
+            fromRedToGreen();
             bodyTemperature += currentAmountDegrees;
             setCountTemperature(currentAmountDegrees);
             currentAmountDegrees += 1;
+            
+            if(bodyTemperature > -9){
+                Vector3 scaleBarTemperature = verticalBarTemperature.Scale; 
+                if(amountDamageLeft < 4)
+                {
+                    amountDamageLeft +=1;
+                }
+                if(scaleBarTemperature.y < 1){
+                    scaleBarTemperature.y += sizeBarChunks;
+                    verticalBarTemperature.Scale = scaleBarTemperature;
+
+                }
+            }
         }
+
     }
     private void endTimerRayUmbrellaEnable()
     {
@@ -151,9 +209,9 @@ public class Player : KinematicBody
         Node node = (Node) rayUmbrella.GetCollider();
         if(node != null && node.Name == "enemyCollisor")
         {
-            Enemy enemy = (Enemy)node.GetParent().GetParent().GetNode<Enemy>(".");
+            Enemy scEnemy = node.FindParent("Enemy").GetNode<Enemy>(".");
  
-            enemy.takeDamage(ref rayUmbrella);
+            scEnemy.takeDamage();
   
           
         }
@@ -163,19 +221,11 @@ public class Player : KinematicBody
     {
         if(area.Name == "enemyCollisor")
         {
-           Enemy scEnemy = area.GetParent().GetParent().GetNode<Enemy>(".");
-           scEnemy.areaAttackEntered();
+           Enemy scEnemy = area.FindParent("Enemy").GetNode<Enemy>(".");
+           scEnemy.enemyInsideBodyPlayer();
         }
     }
 
-    private void enemyExitedAttackArea(Area area)
-    {
-        if(area.Name == "enemyCollisor")
-        {
-           Enemy scEnemy = area.GetParent().GetParent().GetNode<Enemy>(".");
-           scEnemy.areaAttackExited();
-        }
-    }
     public void enemyClose()
     {
         AnimationPlayerActions.Play("lightBlink",-1,2);
@@ -232,7 +282,7 @@ public class Player : KinematicBody
       
         if(amountDamageLeft > 0)
         {
-            amountDamageLeft -=damage;
+            amountDamageLeft -= damage;
             canReceiverDamage = false;
 
             animationPlayerUI.Play("damageReceiver");

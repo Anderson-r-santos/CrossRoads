@@ -1,9 +1,8 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 
-public class EnemyHandler : Spatial
+public class old_EnemyHandler : Spatial
 {
     private Player scPlayer;
 
@@ -12,7 +11,7 @@ public class EnemyHandler : Spatial
     private List<Vector3> spawnPosition = new List<Vector3>();   //guarda uma lista de spawn(somente em cima da pista)
     public List<Slot> slotList = new List<Slot>();        //lista contendo os slot e se estao vazio ou nao
     private List <boundsRoadStruct> roadInsideRangeArea = new List<boundsRoadStruct>();
-    private List<Enemy> listEnemyCreated = new List<Enemy>();
+    private List<old_Enemy> listEnemyCreated = new List<old_Enemy>();
    
     private PackedScene spawnParticles = (PackedScene) GD.Load("res://Prefabs/spawnParticles.tscn");
     private PackedScene enemy = (PackedScene) GD.Load("res://Prefabs/Enemy.tscn");
@@ -201,7 +200,7 @@ public class EnemyHandler : Spatial
             Node instanceEnemy = enemy.Instance();
             ((Spatial)instanceEnemy).Translation = spawnPos;
             AddChild(instanceEnemy);
-            Enemy scEnemy = instanceEnemy.GetNode<Enemy>(".");
+            old_Enemy scEnemy = instanceEnemy.GetNode<old_Enemy>(".");
             listEnemyCreated.Add(scEnemy);
             scEnemy.EnemyHandlerPropertie = this;
 
@@ -209,7 +208,7 @@ public class EnemyHandler : Spatial
            
             if(enemySlot != null)
             {
-                scEnemy.currentStateEnemy = Enemy.STATE_ENEMY.SPAWN;
+                scEnemy.currentStateEnemy = old_Enemy.STATE_ENEMY.SPAWN;
                 scEnemy.currentSlotThisEnemy = enemySlot;
 
 
@@ -244,7 +243,7 @@ public class EnemyHandler : Spatial
         if(listEnemyCreated.Count > 0)
         {
             int lastPosList = listEnemyCreated.Count - 1 ;
-            listEnemyCreated[lastPosList].currentStateEnemy = Enemy.STATE_ENEMY.MOVE;
+            listEnemyCreated[lastPosList].currentStateEnemy = old_Enemy.STATE_ENEMY.MOVE;
             listEnemyCreated.RemoveAt(lastPosList);
         }
     }

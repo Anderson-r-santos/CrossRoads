@@ -23,7 +23,7 @@ tracks/0/keys = {
 script = ExtResource( 1 )
 
 [node name="Light" type="SpotLight" parent="."]
-transform = Transform( 0.939693, 2.63612e-09, -0.34202, 0.34202, -1.49502e-08, 0.939693, -2.63612e-09, -1, -1.49502e-08, 0, 0, 0 )
+transform = Transform( 0.996939, -1.45924e-09, -0.0781803, 0.0781803, -1.51105e-08, 0.996939, -2.63612e-09, -1, -1.49502e-08, 0, 0, 0 )
 light_color = Color( 0.972549, 0.968627, 0.631373, 1 )
 light_energy = 6.0
 light_specular = 0.533
