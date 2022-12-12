@@ -36,6 +36,7 @@ public class Actions : Node
     private AudioStreamPlayer2D audioAttack;
 
     private Particles attackParticles;
+    private Particles attackParticles2;
 
     private Camera playerCamera;
     private Vector2 mousePosition;
@@ -59,7 +60,10 @@ public class Actions : Node
         audioAttack = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/attack");
 
         attackParticles = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles");
-         
+        attackParticles2 = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles2");
+
+
+
         playerCamera = GetParent().GetNode<Camera>("Camera");
         fallGravity = defaultGravity * 40;
         flyGravity = -(defaultGravity * 50);
@@ -86,7 +90,7 @@ public class Actions : Node
             scPlayer.timerUmbrellaRay.Start();
             audioAttack.Play();
             attackParticles.Emitting = true;
-
+            attackParticles2.Emitting = true;
         }
 
     }

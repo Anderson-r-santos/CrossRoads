@@ -66,9 +66,6 @@ transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, -22.8615, 31.4484, -18.
 [node name="roadCollisionShap5" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -143.547, 1.07, -135.093 )
 
-[node name="roadCollisionShap6" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -395.16, 1.07, -135.093 )
-
 [node name="roadCollisionShap9" parent="." instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -928.229, -21.3947, -163.353 )
 
@@ -108,7 +105,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24 )
 
 [node name="roadCollisionShap7" type="StaticBody" parent="."]
-transform = Transform( 0.767165, 0, 0.64145, 0, 1, 0, -0.64145, 0, 0.767165, -633.396, 3.24724, -51.6032 )
+transform = Transform( 0.767165, 0, 0.64145, 0, 1, 0, -0.64145, 0, 0.767165, -633.396, 1.53319, -51.6032 )
 collision_layer = 256
 collision_mask = 0
 
