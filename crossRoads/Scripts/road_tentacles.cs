@@ -1,19 +1,38 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class road_tentacles : Spatial
 {
-    private AnimationPlayer animTenTacles;
+    private AnimationPlayer [] animTenTacles = new AnimationPlayer[4];
     private AnimationNodeStateMachinePlayback stateMachine;
     private AnimationTree animTree;
+
+   
+
     public override void _Ready()
     {
-        animTenTacles = GetNode<AnimationPlayer>("AnimationPlayer");
-        // animTree = GetNode<AnimationTree>("AnimationTree");
-        // //animTenTacles = GetNode<AnimationPlayer>("AnimationPlayer");
-        // stateMachine = (AnimationNodeStateMachinePlayback)animTree.Get("parameters/playback");
-        // stateMachine.Start("left_to_right");
-        animTenTacles.Play("swing001");
+        Spatial allTentacles = GetNode<Spatial>("tentaclesChild");
+        for(int i = 0 ; i < allTentacles.GetChildCount() ; i++)
+        {
+          Spatial currentTentacle = (Spatial)allTentacles.GetChild(i);
+          animTenTacles[i] = currentTentacle.GetNode<AnimationPlayer>("./AnimationPlayer");
+          GD.Print("name Tentacles " + currentTentacle.Name);
+
+        }
+    }
+
+    private  async void playAsyncAnimation ()
+    {
+        
+        
+      foreach(AnimationPlayer animPlayerTentacles in animTenTacles)
+      {
+        await ToSignal(GetTree().CreateTimer(0.5f),"timeout");
+        if(!animPlayerTentacles.IsPlaying()){
+            animPlayerTentacles.Play("swing001",-1,(float)GD.RandRange(1.0,2.0));
+        }
+      }
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,8 +40,7 @@ public class road_tentacles : Spatial
  {
     //animTree.
   // animTenTacles.Play();
-  if(!animTenTacles.IsPlaying()){
-    animTenTacles.Play("swing001");
-  }
+    playAsyncAnimation();
+
  }
 }

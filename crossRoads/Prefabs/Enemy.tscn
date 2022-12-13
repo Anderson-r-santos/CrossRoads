@@ -151,6 +151,9 @@ flags_unshaded = true
 flags_do_not_receive_shadows = true
 flags_disable_ambient_light = true
 albedo_color = Color( 0, 0, 0, 1 )
+distance_fade_mode = 1
+distance_fade_min_distance = 100.0
+distance_fade_max_distance = 10.0
 
 [sub_resource type="SphereMesh" id=1]
 material = SubResource( 2 )
@@ -239,7 +242,7 @@ unit_size = 0.1
 curve = SubResource( 18 )
 
 [node name="PathFollow" type="PathFollow" parent="Path"]
-transform = Transform( 0.939231, 0, 0.343281, 0, 1, 0, -0.343281, 0, 0.939231, 0, 0, 0 )
+transform = Transform( 0.939231, 0, 0.343281, 0, 1, 0, -0.343281, 0, 0.939231, 20.5846, 0, 0.721418 )
 
 [node name="mesh" type="MeshInstance" parent="Path/PathFollow"]
 transform = Transform( 0.999996, 0, -0.00292471, 0, 1, 0, 0.00292471, 0, 0.999996, 0, 0, 0 )
@@ -278,7 +281,6 @@ monitorable = false
 shape = SubResource( 19 )
 
 [node name="ParticlesDamage" type="Particles" parent="Path/PathFollow/mesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 emitting = false
 amount = 15
 lifetime = 0.5
