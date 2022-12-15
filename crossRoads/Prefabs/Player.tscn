@@ -188,7 +188,6 @@ shape = SubResource( 1 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -1, -2.99003e-08, 8.21506e-08, 2.30926e-14, 0.939693, 0.34202, -8.74228e-08, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 )
 current = true
-far = 300.0
 
 [node name="Control" parent="Camera" instance=ExtResource( 6 )]
 

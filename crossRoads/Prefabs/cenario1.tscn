@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Models/cenario1.glb" type="PackedScene" id=1]
+
+[sub_resource type="QuadMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+emission_enabled = true
+emission = Color( 1, 1, 1, 1 )
+emission_energy = 6.66
+emission_operator = 0
+emission_on_uv2 = false
 
 [node name="cenario1" instance=ExtResource( 1 )]
 
@@ -48,3 +57,29 @@ shadow_enabled = true
 shadow_bias = 0.35
 omni_range = 71.602
 omni_attenuation = 0.965936
+
+[node name="SpotLight2" type="SpotLight" parent="Cube011" index="0"]
+transform = Transform( -0.0911869, -0.0149578, 0.512936, 0.0245243, 0.520249, 0.0195308, -0.512567, 0.0275528, -0.090318, -5.52821, -1.47528, -2.14577e-06 )
+light_energy = 10.0
+light_cull_mask = 4294966273
+shadow_enabled = true
+spot_range = 50.0
+spot_angle = 23.48
+
+[node name="SpotLight3" type="SpotLight" parent="Cube011" index="1"]
+transform = Transform( -0.0911869, -0.0149578, 0.512936, 0.0245243, 0.520249, 0.0195308, -0.512567, 0.0275528, -0.090318, -5.71228, 1.73053, 0.3361 )
+light_energy = 10.0
+light_cull_mask = 4294966273
+shadow_enabled = true
+spot_range = 50.0
+spot_angle = 23.48
+
+[node name="MeshInstance" type="MeshInstance" parent="Cube011" index="2"]
+transform = Transform( 1.57403e-08, -7.44075e-08, -0.360096, -4.29268e-08, -0.360096, 7.44075e-08, -0.360096, 4.29268e-08, -1.57403e-08, -5.53725, -1.6561, 0.0472362 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Cube011" index="3"]
+transform = Transform( 1.57403e-08, -7.44075e-08, -0.360096, -4.29268e-08, -0.360096, 7.44075e-08, -0.360096, 4.29268e-08, -1.57403e-08, -5.53725, 1.56605, 0.0472357 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
