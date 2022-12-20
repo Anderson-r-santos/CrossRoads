@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Materials/blackFire_horizonal.tres" type="QuadMesh" id=1]
 [ext_resource path="res://Scripts/Enemy.cs" type="Script" id=3]
@@ -9,7 +9,7 @@
 [sub_resource type="Animation" id=9]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:r")
+tracks/0/path = NodePath("mesh:mesh:material:albedo_color:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:g")
+tracks/1/path = NodePath("mesh:mesh:material:albedo_color:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -29,7 +29,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/2/type = "bezier"
-tracks/2/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:b")
+tracks/2/path = NodePath("mesh:mesh:material:albedo_color:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -39,7 +39,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/3/type = "bezier"
-tracks/3/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:a")
+tracks/3/path = NodePath("mesh:mesh:material:albedo_color:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -65,7 +65,7 @@ tracks/4/keys = {
 resource_name = "blink"
 length = 2.0
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:r")
+tracks/0/path = NodePath("mesh:mesh:material:albedo_color:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -75,7 +75,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5, 2 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:g")
+tracks/1/path = NodePath("mesh:mesh:material:albedo_color:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -85,7 +85,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5, 2 )
 }
 tracks/2/type = "bezier"
-tracks/2/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:b")
+tracks/2/path = NodePath("mesh:mesh:material:albedo_color:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -95,7 +95,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5, 2 )
 }
 tracks/3/type = "bezier"
-tracks/3/path = NodePath("Path/PathFollow/mesh:mesh:material:albedo_color:a")
+tracks/3/path = NodePath("mesh:mesh:material:albedo_color:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -109,14 +109,14 @@ tracks/3/keys = {
 resource_name = "damageTake"
 step = 0.995
 tracks/0/type = "transform"
-tracks/0/path = NodePath("Path/PathFollow/mesh")
+tracks/0/path = NodePath("mesh")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = PoolRealArray(  )
 tracks/1/type = "value"
-tracks/1/path = NodePath("Path/PathFollow/mesh:translation")
+tracks/1/path = NodePath("mesh:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -128,7 +128,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 5 ), Vector3( 0.00616086, 0.0128031, 15.5479 ), Vector3( 0.190987, 0.396902, 1.64731 ), Vector3( 0, 5.75445, 0.816327 ), Vector3( 0, 1.9594, 0.816327 ), Vector3( 0, 0, 0 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Path/PathFollow/mesh/Particles2:translation")
+tracks/2/path = NodePath("mesh/Particles2:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -138,12 +138,6 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 0, -0.106, 0 ), Vector3( 0, -0.106, 5 ), Vector3( 0, -0.106, 15.554 ), Vector3( 0, -0.106, 2.04082 ), Vector3( 0, 5.75607, 0.816326 ), Vector3( 0, 1.96102, 0.816326 ), Vector3( 0, -0.106, 0 ) ]
-}
-
-[sub_resource type="Curve3D" id=18]
-_data = {
-"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 20.5846, 0, 0.721418, -5.22846, 0, 1.73093, 5.22846, 0, -1.73093, 34.2979, 0, 1.70976, 2.92537, 0, 7.53745, -2.92537, 0, -7.53745, 38.0042, 0, -13.3625, 0, 0, 0, 0, 0, 0, 5.88301, 0, -22.5047, 2.38697, 0, -4.20179, -2.38697, 0, 4.20179, -16.6415, 0, -19.5383, 1.97669, 0, -11.4895, -1.97669, 0, 11.4895, -21.4596, 0, -2.61292, 6.91841, 0, -5.68298, -6.91841, 0, 5.68298, -43.8209, 0, -13.6082, -4.34656, 0, -4.11609, 4.34656, 0, 4.11609, -46.32, 0, 16.7303, -10.3574, 0, 5.12977, 10.3574, 0, -5.12977, -9.79398, 0, 17.2444, -10.8156, 0, -0.214383, 10.8156, 0, 0.214383, 10.9612, 0, 8.84345, -8.96249, 0, -2.06753, 8.96249, 0, 2.06753, 34.0638, 0, 21.3213, 2.54178, 0, 3.24524, -2.54178, 0, -3.24524, 35.2992, 0, 9.09054, 0.935721, 0, 4.72776, -0.935721, 0, -4.72776, 3.42512, 0, 0.318988, 0, 0, 0, 0, 0, 0, 20.5846, 0, 0.721418 ),
-"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 }
 
 [sub_resource type="SpatialMaterial" id=2]
@@ -184,9 +178,6 @@ scale_random = 1.0
 color_ramp = SubResource( 4 )
 hue_variation = 1.0
 hue_variation_random = 0.98
-
-[sub_resource type="SphereShape" id=19]
-radius = 40.0
 
 [sub_resource type="ParticlesMaterial" id=15]
 lifetime_randomness = 1.0
@@ -238,31 +229,24 @@ stream = ExtResource( 6 )
 unit_db = 30.0
 unit_size = 0.1
 
-[node name="Path" type="Path" parent="."]
-curve = SubResource( 18 )
-
-[node name="PathFollow" type="PathFollow" parent="Path"]
-transform = Transform( 0.939231, 0, 0.343281, 0, 1, 0, -0.343281, 0, 0.939231, 20.5846, 0, 0.721418 )
-
-[node name="mesh" type="MeshInstance" parent="Path/PathFollow"]
-transform = Transform( 0.999996, 0, -0.00292471, 0, 1, 0, 0.00292471, 0, 0.999996, 0, 0, 0 )
+[node name="mesh" type="MeshInstance" parent="."]
+transform = Transform( -0.264154, 0, 0.424525, 0, 0.5, 0, -0.424525, 0, -0.264154, 39.1655, 0, -3.47924 )
 mesh = SubResource( 1 )
-skeleton = NodePath("../../..")
 
-[node name="RayCast" type="RayCast" parent="Path/PathFollow/mesh"]
+[node name="RayCast" type="RayCast" parent="mesh"]
 enabled = true
 cast_to = Vector3( 0, 0, -8 )
 
-[node name="enemyCollisor" type="Area" parent="Path/PathFollow/mesh"]
+[node name="enemyCollisor" type="Area" parent="mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0140295, 1.82854 )
 collision_layer = 16
 collision_mask = 16
 monitoring = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Path/PathFollow/mesh/enemyCollisor"]
+[node name="CollisionShape" type="CollisionShape" parent="mesh/enemyCollisor"]
 shape = SubResource( 12 )
 
-[node name="Particles2" type="Particles" parent="Path/PathFollow/mesh"]
+[node name="Particles2" type="Particles" parent="mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0992733, 0 )
 amount = 30
 lifetime = 0.3
@@ -272,15 +256,7 @@ local_coords = false
 process_material = SubResource( 8 )
 draw_pass_1 = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="Path/PathFollow/mesh"]
-transform = Transform( 1, 0, 3.57628e-07, 0, 1, 0, -3.57628e-07, 0, 1, -0.0332279, 0, 0.00851917 )
-collision_layer = 4
-monitorable = false
-
-[node name="CollisionShape" type="CollisionShape" parent="Path/PathFollow/mesh/Area"]
-shape = SubResource( 19 )
-
-[node name="ParticlesDamage" type="Particles" parent="Path/PathFollow/mesh"]
+[node name="ParticlesDamage" type="Particles" parent="mesh"]
 emitting = false
 amount = 15
 lifetime = 0.5
@@ -288,6 +264,3 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 15 )
 draw_pass_1 = SubResource( 17 )
-
-[connection signal="body_entered" from="Path/PathFollow/mesh/Area" to="." method="playerEnterInArea"]
-[connection signal="body_exited" from="Path/PathFollow/mesh/Area" to="." method="playerExitedArea"]

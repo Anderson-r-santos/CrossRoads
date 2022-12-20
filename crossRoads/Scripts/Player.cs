@@ -33,17 +33,7 @@ public class Player : KinematicBody
     private AnimationPlayer AnimationPlayerActions;
     private AnimationPlayer animationPlayerUI;
 
-    private string whoAttack;
-
     public playerState scPlayerState;
-
-
-    public string WhoAttack
-    {
-        get{return whoAttack;}
-        set{whoAttack = value;}
-    }
-
 
     public StaticBody currentRoadPlayerOnTop = null;
 
@@ -54,11 +44,13 @@ public class Player : KinematicBody
     public int defaultAmountDegrees = 1;
     public int currentAmountDegrees;
 
+    private Spatial tentaclesInsideBody;
+
 
     public override void _Ready()
     {
         lifeTotal = amountDamageLeft;
-        //Input.SetMouseMode(mode:Input.MouseMode.Captured);
+        Input.MouseMode = Input.MouseModeEnum.Captured;
         scActions = GetNode<Actions>("Actions");
         attackArea = GetNode<Area>("areaAttack");
         timerHit = GetNode<Timer>("TimerHit");
@@ -84,11 +76,15 @@ public class Player : KinematicBody
         crackedGround = GetTree().Root.GetNode<AudioStreamPlayer2D>("rootTree/cenarioInicial/crackedGround");
         lightBlink = GetNode<AudioStreamPlayer2D>("Sounds/lightBlink");
 
+        tentaclesInsideBody = GetNode<Spatial>("tentaclesInsidePos");
+
         scPlayerState = GetNode<playerState>("playerState");
         rayUmbrella = GetNode<RayCast>("Camera/RayCast");
  
         sizeBarChunks = verticalBarTemperature.Scale.y / amountDamageLeft - 0.01f; // 0.1 so pra escala nao ser 0 e bugar
         currentAmountDegrees = defaultAmountDegrees;
+
+        tentaclesInsideBody.Visible = false;
 
     }
 
@@ -267,6 +263,7 @@ public class Player : KinematicBody
                 return;
             }
             animationPlayer.Play("damageEnemyBasic",-1,6);
+            ariseTentaclesInsideBody();
         }
         
         if( whoAttack == "hand")
@@ -292,6 +289,21 @@ public class Player : KinematicBody
            scActions.die();
         }
         timerHit.Start();
+    }
+
+    private async void ariseTentaclesInsideBody()
+    {
+       tentaclesInsideBody.Visible = true;
+        AnimationPlayer[] animTentacles = new AnimationPlayer[tentaclesInsideBody.GetChildCount()];
+        for(int i = 0; i  < tentaclesInsideBody.GetChildCount() ; i ++)
+        {
+            animTentacles[i] = tentaclesInsideBody.GetChild(i).GetNode<AnimationPlayer>("tentacles/AnimationPlayer");
+            await ToSignal(GetTree().CreateTimer(0.1f),"timeout");
+            
+            
+            animTentacles[i].Play("fadeOutSwing",-1,8f);
+            //animTentacles[i].GetAnimation("fadeOutSwing").Loop = true;
+        }
     }
 
     private void restartScene()

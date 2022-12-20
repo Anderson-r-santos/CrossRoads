@@ -9,6 +9,7 @@ public class Enemy : Spatial
     public bool playerInsideArea = false;
     private PathFollow pathPatrol;
     private Path path;
+    private RayCast ray;
     
 
     private Vector3 closePoint;
@@ -29,9 +30,10 @@ public class Enemy : Spatial
     public override void _Ready()
     {
         scPlayer = GetTree().Root.GetNode<Player>("rootTree/Player");
-        pathPatrol = GetNode<PathFollow>("Path/PathFollow");
-        path = GetNode<Path>("Path");
+        pathPatrol = GetParent().GetNode<PathFollow>(".");
+        path = GetParent().GetParent().GetNode<Path>(".");
         currentState = EnemyState.PATROL;
+        ray = GetNode<RayCast>("mesh/RayCast");
     }
 
 
@@ -79,17 +81,28 @@ public class Enemy : Spatial
     {
         targetPlayer = null;
         currentState = EnemyState.PATROL;
-        MeshInstance meshEnemy = GetNode<MeshInstance>("Path/PathFollow/mesh");
+        MeshInstance meshEnemy = GetNode<MeshInstance>("mesh");
         meshEnemy.Translate(Vector3.Zero);
     }
 
-    private void followPlayer(float delta)
+    private async void followPlayer(float delta)
     {
-        MeshInstance meshEnemy = GetNode<MeshInstance>("Path/PathFollow/mesh");
+        MeshInstance meshEnemy = GetNode<MeshInstance>("mesh");
         if(targetPlayer != null)
         {
-            meshEnemy.LookAt(targetPlayer.GlobalTransform.origin,Vector3.Up);
+            Vector3 playerCenter = targetPlayer.GlobalTransform.origin;
+            playerCenter.y +=4;
+            meshEnemy.LookAt(playerCenter,Vector3.Up);
             meshEnemy.Translate(Vector3.Forward * delta * moveSpeed);
+            if(ray.IsColliding())
+            {
+               KinematicBody player = (KinematicBody) ray.GetCollider();
+               Player scPlayer =  player.GetNode<Player>(".");
+               
+               await ToSignal(GetTree().CreateTimer(2f),"timeout");
+               scPlayer.damageReceived("enemy");
+               QueueFree();
+            }
   
         }
     }

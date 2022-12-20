@@ -166,7 +166,14 @@ public class Actions : Node
     }
     private void rotateCamera(Vector2 mousePosition)
     {
-        playerCamera.RotateObjectLocal(Vector3.Right,-(mousePosition.y* rotationVelocity));
+
+       if(mousePosition.y > 0  && playerCamera.Rotation.x > -1.05f)
+       {
+        playerCamera.RotateObjectLocal(Vector3.Right, -(mousePosition.y* rotationVelocity));
+       
+       }else if( mousePosition.y < 0 && playerCamera.Rotation.x < 0.8f ){
+            playerCamera.RotateObjectLocal(Vector3.Right,-(mousePosition.y* rotationVelocity));
+       }
     }
     public override void _PhysicsProcess(float delta)
     {

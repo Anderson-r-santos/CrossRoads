@@ -11,6 +11,7 @@ extents = Vector3( 46, 0.2, 28 )
 
 [node name="leftGroundCollisionShape" type="StaticBody"]
 collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

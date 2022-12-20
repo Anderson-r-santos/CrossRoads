@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/meshPlayer.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Sounds/STEP.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Sounds/bad-contact.ogg" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/ataque.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Prefabs/tentaclesInsideBody.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -153,6 +154,30 @@ radius = 18.0
 [node name="Player" type="KinematicBody"]
 collision_mask = 14
 script = ExtResource( 1 )
+
+[node name="tentaclesInsidePos" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+
+[node name="Position3D" type="Position3D" parent="tentaclesInsidePos"]
+transform = Transform( -0.433013, -0.75, 0.5, -0.866025, 0.5, -1.29048e-08, -0.25, -0.433013, -0.866025, 0, 0, 0 )
+
+[node name="tentacles" parent="tentaclesInsidePos/Position3D" instance=ExtResource( 12 )]
+transform = Transform( 1, 7.45058e-09, -1.49012e-08, -2.23517e-08, 0.4, 0, 0, 1.49012e-08, 1, 0, 0, 0 )
+
+[node name="Position3D2" type="Position3D" parent="tentaclesInsidePos"]
+transform = Transform( -0.183013, 0.707107, -0.683013, 0.965926, -4.2222e-08, -0.258819, -0.183013, -0.707107, -0.683013, 0, 0, 0 )
+
+[node name="tentacles" parent="tentaclesInsidePos/Position3D2" instance=ExtResource( 12 )]
+
+[node name="Position3D3" type="Position3D" parent="tentaclesInsidePos"]
+transform = Transform( -0.00623597, -0.683013, 0.73038, 0.933013, 0.258819, 0.25, -0.359789, 0.683013, 0.635646, 0, 0, 0 )
+
+[node name="tentacles" parent="tentaclesInsidePos/Position3D3" instance=ExtResource( 12 )]
+
+[node name="Position3D4" type="Position3D" parent="tentaclesInsidePos"]
+transform = Transform( 0.617243, 0.642995, 0.453396, 0.783448, -0.449401, -0.429241, -0.0722434, 0.620158, -0.781143, 0, 0, 0 )
+
+[node name="tentacles" parent="tentaclesInsidePos/Position3D4" instance=ExtResource( 12 )]
 
 [node name="rayToGround" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38612, 0 )

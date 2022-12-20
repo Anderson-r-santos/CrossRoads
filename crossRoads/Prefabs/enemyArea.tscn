@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=1]
+
+[sub_resource type="SphereShape" id=1]
+radius = 40.0
+
+[sub_resource type="Curve3D" id=2]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 20.5846, 0, 0.721418, -5.22846, 0, 1.73093, 5.22846, 0, -1.73093, 34.2979, 0, 1.70976, 2.92537, 0, 7.53745, -2.92537, 0, -7.53745, 38.0042, 0, -13.3625, 0, 0, 0, 0, 0, 0, 5.88301, 0, -22.5047, 2.38697, 0, -4.20179, -2.38697, 0, 4.20179, -16.6415, 0, -19.5383, 1.97669, 0, -11.4895, -1.97669, 0, 11.4895, -21.4596, 0, -2.61292, 6.91841, 0, -5.68298, -6.91841, 0, 5.68298, -43.8209, 0, -13.6082, -4.34656, 0, -4.11609, 4.34656, 0, 4.11609, -46.32, 0, 16.7303, -10.3574, 0, 5.12977, 10.3574, 0, -5.12977, -9.79398, 0, 17.2444, -10.8156, 0, -0.214383, 10.8156, 0, 0.214383, 10.9612, 0, 8.84345, -8.96249, 0, -2.06753, 8.96249, 0, 2.06753, 34.0638, 0, 21.3213, 2.54178, 0, 3.24524, -2.54178, 0, -3.24524, 35.2992, 0, 9.09054, 0.935721, 0, 4.72776, -0.935721, 0, -4.72776, 3.42512, 0, 0.318988, 0, 0, 0, 0, 0, 0, 20.5846, 0, 0.721418 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="enemyArea" type="Spatial"]
+
+[node name="Area" type="Area" parent="."]
+transform = Transform( 0.499998, 0, -0.00146219, 0, 0.5, 0, 0.00146219, 0, 0.499998, -0.0166264, 0, 0.00421143 )
+collision_layer = 4
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 1 )
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 2 )
+
+[node name="PathFollow" type="PathFollow" parent="Path"]
+transform = Transform( -0.530789, 0, 0.847502, 0, 1, 0, -0.847502, 0, -0.530789, 39.1655, 0, -3.47924 )
+offset = 21.37
+
+[node name="Enemy" parent="Path/PathFollow" instance=ExtResource( 1 )]
+transform = Transform( -0.530791, 0, -0.847505, 0, 1, 0, 0.847505, 0, -0.530791, 17.84, 0, -35.0397 )
