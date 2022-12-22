@@ -1,21 +1,19 @@
 using Godot;
-using System;
 
 public class Player : KinematicBody
 {
-    
+
     public Actions scActions;
-    public bool canReceiverDamage = true;
     private bool isRunning = false;
 
-    private Timer timerHit; // tempo para poder atacar dnv
+
     private Timer timerIncreaseTemperature;  // tempo que a temperatuda corporal decai
     private Timer timerDecreaseTemperature;
     public Timer timerUmbrellaRay; //tempo em que fica ativo o ray que detecta o inmigo
     private int amountDamageLeft = 4;
     private int lifeTotal;
 
-    
+
     private OmniLight lightUmbrella;
 
     private RayCast rayToGround;
@@ -23,7 +21,6 @@ public class Player : KinematicBody
     private int bodyTemperature = 8;
 
     private cenario scSenario;
-    private Area attackArea;
 
     private AudioStreamPlayer2D outRoad;
     private AudioStreamPlayer2D crackedGround;
@@ -52,9 +49,7 @@ public class Player : KinematicBody
         lifeTotal = amountDamageLeft;
         Input.MouseMode = Input.MouseModeEnum.Captured;
         scActions = GetNode<Actions>("Actions");
-        attackArea = GetNode<Area>("areaAttack");
-        timerHit = GetNode<Timer>("TimerHit");
-        timerHit.Connect("timeout",this,"hitReceived");
+
 
         AnimationPlayerActions = GetNode<AnimationPlayer>("AnimationPlayerActions");
         animationPlayer = GetNode<AnimationPlayer>("meshPlayer/AnimationPlayer");
@@ -80,7 +75,7 @@ public class Player : KinematicBody
 
         scPlayerState = GetNode<playerState>("playerState");
         rayUmbrella = GetNode<RayCast>("Camera/RayCast");
- 
+
         sizeBarChunks = verticalBarTemperature.Scale.y / amountDamageLeft - 0.01f; // 0.1 so pra escala nao ser 0 e bugar
         currentAmountDegrees = defaultAmountDegrees;
 
@@ -92,40 +87,39 @@ public class Player : KinematicBody
     {
         AnimationPlayerActions.Play("damageReceiver");
     }
-    public void hitReceived()
+
+    private void setCountTemperature(int amountDegrees, bool increase = true)
     {
-        canReceiverDamage = true;
-    }
-    private void setCountTemperature(int amountDegrees,bool increase = true)
-    {
-        string splitCountText = countDegrees.Text.Substring(0,countDegrees.Text.IndexOf(" "));
+        string splitCountText = countDegrees.Text.Substring(0, countDegrees.Text.IndexOf(" "));
         int countText = splitCountText.ToInt();
-        if(increase)
+        if (increase)
         {
             countText += amountDegrees;
-        }else{
+        }
+        else
+        {
             countText -= amountDegrees;
         }
-        
+
         countDegrees.Text = countText.ToString() + " ° c";
-         
+
     }
     private Color fromGreenToRed()
     {
         Material material = (Material)verticalBarTemperature.Get("material/0");
         Color colorEmission = (Color)material.Get("emission");
-        Color color8 = Color.Color8((byte)colorEmission.r8,(byte)colorEmission.g8,(byte)colorEmission.b8);
+        Color color8 = Color.Color8((byte)colorEmission.r8, (byte)colorEmission.g8, (byte)colorEmission.b8);
 
 
         //cor vai de 0 a 1, e nao 255
         int fixedSize = 255 / lifeTotal;
-       // GD.Print("fixedSize " + fixedSize);
+        // GD.Print("fixedSize " + fixedSize);
 
         colorEmission.r8 += fixedSize + fixedSize;
         colorEmission.g8 -= fixedSize;
         colorEmission.b8 = 0;
 
-        material.Set("emission",colorEmission);
+        material.Set("emission", colorEmission);
 
         return colorEmission;
     }
@@ -133,61 +127,64 @@ public class Player : KinematicBody
     {
         Material material = (Material)verticalBarTemperature.Get("material/0");
         Color colorEmission = (Color)material.Get("emission");
-        Color color8 = Color.Color8((byte)colorEmission.r8,(byte)colorEmission.g8,(byte)colorEmission.b8);
+        Color color8 = Color.Color8((byte)colorEmission.r8, (byte)colorEmission.g8, (byte)colorEmission.b8);
 
 
         //cor vai de 0 a 1, e nao 255
         int fixedSize = 255 / lifeTotal;
-       // GD.Print("fixedSize " + fixedSize);
+        // GD.Print("fixedSize " + fixedSize);
 
         colorEmission.r8 -= fixedSize + fixedSize;
         colorEmission.g8 += fixedSize;
         colorEmission.b8 = 0;
 
-        material.Set("emission",colorEmission);
+        material.Set("emission", colorEmission);
 
         return colorEmission;
     }
     public void decreaseTemperature()
     {
 
-        setCountTemperature(currentAmountDegrees,false);
+        setCountTemperature(currentAmountDegrees, false);
         currentAmountDegrees += 1;
 
-        if(bodyTemperature > -9)
+        if (bodyTemperature > -9)
         {
             bodyTemperature -= currentAmountDegrees;
             fromGreenToRed();
-          
+
         }
-        else if(amountDamageLeft >= 0)
+        else if (amountDamageLeft >= 0)
+        {
+
+            damageReceived("temperature");
+
+            Vector3 scaleBarTemperature = verticalBarTemperature.Scale;
+            if (scaleBarTemperature.y > 0.1f)
             {
-                
-                damageReceived("temperature");
-               
-                Vector3 scaleBarTemperature = verticalBarTemperature.Scale; 
-                if(scaleBarTemperature.y > 0.1f){
-                    scaleBarTemperature.y -= sizeBarChunks;
-                    verticalBarTemperature.Scale = scaleBarTemperature;
-                }
+                scaleBarTemperature.y -= sizeBarChunks;
+                verticalBarTemperature.Scale = scaleBarTemperature;
             }
+        }
     }
     public void increaseTemperature()
     {
-        if(bodyTemperature < 8)
+        if (bodyTemperature < 8)
         {
             fromRedToGreen();
             bodyTemperature += currentAmountDegrees;
             setCountTemperature(currentAmountDegrees);
             currentAmountDegrees += 1;
-            
-            if(bodyTemperature > -9){
-                Vector3 scaleBarTemperature = verticalBarTemperature.Scale; 
-                if(amountDamageLeft < 4)
+
+            if (bodyTemperature > -9)
+            {
+                Vector3 scaleBarTemperature = verticalBarTemperature.Scale;
+                if (amountDamageLeft < 4)
                 {
-                    amountDamageLeft +=1;
+                    amountDamageLeft += 1;
                 }
-                if(scaleBarTemperature.y < 1){
+                if (scaleBarTemperature.y < 1)
+                {
                     scaleBarTemperature.y += sizeBarChunks;
                     verticalBarTemperature.Scale = scaleBarTemperature;
 
@@ -200,108 +197,101 @@ public class Player : KinematicBody
     {
         rayUmbrella.Enabled = false;
     }
-    void verifyRayUmbrella()
-    {
-        Node node = (Node) rayUmbrella.GetCollider();
-        if(node != null && node.Name == "enemyCollisor")
-        {
-            Enemy scEnemy = node.FindParent("Enemy").GetNode<Enemy>(".");
- 
-            scEnemy.takeDamage();
-  
-          
-        }
+    // void verifyRayUmbrella()
+    // {
+    //     Node node = (Node)rayUmbrella.GetCollider();
+    //     if (node != null && node.Name == "enemyCollisor")
+    //     {
+    //         Enemy scEnemy = node.FindParent("Enemy").GetNode<Enemy>(".");
 
-    }
+    //         scEnemy.takeDamage();
+
+
+    //     }
+
+    // }
     private void enemyEnteredAttackArea(Area area)
     {
-        if(area.Name == "enemyCollisor")
+        if (area.Name == "enemyCollisor")
         {
-           Enemy scEnemy = area.FindParent("Enemy").GetNode<Enemy>(".");
-           scEnemy.enemyInsideBodyPlayer();
+            Enemy scEnemy = area.FindParent("Enemy").GetNode<Enemy>(".");
+            scEnemy.enemyInsideBodyPlayer();
         }
     }
 
     public void enemyClose()
     {
-        AnimationPlayerActions.Play("lightBlink",-1,2);
+        AnimationPlayerActions.Play("lightBlink", -1, 2);
         lightBlink.Play();
     }
-    
+
     private void playerIsOutRoad(Vector3 hitPoint)
     {
-        AnimationPlayerActions.Play("tremer",-1,10);
+        AnimationPlayerActions.Play("tremer", -1, 10);
 
         scSenario.startTimer(hitPoint);
 
-        if(!crackedGround.Playing)
+        if (!crackedGround.Playing)
         {
             crackedGround.Play();
         }
-        if(!outRoad.Playing)
+        if (!outRoad.Playing)
         {
             outRoad.Play();
         }
-        
+
     }
     private void playerReturnToRoad()
     {
         crackedGround.Stop();
         outRoad.Stop();
-       // AnimationPlayerActions.Stop();
+        // AnimationPlayerActions.Stop();
         scSenario.playerIsNotInGround();
-       AnimationPlayerActions.Stop();
+        AnimationPlayerActions.Stop();
     }
 
-    public void damageReceived(string whoAttack,int damage =1)
+    public void damageReceived(string animation, int damage = 1, float animSpeed = 1)
     {
-        
-        if(whoAttack == "enemy")
+        if (animation != "temperature")
         {
-            if(!canReceiverDamage)
-            {
-                return;
-            }
-            animationPlayer.Play("damageEnemyBasic",-1,6);
-            ariseTentaclesInsideBody();
-        }
-        
-        if( whoAttack == "hand")
-        {
-            if(!canReceiverDamage)
-            {
-                return;
-            }
 
+            animationPlayer.Play(animation, -1, animSpeed);
 
-            animationPlayer.Play("damageEnemyGround");
         }
-      
-        if(amountDamageLeft > 0)
+
+        if (amountDamageLeft > 0)
         {
             amountDamageLeft -= damage;
-            canReceiverDamage = false;
-
             animationPlayerUI.Play("damageReceiver");
 
-        }else
-        {
-           scActions.die();
         }
-        timerHit.Start();
+        else
+        {
+            if (animation == "dieInTentacles")
+            {
+                scActions.die(true);
+            }
+            else
+            {
+
+                scActions.die();
+
+            }
+        }
+
     }
 
-    private async void ariseTentaclesInsideBody()
+    public async void ariseTentaclesInsideBody()
     {
-       tentaclesInsideBody.Visible = true;
+        tentaclesInsideBody.Visible = true;
         AnimationPlayer[] animTentacles = new AnimationPlayer[tentaclesInsideBody.GetChildCount()];
-        for(int i = 0; i  < tentaclesInsideBody.GetChildCount() ; i ++)
+        for (int i = 0; i < tentaclesInsideBody.GetChildCount(); i++)
         {
             animTentacles[i] = tentaclesInsideBody.GetChild(i).GetNode<AnimationPlayer>("tentacles/AnimationPlayer");
-            await ToSignal(GetTree().CreateTimer(0.1f),"timeout");
-            
-            
-            animTentacles[i].Play("fadeOutSwing",-1,8f);
+            await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+
+
+            animTentacles[i].Play("fadeOutSwing", -1, 8f);
             //animTentacles[i].GetAnimation("fadeOutSwing").Loop = true;
         }
     }
@@ -313,87 +303,90 @@ public class Player : KinematicBody
 
     private bool verifyInputs()
     {
-        bool isInputMovimentPressed = true;
+        bool isInputMovimentPressed = false;
 
 
-    if(Input.IsActionPressed("moveFront"))
-    {
-       scActions.direction += Transform.basis.z;
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+        if (Input.IsActionPressed("moveFront"))
+        {
+            scActions.direction += Transform.basis.z;
+            isInputMovimentPressed = true;
 
- 
+        }
+        else if (Input.IsActionPressed("moveBack"))
+        {
+            scActions.direction -= Transform.basis.z;
+            isInputMovimentPressed = true;
+        }
 
-    }else if(Input.IsActionPressed("moveBack"))
-    {
-        scActions.direction -= Transform.basis.z;
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+        if (Input.IsActionPressed("moveLeft"))
+        {
+            scActions.direction += Transform.basis.x;
+            isInputMovimentPressed = true;
 
-    }
-    
-    if(Input.IsActionPressed("moveLeft"))
-    {
-        scActions.direction +=  Transform.basis.x;
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+        }
+        else if (Input.IsActionPressed("moveRight"))
+        {
+            scActions.direction -= Transform.basis.x;
+            isInputMovimentPressed = true;
 
-        
-    }else if(Input.IsActionPressed("moveRight"))
-    {
-         scActions.direction -= Transform.basis.x;
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+        }
+        if (Input.IsActionJustReleased("moveFront") || Input.IsActionJustReleased("moveBack") || Input.IsActionJustReleased("moveLeft") || Input.IsActionJustReleased("moveRight"))
+        {
+            isInputMovimentPressed = false;
+            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+        }
 
-    }
-    if(Input.IsActionJustReleased("moveFront") || Input.IsActionJustReleased("moveBack") || Input.IsActionJustReleased("moveLeft") || Input.IsActionJustReleased("moveRight"))
-    {
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
-        isInputMovimentPressed = false;
-    }
- 
         return isInputMovimentPressed;
     }
- 
- public override void _Process(float delta)
- {
 
-     if(verifyInputs())
-     {
-        scActions.walk();
-     }
-     if(rayUmbrella.Enabled)
-     {
-         verifyRayUmbrella();
-     }
-   
-     Node nodeGround = (Node) rayToGround.GetCollider();
-       
-     if(nodeGround != null)
-
-     {
-         playerState.playerHasFloor = true;
-         //   GD.Print ("player collidindo com " + nodeGround.Name);
-         Vector3 hitPoint = rayToGround.GetCollisionPoint();
+    public override void _Process(float delta)
+    {
 
 
-        if(nodeGround.Name == "interativeArea")
+        Node nodeGround = (Node)rayToGround.GetCollider();
+
+        if (nodeGround != null)
+
         {
-            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.PUSHED_OUT;
-            //GD.Print("atingiu o top da area e sera empurrado pra fora");
+            playerState.playerHasFloor = true;
+            //   GD.Print ("player collidindo com " + nodeGround.Name);
+            Vector3 hitPoint = rayToGround.GetCollisionPoint();
+
+
+            if (nodeGround.Name == "interativeArea")
+            {
+                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.PUSHED_OUT;
+                //GD.Print("atingiu o top da area e sera empurrado pra fora");
+            }
+            else if (nodeGround.GetParent().Name == "groundColision")
+            {
+                playerIsOutRoad(hitPoint);
+                currentRoadPlayerOnTop = null;
+            }
+            else
+            {
+                currentRoadPlayerOnTop = (StaticBody)nodeGround;
+                playerReturnToRoad();
+            }
+
         }
-        else if(nodeGround.GetParent().Name == "groundColision")
-         {
-             playerIsOutRoad(hitPoint);
-             currentRoadPlayerOnTop = null;
-         }else{
-             currentRoadPlayerOnTop = (StaticBody) nodeGround;
-             playerReturnToRoad();
-         }
+        else
+        {
+            playerState.playerHasFloor = false;
+        }
 
-     }else{
-         playerState.playerHasFloor = false;
-     }
-     
+        if (verifyInputs() && playerState.playerHasFloor == true)
+        {
+            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+        }
 
- }
- 
- }
- 
+        // if (rayUmbrella.Enabled)
+        // {
+        //     verifyRayUmbrella();
+        // }
+
+    }
+
+}
+
 

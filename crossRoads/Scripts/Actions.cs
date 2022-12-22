@@ -7,9 +7,9 @@ public class Actions : Node
     // private string b = "text";
     float rotationVelocity = 0.01f;
 
-    public float currentGravity;
-    public float fallGravity;
-    public float flyGravity;
+    private float currentGravity;
+    private float fallGravity;
+    private float flyGravity;
     private const float moveSpeed = 50f;
     private const float runSpeed = 60f;
     private float currentMoveSpeed;
@@ -37,6 +37,7 @@ public class Actions : Node
 
     private Particles attackParticles;
     private Particles attackParticles2;
+    private Particles splashRainParticles;
 
     private Camera playerCamera;
     private Vector2 mousePosition;
@@ -61,13 +62,14 @@ public class Actions : Node
 
         attackParticles = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles");
         attackParticles2 = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles2");
-
+        splashRainParticles = GetNode<Particles>("../splash");
 
 
         playerCamera = GetParent().GetNode<Camera>("Camera");
         fallGravity = defaultGravity * 40;
         flyGravity = -(defaultGravity * 50);
         currentGravity = defaultGravity * 20;
+
     }
     
     private void setCanAttack()
@@ -112,22 +114,21 @@ public class Actions : Node
 
     public void stop()
     {
-        animPlayer.Play("stop_CloseUmbrella");
-
         audioPlayer.Stop();
-        
-        if(!audioAttack.Playing)
-        {
-            audioAttack.Stop();
-        }
+        animPlayer.Play("stop");
         
     }
-    public void die()
+    public void die(bool dieByTentacle = false)
     {
         if(!playerDie){
             GD.Print("O JOGADOR ESTA MORTO!!!!");
     
-            animPlayer.Play("Die");
+            if(!dieByTentacle){
+                animPlayer.Play("Die");
+
+            }else{
+                animPlayer.Play("dieInTentacles");
+            }
             timerReloadScene.Start();
             playerState.CurrentStatePlayer = playerState.STATE_PLAYER.DIE;
         }
@@ -136,6 +137,7 @@ public class Actions : Node
     }
     public void moviment()
     {
+        splashRainParticles.Visible = true;
         if(!audioPlayer.Playing)
         {
             audioPlayer.Play();
@@ -159,6 +161,34 @@ public class Actions : Node
 
        
     }
+    public void hitByTentacleGround()
+    {
+        scPlayer.damageReceived("dieInTentacles",5);
+    }
+    public async void fly()
+    {
+        currentGravity = flyGravity;
+        splashRainParticles.Visible = false;
+        await ToSignal(GetTree().CreateTimer(5f),"timeout");
+        if(!playerState.playerHasFloor)
+        {
+            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
+
+        }
+    }
+    public void fall()
+    {
+        currentGravity = fallGravity;
+        animPlayer.Play("falling");
+        GD.Print("caindo........");
+    }
+    public async void changeToStoppedPlayer()
+    {
+        float timeAnim = animPlayer.GetAnimation("tentacleInsideDamage").Length;
+        await ToSignal(GetTree().CreateTimer(timeAnim),"timeout");
+        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+    }
+
     private void rotatePlayer(Vector2 mousePosition)
     {
         //Vector3 playerRotation = new Vector3(0,mousePosition.x,0);

@@ -10,12 +10,14 @@ public class Enemy : Spatial
     private PathFollow pathPatrol;
     private Path path;
     private RayCast ray;
+    private Area enemyArea;
+    private MeshInstance meshEnemy;
     
 
     private Vector3 closePoint;
 
     public enum EnemyState{
-        FOLLOWPLAYER,ATTACK,PATROL
+        FOLLOWPLAYER,PATROL
     }
     private EnemyState currentState;
 
@@ -34,6 +36,10 @@ public class Enemy : Spatial
         path = GetParent().GetParent().GetNode<Path>(".");
         currentState = EnemyState.PATROL;
         ray = GetNode<RayCast>("mesh/RayCast");
+        enemyArea = GetNode<Area>("../../../Area");
+        enemyArea.Connect("body_entered",this,"playerEnteredArea");
+        enemyArea.Connect("body_exited",this,"playerExitedArea");
+        meshEnemy = GetNode<MeshInstance>("mesh");
     }
 
 
@@ -41,24 +47,7 @@ public class Enemy : Spatial
     {
 
     }
-    public override void _Process(float delta)
-    {
-        switch(currentState)
-        {
-            case EnemyState.FOLLOWPLAYER:
-                followPlayer(delta);
-            break;
 
-            case EnemyState.ATTACK:
-            
-            break;
-
-            case EnemyState.PATROL:
-                patrol(delta);
-            break;
-
-        }
-    }
 
     public void enemyInsideBodyPlayer()
     {
@@ -68,14 +57,7 @@ public class Enemy : Spatial
     {
 
     }
-    private void playerEnterInArea(Node player)
-    {
-        GD.Print("body enter area " + player.Name);
-        if(player.Name == "Player"){
-            targetPlayer = (KinematicBody) player;
-            currentState = EnemyState.FOLLOWPLAYER;
-        }
-    }
+  
 
     private void playerExitedArea(Node player)
     {
@@ -83,33 +65,43 @@ public class Enemy : Spatial
         currentState = EnemyState.PATROL;
         MeshInstance meshEnemy = GetNode<MeshInstance>("mesh");
         meshEnemy.Translate(Vector3.Zero);
+        playerInsideArea = false;
     }
 
-    private async void followPlayer(float delta)
+    private void followPlayer(float delta)
     {
-        MeshInstance meshEnemy = GetNode<MeshInstance>("mesh");
-        if(targetPlayer != null)
+      
+        if(targetPlayer != null && playerState.currentStateUmbrella == playerState.STATE_UMBRELLA.UP_UMBRELLA)
         {
             Vector3 playerCenter = targetPlayer.GlobalTransform.origin;
             playerCenter.y +=4;
             meshEnemy.LookAt(playerCenter,Vector3.Up);
             meshEnemy.Translate(Vector3.Forward * delta * moveSpeed);
+
             if(ray.IsColliding())
             {
                KinematicBody player = (KinematicBody) ray.GetCollider();
                Player scPlayer =  player.GetNode<Player>(".");
-               
-               await ToSignal(GetTree().CreateTimer(2f),"timeout");
-               scPlayer.damageReceived("enemy");
+              // scPlayer.damageReceived("tentacleInsideDamage");
+               playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY;
+               scPlayer.ariseTentaclesInsideBody();
                QueueFree();
+               
+
             }
   
+        }else{
+             currentState = EnemyState.PATROL;
         }
     }
 
     private void patrol(float delta)
     {
 
+        if(playerInsideArea){
+            currentState = EnemyState.FOLLOWPLAYER;
+            
+        }
         if(pathPatrol.UnitOffset < 1){
             pathPatrol.Offset +=  moveSpeed * delta;
         }else{
@@ -124,13 +116,32 @@ public class Enemy : Spatial
     }
 
         //quando o player entra no campo de visao do inimigo
-    public void playerEnteredArea(Node body)
+    public void playerEnteredArea(Node player)
     {
-        if(body.Name == "Player")
+        if(player.Name == "Player")
         {
             playerInsideArea = true;
             scPlayer.enemyClose();
+            GD.Print("body enter area " + player.Name);
+            targetPlayer = (KinematicBody) player;
+            currentState = EnemyState.FOLLOWPLAYER;
+        
         }
 
+    }
+    public override void _Process(float delta)
+    {
+
+        switch(currentState)
+        {
+            case EnemyState.FOLLOWPLAYER:
+                followPlayer(delta);
+            break;
+
+             case EnemyState.PATROL:
+                patrol(delta);
+            break;
+
+        }
     }
 }

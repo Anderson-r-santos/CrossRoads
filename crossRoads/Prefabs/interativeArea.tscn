@@ -3,8 +3,8 @@
 [ext_resource path="res://Scripts/interativeArea.cs" type="Script" id=1]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 2.0
-height = 5.0
+radius = 8.0
+height = 25.0
 
 [node name="interativeArea" type="Area"]
 collision_layer = 128

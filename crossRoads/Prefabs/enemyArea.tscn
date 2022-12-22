@@ -3,7 +3,7 @@
 [ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=1]
 
 [sub_resource type="SphereShape" id=1]
-radius = 40.0
+radius = 90.0
 
 [sub_resource type="Curve3D" id=2]
 _data = {
@@ -29,4 +29,15 @@ transform = Transform( -0.530789, 0, 0.847502, 0, 1, 0, -0.847502, 0, -0.530789,
 offset = 21.37
 
 [node name="Enemy" parent="Path/PathFollow" instance=ExtResource( 1 )]
-transform = Transform( -0.530791, 0, -0.847505, 0, 1, 0, 0.847505, 0, -0.530791, 17.84, 0, -35.0397 )
+
+[node name="PathFollow2" type="PathFollow" parent="Path"]
+transform = Transform( -0.251775, 0, 0.967784, 0, 1, 0, -0.967784, 0, -0.251775, -28.9932, 0, -3.99211 )
+offset = 117.42
+
+[node name="Enemy" parent="Path/PathFollow2" instance=ExtResource( 1 )]
+
+[node name="PathFollow3" type="PathFollow" parent="Path"]
+transform = Transform( 0.996925, 0, 0.0783377, 0, 1, 0, -0.0783377, 0, 0.996925, -20.9656, 0, 20.124 )
+offset = 194.6
+
+[node name="Enemy" parent="Path/PathFollow3" instance=ExtResource( 1 )]

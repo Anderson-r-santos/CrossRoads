@@ -134,7 +134,7 @@ public class road_tentacles : Spatial
     {
       if(verifyRayCollision())
       {
-        scPlayer.damageReceived("tentacles",10);
+        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_TENTACLE_GROUND;
       }
     }
 

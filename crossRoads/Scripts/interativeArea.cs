@@ -4,19 +4,22 @@ using System;
 public class interativeArea : Area
 {
     private Timer timerToFall;
-    bool playerInsideArea = false;
+    private bool playerIsInsideArea = false;
+    private bool playerEnteredArea = false;
+   // private RayCast rayOfPlayer;
 
 
     public override void _Ready()
     {
-        timerToFall = GetNode<Timer>("TimerToFall");  
+        timerToFall = GetNode<Timer>("TimerToFall");
+        //rayOfPlayer = GetTree().Root.GetNode<RayCast>("rootTree/Player/rayToGround");
 
     }
 
     private void endtimerFly()
     {
 
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
+        //playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
         
     }
 
@@ -26,7 +29,7 @@ public class interativeArea : Area
         {
             GD.Print("player entrou em uma area interativa");
 
-                playerInsideArea = true;
+                playerEnteredArea = true;
 
         }
     }
@@ -39,20 +42,21 @@ public class interativeArea : Area
             {
                 timerToFall.Start();
             }
-           playerInsideArea = false;
-           //playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
+           playerEnteredArea = false;
+           playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
            GD.Print("player saiu da area");
         }
     }
 
     public override void _Process(float delta)
     {
-        if(playerInsideArea)
+        if(playerEnteredArea)
         {
-            if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.PUSHED_OUT)
-            {
-                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FLY;
-            }
+
+            // if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.PUSHED_OUT)
+            // {
+                 playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FLY;
+            // }
             
         } 
     }
