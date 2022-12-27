@@ -58,6 +58,7 @@ process_material = SubResource( 24 )
 draw_pass_1 = SubResource( 25 )
 
 [node name="rangeAttackArea" type="Area" parent="."]
+collision_layer = 4
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="rangeAttackArea"]

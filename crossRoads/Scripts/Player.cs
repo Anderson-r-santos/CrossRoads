@@ -32,7 +32,6 @@ public class Player : KinematicBody
 
     public playerState scPlayerState;
 
-    public StaticBody currentRoadPlayerOnTop = null;
 
     private Label countDegrees;
     private MeshInstance verticalBarTemperature;
@@ -349,23 +348,17 @@ public class Player : KinematicBody
 
         {
             playerState.playerHasFloor = true;
-            //   GD.Print ("player collidindo com " + nodeGround.Name);
+           
             Vector3 hitPoint = rayToGround.GetCollisionPoint();
 
-
-            if (nodeGround.Name == "interativeArea")
-            {
-                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.PUSHED_OUT;
-                //GD.Print("atingiu o top da area e sera empurrado pra fora");
-            }
-            else if (nodeGround.GetParent().Name == "groundColision")
+             if (((StaticBody)nodeGround).CollisionLayer == 32)
             {
                 playerIsOutRoad(hitPoint);
-                currentRoadPlayerOnTop = null;
+
             }
             else
             {
-                currentRoadPlayerOnTop = (StaticBody)nodeGround;
+
                 playerReturnToRoad();
             }
 
@@ -379,11 +372,6 @@ public class Player : KinematicBody
         {
             playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
         }
-
-        // if (rayUmbrella.Enabled)
-        // {
-        //     verifyRayUmbrella();
-        // }
 
     }
 

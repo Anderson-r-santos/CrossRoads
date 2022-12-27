@@ -1,6 +1,35 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Models/cenario1.glb" type="PackedScene" id=1]
+
+[sub_resource type="CylinderShape" id=20]
+height = 20.0
+radius = 0.5
+
+[sub_resource type="CylinderShape" id=22]
+height = 10.0
+radius = 0.5
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 7.31198, 11.5128, 1.43258 )
+
+[sub_resource type="CylinderShape" id=23]
+height = 20.0
+
+[sub_resource type="BoxShape" id=24]
+extents = Vector3( 11.8036, 1, 178.422 )
+
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 14.2355, 1.34909, 4.47801 )
+
+[sub_resource type="BoxShape" id=26]
+extents = Vector3( 24.1796, 2.69762, 44.1264 )
+
+[sub_resource type="BoxShape" id=28]
+extents = Vector3( 49.6074, 42.1456, 84.3267 )
+
+[sub_resource type="BoxShape" id=29]
+extents = Vector3( 13.9655, 5.23858, 7.75879 )
 
 [sub_resource type="QuadMesh" id=1]
 
@@ -11,7 +40,176 @@ emission_energy = 6.66
 emission_operator = 0
 emission_on_uv2 = false
 
+[sub_resource type="BoxShape" id=18]
+extents = Vector3( 59.1612, 5.47896, 4.11396 )
+
+[sub_resource type="BoxShape" id=19]
+extents = Vector3( 26.6788, 5.47896, 4.11396 )
+
+[sub_resource type="ConvexPolygonShape" id=9]
+points = PoolVector3Array( 367.035, -0.368094, 24.6291, -61.9195, -0.368094, -25.7469, -61.9195, -0.368094, 24.6291, 367.035, -0.368094, -25.7469 )
+
+[sub_resource type="ConvexPolygonShape" id=10]
+points = PoolVector3Array( -200.835, 1.15845, -182.981, -61.9419, 1.15845, 24.5612, -61.9419, 1.15845, -25.743, -200.835, 1.15845, 197.129, -63.4648, 1.15845, -182.981, -150.445, 1.15845, 197.129 )
+
+[sub_resource type="ConvexPolygonShape" id=11]
+points = PoolVector3Array( -263.457, -1.89464, -140.243, -518.357, -0.368094, -182.976, -200.897, -0.368094, -182.976, -518.357, -0.368094, -132.61, -200.897, -0.368094, -132.61, -269.579, -1.89464, -149.404 )
+
+[sub_resource type="ConvexPolygonShape" id=12]
+points = PoolVector3Array( -698.489, 1.15845, -59.3411, -522.941, -0.368094, -182.981, -532.11, -0.368094, -181.438, -696.955, -0.368094, -5.90186, -519.891, 1.15845, -131.067, -518.357, -0.368094, -132.593, -696.955, -0.368094, -60.8664, -577.919, -0.368094, -163.134, -651.146, -0.368094, -25.7487, -553.48, -0.368094, -175.337, -677.101, -0.368094, -12.0206 )
+
+[sub_resource type="ConvexPolygonShape" id=13]
+points = PoolVector3Array( -953.422, -21.7399, -225.724, -898.466, -20.2138, -2.88074, -903.049, -21.7399, 169.651, -953.422, -21.7399, 169.651, -903.049, -21.7399, -225.724, -898.466, -20.2138, -53.1928, -901.65, -21.7399, -50.2778 )
+
+[sub_resource type="BoxShape" id=14]
+extents = Vector3( 83.6254, 1, 24 )
+
+[sub_resource type="BoxShape" id=15]
+extents = Vector3( 11.4799, 1, 24 )
+
+[sub_resource type="BoxShape" id=16]
+extents = Vector3( 18.0898, 1, 24 )
+
+[sub_resource type="ConvexPolygonShape" id=17]
+points = PoolVector3Array( -631.572, -0.235479, -275.195, -502.383, -0.235479, -275.195, -921.077, -22.5038, -220.388, -803.999, -9.62483, -220.388, -717.786, -0.235479, -220.388, -64.6747, 0.231873, -159.69, -903.886, -22.5038, -220.388, -64.6747, -0.235479, -269.304, -921.077, -22.5038, 218.066, -760.892, -4.81554, -165.582, -717.786, -0.235479, 108.452, -286.85, -0.235479, 218.114, -200.636, -0.235479, 218.114, -64.6747, -0.233255, 212.175, 409.368, -0.233255, 157.368, 409.368, -0.233255, -110.775, 280.048, -0.233255, -191.995, -903.886, -22.5038, 218.066, -803.999, -9.62483, 218.066, -760.892, -4.81554, 108.452 )
+
+[sub_resource type="BoxShape" id=27]
+extents = Vector3( 42.4931, 0.437741, 30.6872 )
+
 [node name="cenario1" instance=ExtResource( 1 )]
+
+[node name="StaticBody" type="StaticBody" parent="Plane" index="0"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Plane/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.36545, -12.3789, 0.776747 )
+shape = SubResource( 20 )
+
+[node name="StaticBody" type="StaticBody" parent="Cylinder" index="0"]
+collision_layer = 2
+
+[node name="CollisionShape2" type="CollisionShape" parent="Cylinder/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.0999, 1.32987, -2.44971 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="Cylinder/StaticBody" index="1"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -38.5471, 1.32987, 0.0467377 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="Cylinder/StaticBody" index="2"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -49.9887, 1.32987, 15.3944 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="Cylinder/StaticBody" index="3"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -66.8208, 1.32987, 22.0688 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="Cylinder/StaticBody" index="4"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -67.9502, 1.32987, 7.98174 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="Cylinder/StaticBody" index="5"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -85.3065, 1.32987, 25.8135 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape8" type="CollisionShape" parent="Cylinder/StaticBody" index="6"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -90.5447, 1.32987, 45.2199 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape9" type="CollisionShape" parent="Cylinder/StaticBody" index="7"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -109.691, 1.32987, 38.0354 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape10" type="CollisionShape" parent="Cylinder/StaticBody" index="8"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -106.243, 1.32987, 60.5212 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape11" type="CollisionShape" parent="Cylinder/StaticBody" index="9"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -126.358, 1.32987, 67.7717 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape12" type="CollisionShape" parent="Cylinder/StaticBody" index="10"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -145.171, 1.32987, 53.2493 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape13" type="CollisionShape" parent="Cylinder/StaticBody" index="11"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -118.075, 1.32987, 124.352 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape14" type="CollisionShape" parent="Cylinder/StaticBody" index="12"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -107.961, 1.32987, 145.387 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape15" type="CollisionShape" parent="Cylinder/StaticBody" index="13"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -87.8242, 1.32987, 123.987 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape16" type="CollisionShape" parent="Cylinder/StaticBody" index="14"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -67.0406, 1.32987, 107.96 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape17" type="CollisionShape" parent="Cylinder/StaticBody" index="15"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -47.3927, 1.32987, 116.306 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape18" type="CollisionShape" parent="Cylinder/StaticBody" index="16"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -56.714, 1.32987, 92.2863 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape19" type="CollisionShape" parent="Cylinder/StaticBody" index="17"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -39.9048, 1.32987, 91.1195 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape20" type="CollisionShape" parent="Cylinder/StaticBody" index="18"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -16.8062, 1.32987, 84.8315 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape21" type="CollisionShape" parent="Cylinder/StaticBody" index="19"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -30.965, 1.32987, 76.8906 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape22" type="CollisionShape" parent="Cylinder/StaticBody" index="20"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, -13.5475, 1.32987, 64.4548 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape23" type="CollisionShape" parent="Cylinder/StaticBody" index="21"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 1.94095, 1.32987, 75.1675 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape24" type="CollisionShape" parent="Cylinder/StaticBody" index="22"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 8.83719, 1.32987, 58.8229 )
+shape = SubResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cylinder/StaticBody" index="23"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0371094, 1.32987, -5.9659 )
+shape = SubResource( 22 )
+
+[node name="StaticBody" type="StaticBody" parent="Plane001" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -398.997, 0, 43.1665 )
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Plane001/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.20059, 12.6317, -0.401989 )
+shape = SubResource( 21 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Plane001/StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.8539, 7.6703, 30.0612 )
+shape = SubResource( 23 )
+
+[node name="StaticBody" type="StaticBody" parent="Cylinder008" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30.4341 )
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Cylinder008/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.30453, 0.712452, 13.2551 )
+shape = SubResource( 24 )
+
+[node name="StaticBody" type="StaticBody" parent="Cylinder013" index="0"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Cylinder013/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.89898, 0 )
+shape = SubResource( 21 )
 
 [node name="OmniLight" type="OmniLight" parent="Cube001" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5396, 23.8855, 26.9017 )
@@ -58,6 +256,47 @@ shadow_bias = 0.35
 omni_range = 71.602
 omni_attenuation = 0.965936
 
+[node name="StaticBody" type="StaticBody" parent="Cube001" index="5"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube001/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2394, 15.0006, -1.3497 )
+shape = SubResource( 21 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Cube001/StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.6223, 4.53347, -1.85663 )
+shape = SubResource( 25 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="Cube001/StaticBody" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36.6384, 26.631, -0.0221748 )
+shape = SubResource( 26 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="Cube001/StaticBody" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2394, 15.0006, -28.1372 )
+shape = SubResource( 21 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="Cube001/StaticBody" index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.6223, 4.53347, -28.6441 )
+shape = SubResource( 25 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="Cube001/StaticBody" index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2394, 15.0006, 27.088 )
+shape = SubResource( 21 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="Cube001/StaticBody" index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.6223, 4.53347, 26.581 )
+shape = SubResource( 25 )
+
+[node name="StaticBody" type="StaticBody" parent="Cube002" index="0"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube002/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -66.8473, 0, 23.1272 )
+shape = SubResource( 28 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Cube002/StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.6815, 5.38819, 85.7168 )
+shape = SubResource( 29 )
+
 [node name="SpotLight2" type="SpotLight" parent="Cube011" index="0"]
 transform = Transform( -0.0911869, -0.0149578, 0.512936, 0.0245243, 0.520249, 0.0195308, -0.512567, 0.0275528, -0.090318, -5.52821, -1.47528, -2.14577e-06 )
 light_energy = 10.0
@@ -83,3 +322,66 @@ material/0 = SubResource( 2 )
 transform = Transform( 1.57403e-08, -7.44075e-08, -0.360096, -4.29268e-08, -0.360096, 7.44075e-08, -0.360096, 4.29268e-08, -1.57403e-08, -5.53725, 1.56605, 0.0472357 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="StaticBody2" type="StaticBody" parent="Cylinder015" index="0"]
+transform = Transform( 0, 0, 3.33715, 0, 0.665135, 0, -3.33715, 0, 0, 11.842, -0.834835, -65.2818 )
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Cylinder015/StaticBody2" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4348, 0, 0 )
+shape = SubResource( 18 )
+
+[node name="StaticBody" type="StaticBody" parent="Cube007" index="0"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube007/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4348, 0, 0 )
+shape = SubResource( 19 )
+
+[node name="StaticBody" type="StaticBody" parent="road" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.109354, 0.496206, -0.141914 )
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape5" type="CollisionShape" parent="road/StaticBody" index="0"]
+shape = SubResource( 9 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="road/StaticBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284473, -0.973144, -0.165638 )
+shape = SubResource( 10 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="road/StaticBody" index="2"]
+shape = SubResource( 11 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="road/StaticBody" index="3"]
+shape = SubResource( 12 )
+
+[node name="CollisionShape" type="CollisionShape" parent="road/StaticBody" index="4"]
+shape = SubResource( 13 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="road/StaticBody" index="5"]
+transform = Transform( 0.993844, -0.110792, 0, 0.110792, 0.993844, 0, 0, 0, 1, -820.542, -12.9062, -29.8247 )
+shape = SubResource( 14 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="road/StaticBody" index="6"]
+transform = Transform( 0.964021, 0, 0.265825, 0, 1, 0, -0.265825, 0, 0.964021, -698.051, -0.683263, -32.6047 )
+shape = SubResource( 15 )
+
+[node name="CollisionShape8" type="CollisionShape" parent="road/StaticBody" index="7"]
+transform = Transform( 0.987666, -0.0901705, 0.128004, 0.0919788, 0.995727, -0.00827485, -0.12671, 0.0199464, 0.991739, -723.604, -2.30032, -28.4112 )
+shape = SubResource( 16 )
+
+[node name="StaticBody" type="StaticBody" parent="ground_dirty" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2729, -3.98261, 3.66197 )
+collision_layer = 32
+
+[node name="CollisionShape" type="CollisionShape" parent="ground_dirty/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.72339, 0 )
+shape = SubResource( 17 )
+
+[node name="StaticBody" type="StaticBody" parent="ground_concrete_stopBus" index="0"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="ground_concrete_stopBus/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250307, -0.0866089, -23.7318 )
+shape = SubResource( 27 )
