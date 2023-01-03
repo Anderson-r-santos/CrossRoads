@@ -10,8 +10,12 @@ public class Enemy : Spatial
     private PathFollow pathPatrol;
     private Path path;
     private RayCast ray;
-    private Area enemyArea;
+    private Area enemyPatrolArea;
     private MeshInstance meshEnemy;
+    private AnimationPlayer enemyAnimPlayer;
+    private Particles damageParticles;
+    private int lifeEnemy = 3;
+    private float defautPathOffset;
     
 
     private Vector3 closePoint;
@@ -36,25 +40,31 @@ public class Enemy : Spatial
         path = GetParent().GetParent().GetNode<Path>(".");
         currentState = EnemyState.PATROL;
         ray = GetNode<RayCast>("mesh/RayCast");
-        enemyArea = GetNode<Area>("../../../Area");
-        enemyArea.Connect("body_entered",this,"playerEnteredArea");
-        enemyArea.Connect("body_exited",this,"playerExitedArea");
+        enemyPatrolArea = GetNode<Area>("../../../Area");
+        enemyPatrolArea.Connect("body_entered",this,"playerEnteredArea");
+        enemyPatrolArea.Connect("body_exited",this,"playerExitedArea");
         meshEnemy = GetNode<MeshInstance>("mesh");
+
+        enemyAnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        damageParticles = GetNode<Particles>("mesh/ParticlesDamage");
+        defautPathOffset = pathPatrol.Offset;
     }
 
 
-    private void enemyStateHasChanged(EnemyState newState)
-    {
 
-    }
-
-
-    public void enemyInsideBodyPlayer()
-    {
-
-    }
     public void takeDamage()
     {
+        LookAt(scPlayer.Transform.origin,Vector3.Up);
+        GD.Print("inimigo acertado");
+        if(lifeEnemy > 0)
+        {
+            enemyAnimPlayer.Play("blink",-1,3f);
+            damageParticles.Emitting = true;
+            lifeEnemy--;
+        }else{
+            QueueFree();
+        }
+      
 
     }
   
@@ -91,6 +101,7 @@ public class Enemy : Spatial
             }
   
         }else{
+            //pathPatrol.Offset = defautPathOffset;
              currentState = EnemyState.PATROL;
         }
     }
@@ -102,15 +113,9 @@ public class Enemy : Spatial
             currentState = EnemyState.FOLLOWPLAYER;
             
         }
-        if(pathPatrol.UnitOffset < 1){
-            pathPatrol.Offset +=  moveSpeed * delta;
-        }else{
-            pathPatrol.UnitOffset = 0;
-            pathPatrol.Offset = 0;
-            pathPatrol.HOffset = 0;
-            pathPatrol.VOffset = 0;
-        }
- 
+
+            pathPatrol.Offset += delta * moveSpeed;
+        
 
 
     }

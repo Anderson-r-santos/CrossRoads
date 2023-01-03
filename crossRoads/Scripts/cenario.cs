@@ -38,13 +38,13 @@ public class cenario : Spatial
     public void instanceHand()
     {
       GD.Print("INSTANCIANDO UMA MAO");
-      RigidBody node = (RigidBody)hand.Instance();
+      Spatial node = (Spatial)hand.Instance();
       GetTree().Root.AddChild(node);
       AnimationPlayer animPlayer = node.GetNode<AnimationPlayer>("AnimationPlayer");
       node.Translate(initPos);
       node.RotateY(rotation);
       rotation+=10;
-      ray = node.GetNode<RayCast>("RayCast");
+      ray = node.GetNode<RayCast>("Armature/Skeleton/BoneAttachment/KinematicBody/RayCast");
       animPlayer.Play("agarrar");
       
     }
@@ -53,23 +53,27 @@ public class cenario : Spatial
         hand.QueueFree();
         ray = null;
     }
+
+    private async void attackPlayer(Player scPlayer)
+    {
+        await ToSignal(GetTree().CreateTimer(2f),"timeout");
+        
+        
+    }
  // Called every frame. 'delta' is the elapsed time since the previous frame.
  public override void _Process(float delta)
  {
 
     if(ray != null)
     {
- 
-        
-        //player = ray.IsColliding() ? (KinematicBody) : null;
-        
-        if(ray.IsColliding() && ray.GetCollider()!= null)
+        if(ray.IsColliding())
         
         {
             KinematicBody player = (KinematicBody)ray.GetCollider();
             if(player.Name == "Player"){
                 Player scPlayer = GetTree().Root.GetNode<Player>("rootTree/Player");
-                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY;
+                scPlayer.damageReceived("damageEnemyGround", 2);
+                // playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY;
             }
         }
     }

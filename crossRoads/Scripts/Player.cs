@@ -192,31 +192,25 @@ public class Player : KinematicBody
         }
 
     }
-    private void endTimerRayUmbrellaEnable()
+    public void verifyRayUmbrella()
     {
-        rayUmbrella.Enabled = false;
-    }
-    // void verifyRayUmbrella()
-    // {
-    //     Node node = (Node)rayUmbrella.GetCollider();
-    //     if (node != null && node.Name == "enemyCollisor")
-    //     {
-    //         Enemy scEnemy = node.FindParent("Enemy").GetNode<Enemy>(".");
-
-    //         scEnemy.takeDamage();
-
-
-    //     }
-
-    // }
-    private void enemyEnteredAttackArea(Area area)
-    {
-        if (area.Name == "enemyCollisor")
+        
+        if (rayUmbrella.IsColliding())
         {
-            Enemy scEnemy = area.FindParent("Enemy").GetNode<Enemy>(".");
-            scEnemy.enemyInsideBodyPlayer();
+            Node node = (Node)rayUmbrella.GetCollider();
+            if(node.Name == "enemyCollisor")
+            {
+
+            Enemy scEnemy = node.GetParent().GetNode<Enemy>("../.");
+
+            scEnemy.takeDamage();
+            }
+
+
         }
+
     }
+
 
     public void enemyClose()
     {
@@ -290,9 +284,10 @@ public class Player : KinematicBody
             await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
 
 
-            animTentacles[i].Play("fadeOutSwing", -1, 8f);
+            animTentacles[i].Play("fadeOutSwing", -1, 15f);
             //animTentacles[i].GetAnimation("fadeOutSwing").Loop = true;
         }
+        
     }
 
     private void restartScene()
@@ -340,7 +335,7 @@ public class Player : KinematicBody
 
     public override void _Process(float delta)
     {
-
+  
 
         Node nodeGround = (Node)rayToGround.GetCollider();
 

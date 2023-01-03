@@ -131,12 +131,13 @@ public class playerState : Node
 
                     scPlayer.damageReceived("tentacleInsideDamage");
                     currentStatePlayer = STATE_PLAYER.NONE;
+                    scActions.changeToStoppedPlayer();
 
                 }
                 else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY)
                 {
 
-                    scPlayer.damageReceived("damageEnemyGround", 2);
+                    
 
                 }
                 else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_TENTACLE_GROUND)

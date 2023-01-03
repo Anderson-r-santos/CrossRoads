@@ -85,6 +85,12 @@ bind/20/name = "Bone.012"
 bind/20/bone = -1
 bind/20/pose = Transform( 3.81134, -1.22078, 0.0385432, 1.22063, 3.80262, -0.2613, 0.0430819, 0.260591, 3.99354, 10.657, -42.3059, -4.50231 )
 
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.5, 0.189438, 0.849176 )
+
+[sub_resource type="CapsuleShape" id=4]
+radius = 0.5
+
 [sub_resource type="Animation" id=3]
 resource_name = "agarrar"
 length = 2.70833
@@ -236,21 +242,8 @@ tracks/20/imported = false
 tracks/20/enabled = true
 tracks/20/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, -9.09495e-13, 1, 1, 1, 1, 0.0666667, 1, -2.01166e-06, 0.0176163, -0.000718236, 0, 0, -9.09495e-13, 1, 1, 1, 1, 0.133333, 1, -1.62572e-05, 0.142786, -0.00582153, -1.86265e-09, 2.91038e-11, 1.81899e-12, 1, 1, 1, 1, 0.2, 1, -4.5985e-05, 0.403818, -0.0164641, 0, 0, -9.09495e-13, 1, 1, 1, 1, 0.266667, 1, -8.9407e-05, 0.785078, -0.0320082, -1.86265e-09, 2.91038e-11, 1.81899e-12, 1, 1, 1, 1, 0.4, 1, -0.000209793, 1.84227, -0.0751109, 0, 0, -9.09495e-13, 1, 1, 1, 1, 1, 1, -0.000983849, 8.63932, -0.352232, 0, 0, -9.09495e-13, 1, 1, 1, 1, 1.06667, 1, -0.00106019, 9.30966, -0.379562, 0.00506237, 3.38828e-07, -1.90394e-07, 0.999987, 1, 1, 1, 1.13333, 1, -0.0011307, 9.92879, -0.404804, 0.0169442, 1.15986e-06, -1.25971e-06, 0.999857, 1, 1, 1, 1.4, 1, -0.00135279, 11.8789, -0.484314, 0.0781362, 6.44764e-06, -3.26329e-05, 0.996943, 1, 1, 1, 1.46667, 1, -0.00139424, 12.243, -0.499157, 0.0815331, 1.07535e-05, -0.000811374, 0.99667, 1, 1, 1, 1.53333, 1, -0.00143023, 12.559, -0.51204, 0.0719209, 0.000116771, -0.0123451, 0.997334, 1, 1, 1, 1.6, 1, -0.00146089, 12.8282, -0.523015, 0.0488758, 0.000697745, -0.0388605, 0.998048, 1, 1, 1, 1.66667, 1, -0.00148675, 13.0553, -0.532273, 0.0160626, 0.00207089, -0.0747851, 0.997068, 1, 1, 1, 1.73333, 1, -0.00150716, 13.2346, -0.539585, -0.0244766, 0.00482429, -0.11576, 0.992964, 1, 1, 1, 1.8, 1, -0.00152306, 13.3742, -0.545277, -0.0683781, 0.00913781, -0.155902, 0.985361, 1, 1, 1, 1.86667, 1, -0.00153419, 13.4719, -0.549261, -0.112899, 0.0155094, -0.190486, 0.975053, 1, 1, 1, 1.93333, 1, -0.00154071, 13.5291, -0.551592, -0.155065, 0.0244113, -0.214699, 0.963983, 1, 1, 1, 2, 1, -0.00154307, 13.5499, -0.552439, -0.193073, 0.0361359, -0.225691, 0.954191, 1, 1, 1, 2.06667, 1, -0.00154307, 13.5499, -0.552439, -0.230599, 0.0954087, -0.218648, 0.943353, 1, 1, 1, 2.13333, 1, -0.00154307, 13.5499, -0.552439, -0.271249, 0.228055, -0.194409, 0.914669, 1, 1, 1, 2.2, 1, -0.00154307, 13.5499, -0.552439, -0.306939, 0.424058, -0.147442, 0.839181, 1, 1, 1, 2.26667, 1, -0.00154307, 13.5499, -0.552439, -0.322603, 0.630083, -0.0821147, 0.701555, 1, 1, 1, 2.33333, 1, -0.00154307, 13.5499, -0.552439, -0.314254, 0.785793, -0.0156569, 0.532475, 1, 1, 1, 2.4, 1, -0.00154307, 13.5499, -0.552439, -0.29578, 0.868134, 0.031473, 0.397325, 1, 1, 1, 2.46667, 1, -0.00154307, 13.5499, -0.552439, -0.281881, 0.902539, 0.0564679, 0.320589, 1, 1, 1, 2.53333, 1, -0.00154307, 13.5499, -0.552439, -0.279358, 0.907426, 0.0604602, 0.308029, 1, 1, 1, 2.70833, 1, -0.00154307, 13.5499, -0.552439, -0.279358, 0.907426, 0.0604602, 0.308029, 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.5, 0.189438, 0.849176 )
-
-[sub_resource type="CapsuleShape" id=4]
-radius = 0.5
-
-[node name="mao" type="RigidBody"]
+[node name="mao" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.37415, 0 )
-collision_layer = 4
-mode = 3
-can_sleep = false
-axis_lock_linear_y = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 script = ExtResource( 2 )
 
 [node name="Cube002_Cube001" type="Spatial" parent="."]
@@ -372,24 +365,29 @@ bones/20/bound_children = [  ]
 [node name="mao direita001" type="MeshInstance" parent="Armature/Skeleton"]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
-material/0 = null
+
+[node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton"]
+transform = Transform( 1, 8.97032e-05, -0.000593019, -0.000113787, 0.99917, -0.0407369, 0.000588873, 0.040737, 0.99917, 0.185714, -25.1042, -0.133246 )
+bone_name = "Bone"
+
+[node name="KinematicBody" type="KinematicBody" parent="Armature/Skeleton/BoneAttachment"]
+
+[node name="CollisionShape2" type="CollisionShape" parent="Armature/Skeleton/BoneAttachment/KinematicBody"]
+transform = Transform( 4.00225, -1.62981e-09, -1.96451e-10, 1.16415e-10, -1.78814e-07, 4.00226, -6.98492e-10, -4.00226, -1.78814e-07, 0.0677308, 9.29064, -0.0752616 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Armature/Skeleton/BoneAttachment/KinematicBody"]
+transform = Transform( 4.00226, -4.65661e-10, -5.09317e-11, 2.91038e-11, -1.78814e-07, 4.00226, 0, -4.00226, -1.78814e-07, -0.000379205, 3.32961, -0.135751 )
+shape = SubResource( 4 )
+
+[node name="RayCast" type="RayCast" parent="Armature/Skeleton/BoneAttachment/KinematicBody"]
+transform = Transform( 4.00225, -2.91038e-10, 2.32831e-09, 1.74623e-10, 4.00226, 1.49012e-07, -1.16415e-09, 0, 4.00226, -0.0890437, 11.587, -0.0658617 )
+enabled = true
+cast_to = Vector3( 0, 2, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 3.0
 anims/agarrar = SubResource( 3 )
-
-[node name="CollisionShape2" type="CollisionShape" parent="."]
-transform = Transform( 1, -2.84194e-15, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.254329, 7.01385, 0.509891 )
-shape = SubResource( 5 )
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, -2.84194e-15, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.322768, 5.27081, 0.653201 )
-shape = SubResource( 4 )
-
-[node name="RayCast" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.192046, 6.4061, 0.497418 )
-enabled = true
-cast_to = Vector3( 0, 2, 0 )
 
 [node name="TimerDelete" type="Timer" parent="."]
 wait_time = 3.0

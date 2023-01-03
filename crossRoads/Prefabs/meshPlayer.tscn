@@ -1456,7 +1456,7 @@ tracks/5/keys = {
 [node name="player" instance=ExtResource( 1 )]
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="6"]
-transform = Transform( 1, 5.68434e-14, -1.11945e-06, -5.3195e-07, 0.879884, -0.475189, 9.84985e-07, 0.475189, 0.879884, -1.26688, 1.42672, 5.0802 )
+transform = Transform( 0.910864, 0.38741, -0.142269, 0.384127, -0.921871, -0.0509906, -0.150908, -0.0082039, -0.988514, -1.78271, 0.334421, 3.9204 )
 bone_name = "umbrella_pole"
 
 [node name="Position3D" type="Position3D" parent="Armature/Skeleton/BoneAttachment" index="0"]
@@ -1484,7 +1484,7 @@ process_material = SubResource( 15 )
 draw_pass_1 = SubResource( 36 )
 
 [node name="BoneAttachBriefCase" type="BoneAttachment" parent="Armature/Skeleton" index="7"]
-transform = Transform( 0.618585, 5.55822e-09, -0.785718, -0.280237, -0.934233, -0.220627, -0.734044, 0.356664, -0.577902, -4.75392, 1.23352, 5.38385 )
+transform = Transform( 1, 0, -2.38419e-07, 0, -1, 0, -2.38419e-07, 0, -1, -4.27169, -0.342401, 4.04787 )
 bone_name = "briefCase"
 
 [node name="barTemperatureIndicator" type="MeshInstance" parent="Armature/Skeleton/BoneAttachBriefCase" index="0"]

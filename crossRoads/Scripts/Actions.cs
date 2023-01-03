@@ -53,8 +53,6 @@ public class Actions : Node
         scPlayerState = GetParent().GetNode<playerState>("playerState");
         scPlayer = GetParent().GetNode<Player>(".");
         currentMoveSpeed = moveSpeed;
-        timerAttackON = GetParent().GetNode<Timer>("TimerAttackON"); 
-        timerAttackON.Connect("timeout",this,"setCanAttack");
         timerReloadScene = GetParent().GetNode<Timer>("TimerRestartScene");
 
         audioPlayer = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/stepSound");
@@ -72,27 +70,20 @@ public class Actions : Node
 
     }
     
-    private void setCanAttack()
-    {
-        canAttack = true;
 
-    }
-
-    public void attack1()
+    public async void attack1()
     {
         if(canAttack)
         {
             animPlayer.Play("attack2",-1,-4,true);
             canAttack = false;
-            timerAttackON.Start();
 
-            //Vector3 from = playerCamera.ProjectRayOrigin(mousePosition);
-            //Vector3 to = from + playerCamera.ProjectRayNormal(mousePosition) * sizeRay;
-            scPlayer.rayUmbrella.Enabled = true;
-            scPlayer.timerUmbrellaRay.Start();
+            scPlayer.verifyRayUmbrella();
             audioAttack.Play();
             attackParticles.Emitting = true;
             attackParticles2.Emitting = true;
+            await ToSignal(GetTree().CreateTimer(1f),"timeout");
+            canAttack = true;
         }
 
     }
@@ -115,7 +106,12 @@ public class Actions : Node
     public void stop()
     {
         audioPlayer.Stop();
-        animPlayer.Play("stop");
+
+        if(playerState.currentStateUmbrella == playerState.STATE_UMBRELLA.DOWN_UMBRELLA){
+            animPlayer.Play("stop_CloseUmbrella");
+        }else{
+             animPlayer.Play("stop");
+        }
         
     }
     public void die(bool dieByTentacle = false)

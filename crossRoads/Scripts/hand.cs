@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class hand : RigidBody
+public class hand : Spatial
 {
 
     public override void _Ready()
