@@ -92,13 +92,12 @@ public class Enemy : Spatial
             {
                KinematicBody player = (KinematicBody) ray.GetCollider();
                Player scPlayer =  player.GetNode<Player>(".");
-              // scPlayer.damageReceived("tentacleInsideDamage");
+               scPlayer.damageReceived("tentacleInsideDamage");
+               
                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY;
                scPlayer.ariseTentaclesInsideBody();
                QueueFree();
-               
-
-            }
+           }
   
         }else{
             //pathPatrol.Offset = defautPathOffset;
@@ -134,6 +133,12 @@ public class Enemy : Spatial
         }
 
     }
+
+    private void deleteEnemy()
+    {
+        QueueFree();
+    }
+
     public override void _Process(float delta)
     {
 

@@ -6,13 +6,23 @@ public class Player : KinematicBody
     public Actions scActions;
     private bool isRunning = false;
 
-
     private Timer timerIncreaseTemperature;  // tempo que a temperatuda corporal decai
     private Timer timerDecreaseTemperature;
     public Timer timerUmbrellaRay; //tempo em que fica ativo o ray que detecta o inmigo
     private int amountDamageLeft = 4;
     private int lifeTotal;
 
+    //movimentacao
+    public float currentGravity;
+    public float currentMoveSpeed;
+    public  float moveSpeed = 50f;
+    public  float runSpeed = 60f;
+    public float fallGravity;
+    public float flyGravity;
+    public float gravity = 9.8f;
+    public float defaultGravity = 9.8f;
+    public bool playerHasFloor = true;
+    private Vector3 direction;
 
     private OmniLight lightUmbrella;
 
@@ -32,7 +42,7 @@ public class Player : KinematicBody
 
     public playerState scPlayerState;
 
-
+    //briefCase
     private Label countDegrees;
     private MeshInstance verticalBarTemperature;
     private float sizeBarChunks;
@@ -45,8 +55,14 @@ public class Player : KinematicBody
 
     public override void _Ready()
     {
+        currentMoveSpeed = moveSpeed;
+        currentGravity = defaultGravity * 5;
+        fallGravity = defaultGravity * 40;
+        flyGravity = -(defaultGravity * 50);
+
+
         lifeTotal = amountDamageLeft;
-        Input.MouseMode = Input.MouseModeEnum.Captured;
+
         scActions = GetNode<Actions>("Actions");
 
 
@@ -245,30 +261,30 @@ public class Player : KinematicBody
 
     public void damageReceived(string animation, int damage = 1, float animSpeed = 1)
     {
-        if (animation != "temperature")
-        {
-
-            animationPlayer.Play(animation, -1, animSpeed);
-
-        }
-
-        if (amountDamageLeft > 0)
-        {
-            amountDamageLeft -= damage;
-            animationPlayerUI.Play("damageReceiver");
-
-        }
-        else
-        {
-            if (animation == "dieInTentacles")
+        if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.DIE){
+            if (animation != "temperature")
             {
-                scActions.die(true);
+
+                animationPlayer.Play(animation, -1, animSpeed);
+
             }
-            else
+
+            if (amountDamageLeft > 0)
             {
+                amountDamageLeft -= damage;
+                animationPlayerUI.Play("damageReceiver");
 
-                scActions.die();
+            }else
+            {
+            
+                if (animation == "dieInTentacles")
+                {
+                    scActions.die(true);
+                }else{
 
+                        scActions.die();
+
+                    }
             }
         }
 
@@ -295,34 +311,40 @@ public class Player : KinematicBody
         GetTree().ReloadCurrentScene();
     }
 
-    private bool verifyInputs()
+    private bool verifyInputs(ref bool isRunning)
     {
         bool isInputMovimentPressed = false;
 
-
         if (Input.IsActionPressed("moveFront"))
         {
-            scActions.direction += Transform.basis.z;
+            direction += Transform.basis.z;
             isInputMovimentPressed = true;
 
         }
         else if (Input.IsActionPressed("moveBack"))
         {
-            scActions.direction -= Transform.basis.z;
+            direction -= Transform.basis.z;
             isInputMovimentPressed = true;
         }
 
         if (Input.IsActionPressed("moveLeft"))
         {
-            scActions.direction += Transform.basis.x;
+            direction += Transform.basis.x;
             isInputMovimentPressed = true;
 
         }
         else if (Input.IsActionPressed("moveRight"))
         {
-            scActions.direction -= Transform.basis.x;
+            direction -= Transform.basis.x;
             isInputMovimentPressed = true;
 
+        }else if(Input.IsActionPressed("run"))
+        {
+            isRunning = true;
+            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RUN;
+        }else if(Input.IsKeyPressed((int)KeyList.Escape)){
+           
+            GetNode<PauseGame>("pauseGame").setPauseGame();
         }
         if (Input.IsActionJustReleased("moveFront") || Input.IsActionJustReleased("moveBack") || Input.IsActionJustReleased("moveLeft") || Input.IsActionJustReleased("moveRight"))
         {
@@ -342,8 +364,7 @@ public class Player : KinematicBody
         if (nodeGround != null)
 
         {
-            playerState.playerHasFloor = true;
-           
+            playerHasFloor = true;
             Vector3 hitPoint = rayToGround.GetCollisionPoint();
 
              if (((StaticBody)nodeGround).CollisionLayer == 32)
@@ -360,16 +381,41 @@ public class Player : KinematicBody
         }
         else
         {
-            playerState.playerHasFloor = false;
+            playerHasFloor = false;
         }
-
-        if (verifyInputs() && playerState.playerHasFloor == true)
-        {
-            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
-        }
+    
 
     }
 
+
+    public override void _PhysicsProcess(float delta)
+    {
+
+        if(!scActions.playerDie && !scActions.isWaitTime)
+        {
+            bool  isRunning = false;
+          
+            
+            if (verifyInputs(ref isRunning))
+            {
+                if(!isRunning && playerHasFloor == true){
+                    // if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.FLY)
+                    // {
+                        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+                    // }
+                }
+               
+            }
+             direction.y = 0;
+            direction.z *= currentMoveSpeed * delta;
+            direction.x *= currentMoveSpeed * delta;
+
+            direction.y -= currentGravity * delta;
+            MoveAndSlide(direction,Vector3.Up);
+            
+        }
+
+   }
 }
 
 

@@ -24,12 +24,12 @@ public class TipsVideo : Area
         scMainScene.pauseGame();
         uiTipsVideo.Visible = true;
         videoTips.Play();
-        Input.MouseMode = Input.MouseModeEnum.Visible;
+
     }
     private void deleteTipsVideo()
     {
-        scMainScene.pauseGameEnd();
+        scMainScene.resumeGame();
         QueueFree();
-        Input.MouseMode = Input.MouseModeEnum.Captured;
+
     }
 }

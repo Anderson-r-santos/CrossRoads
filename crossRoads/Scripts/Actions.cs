@@ -7,22 +7,12 @@ public class Actions : Node
     // private string b = "text";
     float rotationVelocity = 0.01f;
 
-    private float currentGravity;
-    private float fallGravity;
-    private float flyGravity;
-    private const float moveSpeed = 50f;
-    private const float runSpeed = 60f;
-    private float currentMoveSpeed;
-
     private bool isRunning = false;
-    public float gravity = 9.8f;
-    public float defaultGravity = 9.8f;
     public bool attackMode = false;
     public bool canAttack = true;
-    private bool playerDie = false;
+    public bool playerDie = false;
+    public bool isWaitTime = false;
 
-
-    public Vector3 direction;
     private AnimationPlayer animPlayer;
 
     private KinematicBody player;
@@ -35,8 +25,9 @@ public class Actions : Node
     public AudioStreamPlayer2D audioPlayer;
     private AudioStreamPlayer2D audioAttack;
 
+    private PackedScene attackEffect = GD.Load<PackedScene>("res://Prefabs/attackEffect.tscn");
+
     private Particles attackParticles;
-    private Particles attackParticles2;
     private Particles splashRainParticles;
 
     private Camera playerCamera;
@@ -52,21 +43,19 @@ public class Actions : Node
         //Node nodePlayerState = player.GetNode<playerState>(".");
         scPlayerState = GetParent().GetNode<playerState>("playerState");
         scPlayer = GetParent().GetNode<Player>(".");
-        currentMoveSpeed = moveSpeed;
+
         timerReloadScene = GetParent().GetNode<Timer>("TimerRestartScene");
 
         audioPlayer = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/stepSound");
         audioAttack = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/attack");
 
         attackParticles = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles");
-        attackParticles2 = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles2");
         splashRainParticles = GetNode<Particles>("../splash");
 
 
         playerCamera = GetParent().GetNode<Camera>("Camera");
-        fallGravity = defaultGravity * 40;
-        flyGravity = -(defaultGravity * 50);
-        currentGravity = defaultGravity * 20;
+
+
 
     }
     
@@ -81,24 +70,33 @@ public class Actions : Node
             scPlayer.verifyRayUmbrella();
             audioAttack.Play();
             attackParticles.Emitting = true;
-            attackParticles2.Emitting = true;
+            Spatial attackEffectNode = (Spatial)attackEffect.Instance();
+            GetTree().Root.GetNode<Spatial>("rootTree").AddChild(attackEffectNode);
+    
+            Vector3 playerPos = scPlayer.GetNode<Position3D>("meshPlayer/attackPos").GlobalTransform.origin;
+             attackEffectNode.Translate(playerPos);
+            attackEffectNode.Rotation = scPlayer.Rotation;
+            AnimationPlayer actionAnimPlayer = attackEffectNode.GetNode<AnimationPlayer>("AnimationPlayer");
+            actionAnimPlayer.Play("attackEffect");
             await ToSignal(GetTree().CreateTimer(1f),"timeout");
             canAttack = true;
+            attackEffectNode.QueueFree();
         }
 
     }
 
-    public void walk()
+    public void walk(float moveSpeed,float animSpeed = 1)
     {
+        if (scPlayer.playerHasFloor)
+        {
+            animPlayer.Play("walk",-1,animSpeed);
+            scPlayer.currentMoveSpeed = moveSpeed;
+            splashRainParticles.Visible = true;
 
-        if(isRunning)
-        {
-            animPlayer.PlaybackSpeed = 1.5f;
-            currentMoveSpeed = runSpeed;
-        }else
-        {
-            animPlayer.PlaybackSpeed = 1;
-            currentMoveSpeed = moveSpeed;
+            if(!audioPlayer.Playing)
+            {
+                audioPlayer.Play();
+            }
         }
          
     }
@@ -133,27 +131,14 @@ public class Actions : Node
     }
     public void moviment()
     {
-        splashRainParticles.Visible = true;
-        if(!audioPlayer.Playing)
-        {
-            audioPlayer.Play();
-        }
 
-
-        if(Input.IsActionPressed("run"))
-        {
-            isRunning = true;
-        }else
-        {
-            isRunning = false;
-        }
 
 
     }
        public void pushOutPlayer(float delta)
     {
         GD.Print("empurrando");
-       direction += scPlayer.Transform.basis.z*5;
+      // direction += scPlayer.Transform.basis.z*5;
 
        
     }
@@ -163,10 +148,10 @@ public class Actions : Node
     }
     public async void fly()
     {
-        currentGravity = flyGravity;
+        scPlayer.currentGravity = scPlayer.flyGravity;
         splashRainParticles.Visible = false;
         await ToSignal(GetTree().CreateTimer(5f),"timeout");
-        if(!playerState.playerHasFloor)
+        if(!scPlayer.playerHasFloor)
         {
             playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
 
@@ -174,14 +159,17 @@ public class Actions : Node
     }
     public void fall()
     {
-        currentGravity = fallGravity;
+        scPlayer.currentGravity = scPlayer.fallGravity;
         animPlayer.Play("falling");
         GD.Print("caindo........");
     }
-    public async void changeToStoppedPlayer()
+    
+    public async void waitTime(float time)
     {
-        float timeAnim = animPlayer.GetAnimation("tentacleInsideDamage").Length;
-        await ToSignal(GetTree().CreateTimer(timeAnim),"timeout");
+        isWaitTime = true;
+        await ToSignal(GetTree().CreateTimer(time),"timeout");
+        GD.Print("waittime :" + isWaitTime);
+        isWaitTime = false;
         playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
     }
 
@@ -190,6 +178,7 @@ public class Actions : Node
         //Vector3 playerRotation = new Vector3(0,mousePosition.x,0);
         player.RotateObjectLocal(Vector3.Up,-(mousePosition.x * rotationVelocity));
     }
+    
     private void rotateCamera(Vector2 mousePosition)
     {
 
@@ -201,19 +190,9 @@ public class Actions : Node
             playerCamera.RotateObjectLocal(Vector3.Right,-(mousePosition.y* rotationVelocity));
        }
     }
-    public override void _PhysicsProcess(float delta)
-    {
-        if(!playerDie)
-        {
-            direction.y = 0;
-            direction.z *= currentMoveSpeed * delta;
-            direction.x *= currentMoveSpeed * delta;
+    
 
-            direction.y -= currentGravity * delta;
-            player.MoveAndSlide(direction,Vector3.Up);
-        }
-
-    }
+    
     public override void _Input(InputEvent inputEvent)
     {
         if(inputEvent is InputEventMouseButton mouseEvent  && mouseEvent.Pressed)

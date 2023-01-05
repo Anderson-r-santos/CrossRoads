@@ -4,7 +4,7 @@ using System;
 public class playerState : Node
 {
 
-    public static bool playerHasFloor = true;
+  
     private bool umbrellaIsUp = true;
 
 
@@ -15,7 +15,7 @@ public class playerState : Node
     }
     public enum STATE_PLAYER
     {
-       NONE,WALK, STOP, ATTACK, DIE, RECEIVE_DAMAGE_BASIC_ENEMY, RECEIVE_DAMAGE_GROUND_ENEMY, RECEIVE_DAMAGE_TENTACLE_GROUND, FLY, FALL, PUSHED_OUT
+       WALK, STOP, RUN, ATTACK, DIE, RECEIVE_DAMAGE_BASIC_ENEMY, RECEIVE_DAMAGE_HAND_GROUND, RECEIVE_DAMAGE_TENTACLE_GROUND, FLY, FALL,WAIT_TIME
     }
 
     private Particles umbrellaParticles;
@@ -34,15 +34,11 @@ public class playerState : Node
         get { return currentStatePlayer; }
         set
         {
-            if (currentStatePlayer != value && currentStatePlayer != STATE_PLAYER.DIE)
-            {
-
-                currentStatePlayer = value;
-
-                if (currentStatePlayer != STATE_PLAYER.ATTACK && value == STATE_PLAYER.ATTACK)
+            if(currentStatePlayer != STATE_PLAYER.DIE && currentStatePlayer != STATE_PLAYER.WAIT_TIME){
+            
+                if (currentStatePlayer != value)
                 {
                     currentStatePlayer = value;
-
                 }
             }
         }
@@ -104,21 +100,16 @@ public class playerState : Node
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        GD.Print("current state : " + currentStatePlayer);
+      //  GD.Print("current state : " + currentStatePlayer);
         if (currentStatePlayer != STATE_PLAYER.DIE)
         {
             if (currentStateUmbrella == STATE_UMBRELLA.UP_UMBRELLA)
             {
-                // animPlayer.PlaybackSpeed = 1;
                 umbrellaUp();
-                if (currentStatePlayer == STATE_PLAYER.WALK)
+               if (currentStatePlayer == STATE_PLAYER.WALK)
                 {
-                    if (playerHasFloor)
-                    {
-                        scActions.walk();
-                        scActions.moviment();
-                    }
-                    animPlayer.Play("walk");
+     
+                    scActions.walk(scPlayer.moveSpeed);
 
                 }
                 else if (currentStatePlayer == STATE_PLAYER.STOP)
@@ -126,19 +117,23 @@ public class playerState : Node
                     scActions.stop();
 
                 }
-                else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY)
+                else if (currentStatePlayer == STATE_PLAYER.RUN)
                 {
-
-                    scPlayer.damageReceived("tentacleInsideDamage");
-                    currentStatePlayer = STATE_PLAYER.NONE;
-                    scActions.changeToStoppedPlayer();
+                    scActions.walk(scPlayer.runSpeed,1.5f);
 
                 }
-                else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY)
+                else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY)
                 {
+                    GD.Print("nao ta printando");
+                    scPlayer.damageReceived("tentacleInsideDamage");
+                    currentStatePlayer = STATE_PLAYER.WAIT_TIME;
+                    float timeAnim = animPlayer.GetAnimation("tentacleInsideDamage").Length;
+                    scActions.waitTime(5);
 
-                    
-
+                }
+                else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_HAND_GROUND)
+                {
+                    scPlayer.damageReceived("damageEnemyGround", 2);
                 }
                 else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_TENTACLE_GROUND)
                 {
@@ -147,14 +142,7 @@ public class playerState : Node
                 else if (currentStatePlayer == STATE_PLAYER.FLY)
                 {
                     scActions.fly();
-
-
-                }
-                else if (currentStatePlayer == STATE_PLAYER.PUSHED_OUT)
-                {
-                    scActions.pushOutPlayer(delta);
-
-                }
+                }                
                 else if (currentStatePlayer == STATE_PLAYER.FALL)
                 {
                     scActions.fall();

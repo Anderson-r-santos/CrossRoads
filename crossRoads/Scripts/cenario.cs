@@ -71,9 +71,8 @@ public class cenario : Spatial
         {
             KinematicBody player = (KinematicBody)ray.GetCollider();
             if(player.Name == "Player"){
-                Player scPlayer = GetTree().Root.GetNode<Player>("rootTree/Player");
-                scPlayer.damageReceived("damageEnemyGround", 2);
-                // playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_GROUND_ENEMY;
+                ray = null;
+                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_HAND_GROUND;
             }
         }
     }
