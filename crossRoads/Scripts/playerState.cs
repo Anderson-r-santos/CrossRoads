@@ -15,7 +15,7 @@ public class playerState : Node
     }
     public enum STATE_PLAYER
     {
-       WALK, STOP, RUN, ATTACK, DIE, RECEIVE_DAMAGE_BASIC_ENEMY, RECEIVE_DAMAGE_HAND_GROUND, RECEIVE_DAMAGE_TENTACLE_GROUND, FLY, FALL,WAIT_TIME
+       NONE,WALK, STOP, RUN, ATTACK, DIE, RECEIVE_DAMAGE_BASIC_ENEMY, RECEIVE_DAMAGE_HAND_GROUND, RECEIVE_DAMAGE_TENTACLE_GROUND, FLY, FALL,WAIT_TIME
     }
 
     private Particles umbrellaParticles;
@@ -34,7 +34,7 @@ public class playerState : Node
         get { return currentStatePlayer; }
         set
         {
-            if(currentStatePlayer != STATE_PLAYER.DIE && currentStatePlayer != STATE_PLAYER.WAIT_TIME){
+            if(currentStatePlayer != STATE_PLAYER.DIE && currentStatePlayer != STATE_PLAYER.WAIT_TIME || value == STATE_PLAYER.NONE){
             
                 if (currentStatePlayer != value)
                 {
@@ -119,16 +119,20 @@ public class playerState : Node
                 }
                 else if (currentStatePlayer == STATE_PLAYER.RUN)
                 {
-                    scActions.walk(scPlayer.runSpeed,1.5f);
+                    if(scPlayer.stamina > 0){
+                        scActions.walk(scPlayer.runSpeed,1.5f);
+                        scActions.loseStamina();
+                    }else{
+                        scActions.walk(scPlayer.moveSpeed);
+                    }
+
 
                 }
                 else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY)
                 {
                     GD.Print("nao ta printando");
                     scPlayer.damageReceived("tentacleInsideDamage");
-                    currentStatePlayer = STATE_PLAYER.WAIT_TIME;
-                    float timeAnim = animPlayer.GetAnimation("tentacleInsideDamage").Length;
-                    scActions.waitTime(5);
+    
 
                 }
                 else if (currentStatePlayer == STATE_PLAYER.RECEIVE_DAMAGE_HAND_GROUND)
@@ -146,6 +150,10 @@ public class playerState : Node
                 else if (currentStatePlayer == STATE_PLAYER.FALL)
                 {
                     scActions.fall();
+                }else if(currentStatePlayer == STATE_PLAYER.WAIT_TIME)
+                {
+                    float timeAnim = animPlayer.GetAnimation("tentacleInsideDamage").Length;
+                    scActions.waitTime(timeAnim);
                 }
 
             }

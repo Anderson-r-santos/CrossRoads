@@ -11,13 +11,14 @@ config_version=4
 [application]
 
 config/name="Cross Roads"
-run/main_scene="res://Scenes/mainMenu.tscn"
+run/main_scene="res://Scenes/mainScene.scn"
 config/icon="res://icon.png"
 
 [display]
 
 window/size/width=1920
 window/size/height=1080
+window/size/fullscreen=true
 window/vsync/use_vsync=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
@@ -62,6 +63,11 @@ run={
 3d_physics/layer_8="interativeArea"
 3d_physics/layer_9="Road"
 3d_physics/layer_10="groundNeutro"
+
+[locale]
+
+translations=PoolStringArray( "res://translation/language_game.csv", "res://translation/language_game.en_US.translation", "res://translation/language_game.pt_BR.translation" )
+locale_filter=[ 0, [ "en_US", "pt_BR" ] ]
 
 [mono]
 

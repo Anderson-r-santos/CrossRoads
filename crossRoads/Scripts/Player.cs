@@ -16,11 +16,12 @@ public class Player : KinematicBody
     public float currentGravity;
     public float currentMoveSpeed;
     public  float moveSpeed = 50f;
-    public  float runSpeed = 60f;
+    public  float runSpeed = 55f;
     public float fallGravity;
     public float flyGravity;
     public float gravity = 9.8f;
     public float defaultGravity = 9.8f;
+    public int stamina = 4;
     public bool playerHasFloor = true;
     private Vector3 direction;
 
@@ -56,9 +57,10 @@ public class Player : KinematicBody
     public override void _Ready()
     {
         currentMoveSpeed = moveSpeed;
-        currentGravity = defaultGravity * 5;
-        fallGravity = defaultGravity * 40;
-        flyGravity = -(defaultGravity * 50);
+        defaultGravity = gravity * 5;
+        currentGravity = defaultGravity;
+        fallGravity = defaultGravity * 10;
+        flyGravity = -(defaultGravity * 10);
 
 
         lifeTotal = amountDamageLeft;
@@ -227,6 +229,14 @@ public class Player : KinematicBody
 
     }
 
+    public void showTip(VideoStreamWebm video)
+    {
+        GetNode<TipsVideo>("Camera/PlayerUI/TipVideo").showTipsVideo(video);
+    }
+    public void showTip(string message)
+    {
+        GetNode<TipsVideo>("Camera/PlayerUI/TipVideo").showTipsText(message);
+    }
 
     public void enemyClose()
     {
@@ -338,14 +348,18 @@ public class Player : KinematicBody
             direction -= Transform.basis.x;
             isInputMovimentPressed = true;
 
-        }else if(Input.IsActionPressed("run"))
+        }
+         if(Input.IsActionPressed("run"))
         {
             isRunning = true;
             playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RUN;
-        }else if(Input.IsKeyPressed((int)KeyList.Escape)){
+        }
+         if(Input.IsKeyPressed((int)KeyList.Escape)){
            
             GetNode<PauseGame>("pauseGame").setPauseGame();
         }
+
+
         if (Input.IsActionJustReleased("moveFront") || Input.IsActionJustReleased("moveBack") || Input.IsActionJustReleased("moveLeft") || Input.IsActionJustReleased("moveRight"))
         {
             isInputMovimentPressed = false;
@@ -384,7 +398,13 @@ public class Player : KinematicBody
             playerHasFloor = false;
         }
     
+        if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.RUN){
+            if(stamina < 4)
+            {
+                scActions.recoverStamina();
 
+            }
+        }
     }
 
 
@@ -398,11 +418,11 @@ public class Player : KinematicBody
             
             if (verifyInputs(ref isRunning))
             {
-                if(!isRunning && playerHasFloor == true){
-                    // if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.FLY)
-                    // {
+                if(!isRunning){
                         playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
-                    // }
+
+                }else if(!playerHasFloor){
+                  currentMoveSpeed = moveSpeed;
                 }
                
             }

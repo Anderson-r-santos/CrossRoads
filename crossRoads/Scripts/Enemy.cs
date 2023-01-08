@@ -94,7 +94,7 @@ public class Enemy : Spatial
                Player scPlayer =  player.GetNode<Player>(".");
                scPlayer.damageReceived("tentacleInsideDamage");
                
-               playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_BASIC_ENEMY;
+               playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WAIT_TIME;
                scPlayer.ariseTentaclesInsideBody();
                QueueFree();
            }

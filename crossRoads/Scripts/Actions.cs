@@ -6,12 +6,14 @@ public class Actions : Node
     // private int a = 2;
     // private string b = "text";
     float rotationVelocity = 0.01f;
-
+    bool canChangeStamina = true;
     private bool isRunning = false;
     public bool attackMode = false;
     public bool canAttack = true;
     public bool playerDie = false;
     public bool isWaitTime = false;
+    private float sizeStaminaBar;
+    private Panel staminaIndicator;
 
     private AnimationPlayer animPlayer;
 
@@ -27,7 +29,7 @@ public class Actions : Node
 
     private PackedScene attackEffect = GD.Load<PackedScene>("res://Prefabs/attackEffect.tscn");
 
-    private Particles attackParticles;
+
     private Particles splashRainParticles;
 
     private Camera playerCamera;
@@ -49,13 +51,13 @@ public class Actions : Node
         audioPlayer = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/stepSound");
         audioAttack = GetParent().GetNode<AudioStreamPlayer2D>("Sounds/attack");
 
-        attackParticles = GetParent().GetNode<Particles>("meshPlayer/Armature/Skeleton/BoneAttachment/Position3D/attack_Particles");
         splashRainParticles = GetNode<Particles>("../splash");
 
 
         playerCamera = GetParent().GetNode<Camera>("Camera");
 
-
+        staminaIndicator = scPlayer.GetNode<Panel>("Camera/PlayerUI/VBoxContainer/staminaIndicator");
+        sizeStaminaBar = staminaIndicator.MarginRight - staminaIndicator.MarginLeft;
 
     }
     
@@ -69,7 +71,6 @@ public class Actions : Node
 
             scPlayer.verifyRayUmbrella();
             audioAttack.Play();
-            attackParticles.Emitting = true;
             Spatial attackEffectNode = (Spatial)attackEffect.Instance();
             GetTree().Root.GetNode<Spatial>("rootTree").AddChild(attackEffectNode);
     
@@ -129,19 +130,8 @@ public class Actions : Node
         playerDie = true;
 
     }
-    public void moviment()
-    {
 
 
-
-    }
-       public void pushOutPlayer(float delta)
-    {
-        GD.Print("empurrando");
-      // direction += scPlayer.Transform.basis.z*5;
-
-       
-    }
     public void hitByTentacleGround()
     {
         scPlayer.damageReceived("dieInTentacles",5);
@@ -170,7 +160,7 @@ public class Actions : Node
         await ToSignal(GetTree().CreateTimer(time),"timeout");
         GD.Print("waittime :" + isWaitTime);
         isWaitTime = false;
-        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.NONE;
     }
 
     private void rotatePlayer(Vector2 mousePosition)
@@ -191,7 +181,58 @@ public class Actions : Node
        }
     }
     
+    public async void recoverStamina()
+    {
 
+        const int defaultStamina = 4;
+
+        if(canChangeStamina){
+            for(int i =0; i< defaultStamina; i++){  
+
+                if(playerState.CurrentStatePlayer == playerState.STATE_PLAYER.RUN)
+                {
+                        break;
+                }
+                canChangeStamina =false;
+                GD.Print("size bar Stamina " + sizeStaminaBar);
+
+                staminaIndicator.MarginLeft -= (sizeStaminaBar / defaultStamina) /2;
+                staminaIndicator.MarginRight += (sizeStaminaBar / defaultStamina) /2;
+                GD.Print("margin Left " + staminaIndicator.MarginLeft);
+                GD.Print("margin Right " + staminaIndicator.MarginRight);
+                scPlayer.stamina ++;
+                await ToSignal(GetTree().CreateTimer(1f),"timeout");
+                canChangeStamina = true;
+            }
+        }
+
+    }
+    public async void loseStamina()
+    {
+        const int defaultStamina = 4;
+
+        if(canChangeStamina){
+            for(int i =0; i< defaultStamina; i++){  
+
+                if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.RUN)
+                {
+                        break;
+                }
+                canChangeStamina =false;
+                GD.Print("size bar Stamina " + sizeStaminaBar);
+
+                staminaIndicator.MarginLeft += (sizeStaminaBar / defaultStamina) /2;
+                staminaIndicator.MarginRight -= (sizeStaminaBar / defaultStamina) /2;
+                GD.Print("margin Left " + staminaIndicator.MarginLeft);
+                GD.Print("margin Right " + staminaIndicator.MarginRight);
+                scPlayer.stamina --;
+                await ToSignal(GetTree().CreateTimer(2f),"timeout");
+                canChangeStamina = true;
+            }
+        }
+
+       
+    }
     
     public override void _Input(InputEvent inputEvent)
     {

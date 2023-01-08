@@ -15,6 +15,7 @@ public class mainMenu : Control
     {
         video = GetNode<VideoPlayer>("VideoPlayer");
         menuScene = GetTree().Root;
+
     }
 
     private void loopVideo()

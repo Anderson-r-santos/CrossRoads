@@ -81,10 +81,6 @@ shape = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -402.316, -22.2422, 119.357 )
 shape = SubResource( 5 )
 
-[node name="CollisionShape6" type="CollisionShape" parent="groundGasStation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -502.866, -22.2422, 119.357 )
-shape = SubResource( 5 )
-
 [node name="CollisionShape7" type="CollisionShape" parent="groundGasStation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9574, -22.2422, -80.1907 )
 shape = SubResource( 5 )
@@ -103,10 +99,6 @@ shape = SubResource( 5 )
 
 [node name="CollisionShape11" type="CollisionShape" parent="groundGasStation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -402.316, -22.2422, -80.1907 )
-shape = SubResource( 5 )
-
-[node name="CollisionShape12" type="CollisionShape" parent="groundGasStation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -502.866, -22.2422, -80.1907 )
 shape = SubResource( 5 )
 
 [connection signal="timeout" from="TimerToInstanceHand" to="." method="instanceHand"]
