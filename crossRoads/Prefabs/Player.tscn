@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/meshPlayer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Actions.cs" type="Script" id=3]
+[ext_resource path="res://RoughenCornerRegular-7RjV.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://Sounds/rainSound.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Prefabs/UI/PlayerUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Sounds/wind.ogg" type="AudioStream" id=7]
@@ -41,10 +42,62 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 2.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camera:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -4.03331, 7.27692, -11.1257 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Camera:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -20, 180, 1.40802e-12 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "damageReceiver"
 loop = true
+
+[sub_resource type="Animation" id=19]
+resource_name = "endGame"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -4.03331, 7.27692, -11.1257 ), Vector3( -4.03331, 23.6897, -36.5494 ), Vector3( -4.03331, 23.6897, -36.5494 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -20, 180, 1.40802e-12 ), Vector3( -56.387, 180, 2.39009e-12 ), Vector3( -32.926, 180, 1.5763e-12 ) ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "lightBlink"
@@ -91,6 +144,13 @@ length = 0.001
 
 [sub_resource type="Animation" id=12]
 resource_name = "damageReceiver"
+
+[sub_resource type="DynamicFont" id=20]
+size = 128
+outline_size = 10
+outline_color = Color( 0.945098, 1, 0, 0.658824 )
+extra_spacing_char = 13
+font_data = ExtResource( 4 )
 
 [sub_resource type="CubeMesh" id=2]
 
@@ -153,6 +213,7 @@ collide_with_areas = true
 playback_speed = 0.5
 anims/RESET = SubResource( 7 )
 anims/damageReceiver = SubResource( 8 )
+anims/endGame = SubResource( 19 )
 anims/lightBlink = SubResource( 10 )
 anims/msgDeAviso = SubResource( 11 )
 anims/tremer = SubResource( 9 )
@@ -174,7 +235,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.00583
 shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -2.99003e-08, 8.21506e-08, 2.30926e-14, 0.939693, 0.34202, -8.74228e-08, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 )
+transform = Transform( -1, -5.16436e-08, 1.4189e-07, 2.30926e-14, 0.939693, 0.34202, -1.50996e-07, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 )
 current = true
 
 [node name="RayCast" type="RayCast" parent="Camera"]
@@ -196,6 +257,22 @@ mouse_filter = 1
 
 [node name="TipVideo" parent="Camera/PlayerUI" instance=ExtResource( 15 )]
 physics_interpolation_mode = 2
+
+[node name="endGame" type="Label" parent="Camera/PlayerUI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -472.0
+margin_top = -139.5
+margin_right = 472.0
+margin_bottom = 139.5
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 0.556863 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 20 )
+text = "Mission complete
+"
 
 [node name="cube" type="MeshInstance" parent="."]
 visible = false

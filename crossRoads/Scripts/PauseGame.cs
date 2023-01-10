@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// pausa o jogo e exibe um menu
+/// </summary>
 public class PauseGame : Node
 {
     private mainScene scMainScene;

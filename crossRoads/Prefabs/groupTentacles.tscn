@@ -38,16 +38,16 @@ script = ExtResource( 2 )
 [node name="tentaclesChild" type="Spatial" parent="."]
 
 [node name="tentacles" parent="tentaclesChild" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21961, 0, -1.71536 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3839, 0, -1.02713 )
 
 [node name="tentacles2" parent="tentaclesChild" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.68389, 0, -1.71536 )
+transform = Transform( 0.617256, 0, 0.786763, 0, 1, 0, -0.786763, 0, 0.617256, 0.619199, 0, -1.71536 )
 
 [node name="tentacles3" parent="tentaclesChild" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.68389, 0, 2.07289 )
+transform = Transform( 0.14294, 0, -0.989731, 0, 1, 0, 0.989731, 0, 0.14294, 1.20911, 0, 0.843906 )
 
 [node name="tentacles4" parent="tentaclesChild" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72285, 0, 2.07289 )
+transform = Transform( 0.343611, 0, -0.939112, 0, 1, 0, 0.939112, 0, 0.343611, -1.49387, 0, 0.253994 )
 
 [node name="Particles3" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1.92022, 1.19209e-07 )

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Tutorial/enemy_attack_light.webm" type="VideoStream" id=1]
 [ext_resource path="res://Tutorial/backgroundTipsVideo.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/TipsVideo.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Tips.cs" type="Script" id=3]
 [ext_resource path="res://00233_7days.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="Theme" id=3]

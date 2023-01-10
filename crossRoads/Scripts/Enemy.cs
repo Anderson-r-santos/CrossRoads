@@ -1,11 +1,14 @@
 using Godot;
 using System;
 
+/// <summary>
+/// inimigo padrão
+/// </summary>
 public class Enemy : Spatial
 {
     private Player scPlayer;
     private KinematicBody targetPlayer = null;
-    private const float moveSpeed = 10f;
+    private const float moveSpeed = 20f;
     public bool playerInsideArea = false;
     private PathFollow pathPatrol;
     private Path path;
@@ -51,7 +54,9 @@ public class Enemy : Spatial
     }
 
 
-
+    /// <summary>
+    /// ao ser atingido pelo jogador
+    /// </summary>
     public void takeDamage()
     {
         LookAt(scPlayer.Transform.origin,Vector3.Up);
@@ -77,7 +82,10 @@ public class Enemy : Spatial
         meshEnemy.Translate(Vector3.Zero);
         playerInsideArea = false;
     }
-
+    /// <summary>
+    /// segue o jogador se ele estiver com o guarda chuvas aberto,perseguindo a luz que existe na ponta
+    /// </summary>
+    /// <param name="delta"></param>
     private void followPlayer(float delta)
     {
       
@@ -105,6 +113,11 @@ public class Enemy : Spatial
         }
     }
 
+
+    /// <summary>
+    /// quando o jogador nao estiver com a luz acesa ou estiver longe, o inimigo vai ficar andando em um caminho pré definido
+    /// </summary>
+    /// <param name="delta"></param>
     private void patrol(float delta)
     {
 

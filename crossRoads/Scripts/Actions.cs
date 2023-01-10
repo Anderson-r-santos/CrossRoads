@@ -1,5 +1,7 @@
 using Godot;
-
+/// <summary>
+/// chama as funções de acordo com o estado atual do jogador e seu guarda chuvas
+/// </summary>
 public class Actions : Node
 {
     // Declare member variables here. Examples:
@@ -7,8 +9,6 @@ public class Actions : Node
     // private string b = "text";
     float rotationVelocity = 0.01f;
     bool canChangeStamina = true;
-    private bool isRunning = false;
-    public bool attackMode = false;
     public bool canAttack = true;
     public bool playerDie = false;
     public bool isWaitTime = false;
@@ -69,7 +69,7 @@ public class Actions : Node
             animPlayer.Play("attack2",-1,-4,true);
             canAttack = false;
 
-            scPlayer.verifyRayUmbrella();
+            scPlayer.verifyRayCamera();
             audioAttack.Play();
             Spatial attackEffectNode = (Spatial)attackEffect.Instance();
             GetTree().Root.GetNode<Spatial>("rootTree").AddChild(attackEffectNode);
@@ -86,11 +86,16 @@ public class Actions : Node
 
     }
 
-    public void walk(float moveSpeed,float animSpeed = 1)
+    public void walk(float moveSpeed,bool isUmbrellaDown = false,float animSpeed = 1)
     {
         if (scPlayer.playerHasFloor)
         {
-            animPlayer.Play("walk",-1,animSpeed);
+            if(!isUmbrellaDown){
+                animPlayer.Play("walk",-1,animSpeed);
+            }else{
+                animPlayer.Play("walk_closeUmbrella",-1,animSpeed);
+            }
+
             scPlayer.currentMoveSpeed = moveSpeed;
             splashRainParticles.Visible = true;
 
@@ -153,7 +158,11 @@ public class Actions : Node
         animPlayer.Play("falling");
         GD.Print("caindo........");
     }
-    
+    /// <summary>
+    /// espera uma qnt de tempo ate terminar uma animação 
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     public async void waitTime(float time)
     {
         isWaitTime = true;
@@ -163,6 +172,18 @@ public class Actions : Node
         playerState.CurrentStatePlayer = playerState.STATE_PLAYER.NONE;
     }
 
+    public async void endGame(EndGame scEndGame)
+    {
+        playerState.isEndGame = true;
+       AnimationPlayer animPlayerActions = GetNode<AnimationPlayer>("../AnimationPlayerActions");
+       animPlayerActions.Play("endGame",-1,0.5f);
+       GetParent().GetNode<Player>(".").SetScript(null);
+       GetParent().GetNode<Label>("Camera/PlayerUI/endGame").Visible = true;
+       await(ToSignal(animPlayerActions,"animation_finished"));
+       scEndGame.changeToThanksScene();
+       GetParent().QueueFree();
+   
+    }
     private void rotatePlayer(Vector2 mousePosition)
     {
         //Vector3 playerRotation = new Vector3(0,mousePosition.x,0);
@@ -236,7 +257,8 @@ public class Actions : Node
     
     public override void _Input(InputEvent inputEvent)
     {
-        if(inputEvent is InputEventMouseButton mouseEvent  && mouseEvent.Pressed)
+        if(!playerState.isEndGame){
+            if(inputEvent is InputEventMouseButton mouseEvent  && mouseEvent.Pressed)
        {
           if(mouseEvent.ButtonIndex == (int)ButtonList.Left)
           {
@@ -269,6 +291,7 @@ public class Actions : Node
             rotatePlayer(mouseMotion.Relative);
             rotateCamera(mouseMotion.Relative);
         }
+    }
     }
 
 }

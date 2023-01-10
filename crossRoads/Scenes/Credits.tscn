@@ -1,0 +1,190 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://BarelyEnoughRegular-JRD6o.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Font_Credits.tres" type="DynamicFont" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+extra_spacing_top = 37
+extra_spacing_bottom = -15
+extra_spacing_char = 5
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 55
+font_data = ExtResource( 1 )
+
+[node name="Credits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="backGround" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.105882, 0.105882, 0.105882, 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 131.0
+margin_right = 1789.0
+margin_bottom = 74.0
+custom_colors/font_color = Color( 0.901961, 0.952941, 0.513726, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Original Developer"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -581.0
+margin_top = -394.0
+margin_right = 582.0
+margin_bottom = 516.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+margin_right = 1439.0
+margin_bottom = 623.0
+custom_constants/separation = 142
+
+[node name="funcContainer" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer"]
+margin_right = 325.0
+margin_bottom = 623.0
+custom_constants/separation = -33
+
+[node name="developerFunc" type="Label" parent="VBoxContainer2/HBoxContainer/funcContainer"]
+margin_right = 325.0
+margin_bottom = 151.0
+custom_fonts/font = ExtResource( 2 )
+text = "design
+"
+
+[node name="developerFunc2" type="Label" parent="VBoxContainer2/HBoxContainer/funcContainer"]
+margin_top = 118.0
+margin_right = 325.0
+margin_bottom = 269.0
+custom_fonts/font = ExtResource( 2 )
+text = "Modelling
+"
+
+[node name="developerFunc3" type="Label" parent="VBoxContainer2/HBoxContainer/funcContainer"]
+margin_top = 236.0
+margin_right = 325.0
+margin_bottom = 387.0
+custom_fonts/font = ExtResource( 2 )
+text = "Programmer
+"
+
+[node name="developerFunc4" type="Label" parent="VBoxContainer2/HBoxContainer/funcContainer"]
+margin_top = 354.0
+margin_right = 325.0
+margin_bottom = 505.0
+custom_fonts/font = ExtResource( 2 )
+text = "texturing
+"
+
+[node name="developerFunc5" type="Label" parent="VBoxContainer2/HBoxContainer/funcContainer"]
+margin_top = 472.0
+margin_right = 325.0
+margin_bottom = 623.0
+custom_fonts/font = ExtResource( 2 )
+text = "Animation
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer"]
+margin_left = 467.0
+margin_right = 483.0
+margin_bottom = 623.0
+custom_constants/separation = 43
+
+[node name="developerFunc" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_right = 16.0
+margin_bottom = 74.0
+custom_fonts/font = ExtResource( 2 )
+text = ":"
+
+[node name="developerFunc2" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 117.0
+margin_right = 16.0
+margin_bottom = 191.0
+custom_fonts/font = ExtResource( 2 )
+text = ":"
+
+[node name="developerFunc3" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 234.0
+margin_right = 16.0
+margin_bottom = 308.0
+custom_fonts/font = ExtResource( 2 )
+text = ":"
+
+[node name="developerFunc4" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 351.0
+margin_right = 16.0
+margin_bottom = 425.0
+custom_fonts/font = ExtResource( 2 )
+text = ":"
+
+[node name="developerFunc5" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 468.0
+margin_right = 16.0
+margin_bottom = 542.0
+custom_fonts/font = ExtResource( 2 )
+text = ":"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer"]
+margin_left = 625.0
+margin_right = 1439.0
+margin_bottom = 623.0
+
+[node name="nameDeveloper" type="Label" parent="VBoxContainer2/HBoxContainer/VBoxContainer2"]
+margin_top = 274.0
+margin_right = 814.0
+margin_bottom = 348.0
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 2 )
+text = "Anderson rodrigus dos santos"
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+margin_top = 627.0
+margin_right = 1439.0
+margin_bottom = 883.0
+custom_constants/separation = -46
+
+[node name="Colaborators" type="Label" parent="VBoxContainer2/VBoxContainer"]
+margin_right = 1439.0
+margin_bottom = 151.0
+custom_colors/font_color = Color( 0.87451, 0.941176, 0.541176, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Colaborators
+"
+align = 1
+
+[node name="containerFunc3" type="HBoxContainer" parent="VBoxContainer2/VBoxContainer"]
+margin_top = 105.0
+margin_right = 1439.0
+margin_bottom = 256.0
+custom_constants/separation = 100
+
+[node name="devekioerFunc" type="Label" parent="VBoxContainer2/VBoxContainer/containerFunc3"]
+margin_right = 175.0
+margin_bottom = 151.0
+custom_fonts/font = ExtResource( 2 )
+text = "{Func}
+"
+
+[node name="Label" type="Label" parent="VBoxContainer2/VBoxContainer/containerFunc3"]
+margin_left = 275.0
+margin_right = 296.0
+margin_bottom = 151.0
+custom_fonts/font = ExtResource( 2 )
+text = ":
+"
+
+[node name="devekioerName" type="Label" parent="VBoxContainer2/VBoxContainer/containerFunc3"]
+margin_left = 396.0
+margin_top = 47.0
+margin_right = 574.0
+margin_bottom = 104.0
+custom_fonts/font = SubResource( 2 )
+text = "{name}"

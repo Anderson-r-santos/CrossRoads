@@ -1,6 +1,10 @@
 using Godot;
 using System;
 
+
+/// <summary>
+/// verifica o estado do jogador e do guarda chuvas
+/// </summary>
 public class playerState : Node
 {
 
@@ -27,9 +31,11 @@ public class playerState : Node
     private AnimationPlayer animPlayer;
     private AnimationPlayer animPlayerTemperature;
 
+    public static bool isEndGame = false;
 
     private static STATE_PLAYER currentStatePlayer;
     public static STATE_PLAYER CurrentStatePlayer
+    
     {
         get { return currentStatePlayer; }
         set
@@ -57,7 +63,9 @@ public class playerState : Node
         currentStateUmbrella = STATE_UMBRELLA.UP_UMBRELLA;
     }
 
-
+    /// <summary>
+    /// começa a subir a temperatura depois de o guarda chuvas ser aberto
+    /// </summary>
     private void endTimerIncreaseTemperature()
     {
         if (currentStateUmbrella == STATE_UMBRELLA.UP_UMBRELLA)
@@ -65,6 +73,10 @@ public class playerState : Node
             scPlayer.increaseTemperature();
         }
     }
+
+    /// <summary>
+    /// decai a  temperatua quando o guarda chuvas está fechado
+    /// </summary>
     private void endTimerDecreaseTemperature()
     {
         if (currentStateUmbrella == STATE_UMBRELLA.DOWN_UMBRELLA)
@@ -72,6 +84,11 @@ public class playerState : Node
             scPlayer.decreaseTemperature();
         }
     }
+
+
+    /// <summary>
+    /// chamado ao abrir o guarda chuvas
+    /// </summary>
     private void umbrellaUp()
     {
         if (!umbrellaIsUp)
@@ -84,6 +101,10 @@ public class playerState : Node
         }
 
     }
+
+    /// <summary>
+    /// chamado ao fechar o guarda chuvas
+    /// </summary>
     private void umbrellaDown()
     {
 
@@ -97,7 +118,6 @@ public class playerState : Node
         }
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
       //  GD.Print("current state : " + currentStatePlayer);
@@ -120,7 +140,7 @@ public class playerState : Node
                 else if (currentStatePlayer == STATE_PLAYER.RUN)
                 {
                     if(scPlayer.stamina > 0){
-                        scActions.walk(scPlayer.runSpeed,1.5f);
+                        scActions.walk(scPlayer.runSpeed,false,1.5f);
                         scActions.loseStamina();
                     }else{
                         scActions.walk(scPlayer.moveSpeed);
@@ -163,8 +183,11 @@ public class playerState : Node
                 umbrellaDown();
                 if (currentStatePlayer == STATE_PLAYER.WALK)
                 {
-                    animPlayer.Play("walk_closeUmbrella");
+                    scActions.walk(scPlayer.moveSpeed,true);
 
+                }else if(currentStatePlayer == STATE_PLAYER.RUN)
+                {
+                    scActions.walk(scPlayer.runSpeed,true,1.5f);
                 }
                 else if (currentStatePlayer == STATE_PLAYER.STOP)
                 {
@@ -172,11 +195,15 @@ public class playerState : Node
                 }
                 else if (currentStatePlayer == STATE_PLAYER.ATTACK)
                 {
-                    scActions.attack1();
-                    if (!animPlayer.IsPlaying())
+                    if(!scPlayer.isRunning)
                     {
-                        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+                        scActions.attack1();
+                        if (!animPlayer.IsPlaying())
+                        {
+                            playerState.CurrentStatePlayer = playerState.STATE_PLAYER.STOP;
+                        }
                     }
+   
                 }
             }
 

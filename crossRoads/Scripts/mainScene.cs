@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// controla a cena principal do jogo como pause,resume,exit
+/// </summary>
 public class mainScene : Spatial
 {
  

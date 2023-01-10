@@ -1,6 +1,8 @@
 using Godot;
 
-
+/// <summary>
+/// um tipo diferen de imigo que causa morte instantâne  e nao pode ser atingido
+/// </summary>
 public class road_tentacles : Spatial
 {
     private AnimationPlayer [] animTenTacles;
@@ -31,14 +33,18 @@ public class road_tentacles : Spatial
           Spatial currentTentacle = (Spatial)allTentacles.GetChild(i);
           animTenTacles[i] = currentTentacle.GetNode<AnimationPlayer>("AnimationPlayer");
           rayCastTentacles[i] = currentTentacle.GetNode<RayCast>("Armature/Skeleton/BoneAttachment/RayCast");
-          animTenTacles[i].Play("swing");
+          animTenTacles[i].Play("swing",-1,(float)GD.RandRange(2.0,3.0));
           animTenTacles[i].GetAnimation("swing").Loop = true;
           GD.Print("name Tentacles " + currentTentacle.Name);
 
         }
 
     }
-
+    /// <summary>
+    /// espera uma quantida de segundos aleatórios para executar a animação de "swing" dos tentaculos,para fazerem movimentos nao sincronizados
+    /// </summary>
+    /// <param name="animTentacles"></param>
+    /// <returns></returns>
     private  async void wait (AnimationPlayer animTentacles)
     {
 
@@ -50,7 +56,10 @@ public class road_tentacles : Spatial
     }
 
 
-    
+    /// <summary>
+    /// attacka o jogador ao entrar em sua áre
+    /// </summary>
+    /// <returns></returns>
     private async void attack()
     {
 
@@ -71,32 +80,34 @@ public class road_tentacles : Spatial
     }
 
 
-    private void aim()
-    {
-      float shorterDistance = 1000;
-      //Spatial shorterTentacle = null;
+    // private void aim()
+    // {
+    //   float shorterDistance = 1000;
+    //   //Spatial shorterTentacle = null;
 
-      foreach(AnimationPlayer animPlayerTentacles in animTenTacles)
-      {
-        Spatial tentacleNode = (Spatial)animPlayerTentacles.GetParent();
-        float currentDistance = tentacleNode.Transform.origin.DistanceTo(player.Transform.origin);
+    //   foreach(AnimationPlayer animPlayerTentacles in animTenTacles)
+    //   {
+    //     Spatial tentacleNode = (Spatial)animPlayerTentacles.GetParent();
+    //     float currentDistance = tentacleNode.Transform.origin.DistanceTo(player.Transform.origin);
 
-        if(currentDistance <= shorterDistance)
-        {
-          shorterDistance = currentDistance;
-          animPlayerTentacles.Play("aiming");
-          lookAtPlayer(tentacleNode);
+    //     if(currentDistance <= shorterDistance)
+    //     {
+    //       shorterDistance = currentDistance;
+    //       animPlayerTentacles.Play("aiming");
+    //       lookAtPlayer(tentacleNode);
 
-          currentState = stateTentacles.ATTACK;
-        }
-     }
-    }
+    //       currentState = stateTentacles.ATTACK;
+    //     }
+    //  }
+    // }
 
     private void lookAtPlayer(Spatial tentacleNode)
     {
         tentacleNode.LookAt(player.Transform.origin,Vector3.Up);
         tentacleNode.RotateObjectLocal(Vector3.Up,3.14f);
     }
+
+
 
   private void playerEnteredInMyArea(Node body)
   {
@@ -109,6 +120,12 @@ public class road_tentacles : Spatial
   {
     playerIsInsideTentacleArea = false;
   }
+
+
+  /// <summary>
+  /// cada tentaculo tem um raycast na ponta,esse método verifica se eles colidiram com o jogado
+  /// </summary>
+  /// <returns></returns>
   private bool verifyRayCollision()
   {
     bool hitPlayer = false;

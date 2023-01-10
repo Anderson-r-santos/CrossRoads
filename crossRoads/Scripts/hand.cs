@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// mão que surge no terreno quando o jogador sai da pista
+/// </summary>
 public class hand : Spatial
 {
 
@@ -8,7 +11,9 @@ public class hand : Spatial
     {
         
     }
-
+    /// <summary>
+    /// deleta essa instância de mão,depois de terminar o tempo definido pelo nó contido em sua cena
+    /// </summary>
     private void deleteThisInstance()
     {
         GetTree().Root.GetNode<cenario>("rootTree/cenarioInicial").deleteHand(this);

@@ -1,2 +1,2 @@
-﻿46021
+﻿40869
 /home/anderson/Documentos/Godot_v3.5.1/Godot

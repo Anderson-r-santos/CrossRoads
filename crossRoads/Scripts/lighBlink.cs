@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// simula um mau contato de uma luz
+/// </summary>
 public class lighBlink : Node
 {
     AnimationPlayer lightAnimationPlayer;

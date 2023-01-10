@@ -4,7 +4,7 @@ public class Player : KinematicBody
 {
 
     public Actions scActions;
-    private bool isRunning = false;
+    public bool isRunning = false;
 
     private Timer timerIncreaseTemperature;  // tempo que a temperatuda corporal decai
     private Timer timerDecreaseTemperature;
@@ -15,8 +15,8 @@ public class Player : KinematicBody
     //movimentacao
     public float currentGravity;
     public float currentMoveSpeed;
-    public  float moveSpeed = 50f;
-    public  float runSpeed = 55f;
+    public float moveSpeed = 50f;
+    public float runSpeed = 55f;
     public float fallGravity;
     public float flyGravity;
     public float gravity = 9.8f;
@@ -28,7 +28,7 @@ public class Player : KinematicBody
     private OmniLight lightUmbrella;
 
     private RayCast rayToGround;
-    public RayCast rayUmbrella;
+    public RayCast rayCamera;
     private int bodyTemperature = 8;
 
     private cenario scSenario;
@@ -91,7 +91,7 @@ public class Player : KinematicBody
         tentaclesInsideBody = GetNode<Spatial>("tentaclesInsidePos");
 
         scPlayerState = GetNode<playerState>("playerState");
-        rayUmbrella = GetNode<RayCast>("Camera/RayCast");
+        rayCamera = GetNode<RayCast>("Camera/RayCast");
 
         sizeBarChunks = verticalBarTemperature.Scale.y / amountDamageLeft - 0.01f; // 0.1 so pra escala nao ser 0 e bugar
         currentAmountDegrees = defaultAmountDegrees;
@@ -99,12 +99,11 @@ public class Player : KinematicBody
         tentaclesInsideBody.Visible = false;
 
     }
-
-    private void playMsgWarning()
-    {
-        AnimationPlayerActions.Play("damageReceiver");
-    }
-
+    /// <summary>
+    /// muda visualmente a qnt de graus atual da maleta
+    /// </summary>
+    /// <param name="amountDegrees"></param>
+    /// <param name="increase"></param>
     private void setCountTemperature(int amountDegrees, bool increase = true)
     {
         string splitCountText = countDegrees.Text.Substring(0, countDegrees.Text.IndexOf(" "));
@@ -121,6 +120,10 @@ public class Player : KinematicBody
         countDegrees.Text = countText.ToString() + " ° c";
 
     }
+    /// <summary>
+    /// faz a barra indicadora que esta na maleta mudar de cor do verde ao vermelho ao ficar na chuva
+    /// </summary>
+    /// <returns></returns>
     private Color fromGreenToRed()
     {
         Material material = (Material)verticalBarTemperature.Get("material/0");
@@ -140,6 +143,11 @@ public class Player : KinematicBody
 
         return colorEmission;
     }
+
+    /// <summary>
+    /// faz a barra indicadora que esta na maleta mudar de cor do vermelho ate o verde ao se proteger da chuva
+    /// </summary>
+    /// <returns></returns>
     private Color fromRedToGreen()
     {
         Material material = (Material)verticalBarTemperature.Get("material/0");
@@ -159,6 +167,10 @@ public class Player : KinematicBody
 
         return colorEmission;
     }
+
+    /// <summary>
+    /// ao fechar o guarda chuvas e se expor a chuva,a temperatura corporal do jogador abaixa
+    /// </summary>
     public void decreaseTemperature()
     {
 
@@ -184,6 +196,9 @@ public class Player : KinematicBody
             }
         }
     }
+    /// <summary>
+    /// ao abrir o guarda chuvas aumenta a temperatura do jogador
+    /// </summary>
     public void increaseTemperature()
     {
         if (bodyTemperature < 8)
@@ -210,40 +225,59 @@ public class Player : KinematicBody
         }
 
     }
-    public void verifyRayUmbrella()
+
+    /// <summary>
+    /// verifica se tem algum inimigo na mira
+    /// </summary>
+    public void verifyRayCamera()
     {
-        
-        if (rayUmbrella.IsColliding())
+
+        if (rayCamera.IsColliding())
         {
-            Node node = (Node)rayUmbrella.GetCollider();
-            if(node.Name == "enemyCollisor")
+            Node node = (Node)rayCamera.GetCollider();
+            if (node.Name == "enemyCollisor")
             {
 
-            Enemy scEnemy = node.GetParent().GetNode<Enemy>("../.");
+                Enemy scEnemy = node.GetParent().GetNode<Enemy>("../.");
 
-            scEnemy.takeDamage();
+                scEnemy.takeDamage();
             }
 
 
         }
 
     }
-
+    /// <summary>
+    /// ao chegar em uma area exibe um video dando dicas
+    /// </summary>
+    /// <param name="video"></param>
     public void showTip(VideoStreamWebm video)
     {
-        GetNode<TipsVideo>("Camera/PlayerUI/TipVideo").showTipsVideo(video);
-    }
-    public void showTip(string message)
-    {
-        GetNode<TipsVideo>("Camera/PlayerUI/TipVideo").showTipsText(message);
+        GetNode<Tips>("Camera/PlayerUI/TipVideo").showTipsVideo(video);
     }
 
+    /// <summary>
+    /// ao chegar em uma area exibe uma mensagem na parte inferiro da tela
+    /// </summary>
+    /// <param name="message"></param>
+    public void showTip(string message)
+    {
+        GetNode<Tips>("Camera/PlayerUI/TipVideo").showTipsText(message);
+    }
+
+
+    /// <summary>
+    /// qnd o inimigo estiver perto,a luz do guarda chuva reage
+    /// </summary>
     public void enemyClose()
     {
         AnimationPlayerActions.Play("lightBlink", -1, 2);
         lightBlink.Play();
     }
-
+    /// <summary>
+    /// idetifica se o player saiu da pista
+    /// </summary>
+    /// <param name="hitPoint">o ponto que o jogador esta,para fazer surgir as mãos da terra</param>
     private void playerIsOutRoad(Vector3 hitPoint)
     {
         AnimationPlayerActions.Play("tremer", -1, 10);
@@ -260,6 +294,9 @@ public class Player : KinematicBody
         }
 
     }
+    /// <summary>
+    /// chamada apos o jogador sair fora da pista para a parte de terra e dps retornar para a pista
+    /// </summary>
     private void playerReturnToRoad()
     {
         crackedGround.Stop();
@@ -268,10 +305,16 @@ public class Player : KinematicBody
         scSenario.playerIsNotInGround();
         AnimationPlayerActions.Stop();
     }
-
+    /// <summary>
+    /// todas vez que o jogador receber dano do inimigo,terreno,temperatura 
+    /// </summary>
+    /// <param name="animation">animação de dano que o jogador recebeu</param>
+    /// <param name="damage">quantidade de dano causado pelo invocador</param>
+    /// <param name="animSpeed">velocidade da animação</param>
     public void damageReceived(string animation, int damage = 1, float animSpeed = 1)
     {
-        if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.DIE){
+        if (playerState.CurrentStatePlayer != playerState.STATE_PLAYER.DIE)
+        {
             if (animation != "temperature")
             {
 
@@ -284,22 +327,29 @@ public class Player : KinematicBody
                 amountDamageLeft -= damage;
                 animationPlayerUI.Play("damageReceiver");
 
-            }else
+            }
+            else
             {
-            
+
                 if (animation == "dieInTentacles")
                 {
                     scActions.die(true);
-                }else{
+                }
+                else
+                {
 
-                        scActions.die();
+                    scActions.die();
 
-                    }
+                }
             }
         }
 
     }
 
+    /// <summary>
+    /// faz os tentaculos aparece em posições diferentes,e que as animações nao fica iguais ou sincronizadas
+    /// </summary>
+    /// <returns></returns>
     public async void ariseTentaclesInsideBody()
     {
         tentaclesInsideBody.Visible = true;
@@ -313,14 +363,22 @@ public class Player : KinematicBody
             animTentacles[i].Play("fadeOutSwing", -1, 15f);
             //animTentacles[i].GetAnimation("fadeOutSwing").Loop = true;
         }
-        
+
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void restartScene()
     {
         GetTree().ReloadCurrentScene();
     }
-
+    
+    /// <summary>
+    ///verifica se as teclas de movimentação estao sendo pressionada
+    /// </summary>
+    /// <param name="isRunning">se o jogador esta no stado de correr</param>
+    /// <returns></returns>
     private bool verifyInputs(ref bool isRunning)
     {
         bool isInputMovimentPressed = false;
@@ -349,13 +407,14 @@ public class Player : KinematicBody
             isInputMovimentPressed = true;
 
         }
-         if(Input.IsActionPressed("run"))
+        if (Input.IsActionPressed("run"))
         {
             isRunning = true;
             playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RUN;
         }
-         if(Input.IsKeyPressed((int)KeyList.Escape)){
-           
+        if (Input.IsKeyPressed((int)KeyList.Escape))
+        {
+
             GetNode<PauseGame>("pauseGame").setPauseGame();
         }
 
@@ -371,7 +430,7 @@ public class Player : KinematicBody
 
     public override void _Process(float delta)
     {
-  
+
 
         Node nodeGround = (Node)rayToGround.GetCollider();
 
@@ -381,7 +440,7 @@ public class Player : KinematicBody
             playerHasFloor = true;
             Vector3 hitPoint = rayToGround.GetCollisionPoint();
 
-             if (((StaticBody)nodeGround).CollisionLayer == 32)
+            if (((StaticBody)nodeGround).CollisionLayer == 32)
             {
                 playerIsOutRoad(hitPoint);
 
@@ -397,9 +456,10 @@ public class Player : KinematicBody
         {
             playerHasFloor = false;
         }
-    
-        if(playerState.CurrentStatePlayer != playerState.STATE_PLAYER.RUN){
-            if(stamina < 4)
+
+        if (playerState.CurrentStatePlayer != playerState.STATE_PLAYER.RUN)
+        {
+            if (stamina < 4)
             {
                 scActions.recoverStamina();
 
@@ -411,31 +471,33 @@ public class Player : KinematicBody
     public override void _PhysicsProcess(float delta)
     {
 
-        if(!scActions.playerDie && !scActions.isWaitTime)
+        if (!scActions.playerDie && !scActions.isWaitTime)
         {
-            bool  isRunning = false;
-          
-            
+            isRunning = false;
+
             if (verifyInputs(ref isRunning))
             {
-                if(!isRunning){
-                        playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
+                if (!isRunning && playerState.CurrentStatePlayer != playerState.STATE_PLAYER.ATTACK)
+                {
+                    playerState.CurrentStatePlayer = playerState.STATE_PLAYER.WALK;
 
-                }else if(!playerHasFloor){
-                  currentMoveSpeed = moveSpeed;
                 }
-               
+                else if (!playerHasFloor)
+                {
+                    currentMoveSpeed = moveSpeed;
+                }
+
             }
-             direction.y = 0;
+            direction.y = 0;
             direction.z *= currentMoveSpeed * delta;
             direction.x *= currentMoveSpeed * delta;
 
             direction.y -= currentGravity * delta;
-            MoveAndSlide(direction,Vector3.Up);
-            
+            MoveAndSlide(direction, Vector3.Up);
+
         }
 
-   }
+    }
 }
 
 

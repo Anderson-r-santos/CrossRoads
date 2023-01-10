@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// área que interage com o guarda chuvas,pegar impulso para voar por exemplo
+/// </summary>
 public class interativeArea : Area
 {
     private bool playerIsInsideArea = false;
@@ -14,13 +17,11 @@ public class interativeArea : Area
 
     }
 
-    private void endtimerFly()
-    {
 
-        //playerState.CurrentStatePlayer = playerState.STATE_PLAYER.FALL;
-        
-    }
-
+    /// <summary>
+    /// indica que o jogador entrou na área de interação
+    /// </summary>
+    /// <param name="body"></param>
     private void areaEntered(Node body)
     {
         if(body.Name == "Player")
@@ -31,6 +32,12 @@ public class interativeArea : Area
 
         }
     }
+
+
+    /// <summary>
+    /// indica que o jogador saiu da área de interação
+    /// </summary>
+    /// <param name="body"></param>
     private void areaExited(Node body)
     {
 

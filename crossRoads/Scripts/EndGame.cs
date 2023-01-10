@@ -1,17 +1,21 @@
 using Godot;
 using System;
 
+/// <summary>
+/// usado ao jogador chegar no final do jogo
+/// </summary>
 public class EndGame : Spatial
 {
 
     private void endGame(Node body)
     {
-        GetTree().ChangeScene("res://Prefabs/End.tscn");
+       //
+       body.GetNode<Actions>("Actions").endGame(this);
     }
 
-    public override void _Ready()
+    public void changeToThanksScene()
     {
-        
+        GetTree().ChangeScene("res://Scenes/Thanks.tscn");
     }
 
 
