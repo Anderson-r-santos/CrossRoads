@@ -1,6 +1,6 @@
 ,en_US,pt_BR
 mainMenu1,new game,novo jogo
-mainMenu2,settings,configurações
+mainMenu2,settings,configuracões
 mainMenu3,exit,sair
 ,,
 pauseMenu1,resume game,voltar para o jogo
@@ -12,7 +12,7 @@ end,mission complete,missao cumprida
 thanks,"thanks for testing my game, now it's from the community
 feel free to modify it, just give credits :)","obrigado por testar meu jogo, agora ele e da comunidade
 sinta-se a vontade para modifica-lo,apenas dêe os creditos  :)"
-,,
+secrets,you found a part!,você encontrou uma parte!
 ,,
 ,,
 mainMission,find the location of the briefcase delivery,encontre o local da entrega da maleta

@@ -166,9 +166,17 @@ public class Actions : Node
     {
         isWaitTime = true;
         await ToSignal(GetTree().CreateTimer(time),"timeout");
-        GD.Print("waittime :" + isWaitTime);
         isWaitTime = false;
         playerState.CurrentStatePlayer = playerState.STATE_PLAYER.NONE;
+    }
+
+    public async void getCollectible ()
+    {
+        Control collectibleUI = GetNode<Control>("../Camera/PlayerUI    /collectible");
+        collectibleUI.Visible = true;
+        await ToSignal(GetTree().CreateTimer(2f),"timeout");
+        collectibleUI.Visible = false;
+
     }
 
     public async void endGame(EndGame scEndGame)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/meshPlayer.tscn" type="PackedScene" id=2]
@@ -16,6 +16,9 @@
 [ext_resource path="res://Scenes/pauseScene.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/UI/tipsShortVideo.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefabs/TranslateNode.tscn" type="PackedScene" id=16]
+[ext_resource path="res://textures/collectible.png" type="Texture" id=17]
+[ext_resource path="res://Tutorial/backgroundTipsVideo.png" type="Texture" id=18]
+[ext_resource path="res://00233_7days.ttf" type="DynamicFontData" id=19]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -146,6 +149,10 @@ outline_size = 10
 outline_color = Color( 1, 0, 0, 0.658824 )
 extra_spacing_char = 13
 font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=21]
+size = 32
+font_data = ExtResource( 19 )
 
 [sub_resource type="CubeMesh" id=2]
 
@@ -282,8 +289,37 @@ text = "you die
 align = 1
 
 [node name="Translate" parent="Camera/PlayerUI" instance=ExtResource( 16 )]
-pathToTextElement = PoolStringArray( "../die", "../endGame", "../../../pauseGame/pauseScene/pauseLabel", "../../../pauseGame/pauseScene/VBoxContainer/ButtonResume/", "../../../pauseGame/pauseScene/VBoxContainer/ButtonExit" )
-textToTranslate = PoolStringArray( "die", "end", "pauseMenu3", "pauseMenu1", "pauseMenu2" )
+pathToTextElement = PoolStringArray( "../die", "../endGame", "../../../pauseGame/pauseScene/pauseLabel", "../../../pauseGame/pauseScene/VBoxContainer/ButtonResume/", "../../../pauseGame/pauseScene/VBoxContainer/ButtonExit", "../collectible/Label" )
+textToTranslate = PoolStringArray( "die", "end", "pauseMenu3", "pauseMenu1", "pauseMenu2", "secrets" )
+
+[node name="collectible" type="Control" parent="Camera/PlayerUI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureRect2" type="TextureRect" parent="Camera/PlayerUI/collectible"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 18 )
+expand = true
+
+[node name="TextureRect" type="TextureRect" parent="Camera/PlayerUI/collectible"]
+margin_left = 1212.0
+margin_top = 372.0
+margin_right = 1558.0
+margin_bottom = 660.0
+texture = ExtResource( 17 )
+expand = true
+
+[node name="Label" type="Label" parent="Camera/PlayerUI/collectible"]
+margin_left = 718.0
+margin_top = 284.0
+margin_right = 1906.0
+margin_bottom = 322.0
+custom_fonts/font = SubResource( 21 )
+text = "voce achou um colecionavel!"
+align = 1
 
 [node name="cube" type="MeshInstance" parent="."]
 visible = false

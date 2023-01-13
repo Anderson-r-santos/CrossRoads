@@ -332,7 +332,7 @@ public class Player : KinematicBody
     /// <param name="animSpeed">velocidade da animação</param>
     public void damageReceived(string animation, int damage = 1, float animSpeed = 1)
     {
-        if (playerState.CurrentStatePlayer != playerState.STATE_PLAYER.DIE)
+        if (!scActions.playerDie)
         {
             if (animation != "temperature")
             {
@@ -341,7 +341,7 @@ public class Player : KinematicBody
 
             }
 
-            if (amountDamageLeft > 0)
+            if (amountDamageLeft - damage > 0)
             {
                 amountDamageLeft -= damage;
                 animationPlayerUI.Play("damageReceiver");
@@ -359,7 +359,6 @@ public class Player : KinematicBody
                 {
 
                     scActions.die();
-
                 }
             }
         }
@@ -372,6 +371,9 @@ public class Player : KinematicBody
     /// <returns></returns>
     public async void ariseTentaclesInsideBody()
     {
+        if(!scActions.playerDie)
+        {
+
         tentaclesInsideBody.Visible = true;
         AnimationPlayer[] animTentacles = new AnimationPlayer[tentaclesInsideBody.GetChildCount()];
         for (int i = 0; i < tentaclesInsideBody.GetChildCount(); i++)
@@ -382,6 +384,7 @@ public class Player : KinematicBody
 
             animTentacles[i].Play("fadeOutSwing", -1, 15f);
             //animTentacles[i].GetAnimation("fadeOutSwing").Loop = true;
+        }
         }
 
     }
