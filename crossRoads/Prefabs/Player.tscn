@@ -282,7 +282,7 @@ text = "you die
 align = 1
 
 [node name="Translate" parent="Camera/PlayerUI" instance=ExtResource( 16 )]
-pathToTextElement = PoolStringArray( "../die", "../end", "../../../pauseGame/pauseScene/pauseLabel", "../../../pauseGame/pauseScene/VBoxContainer/ButtonResume/", "../../../pauseGame/pauseScene/VBoxContainer/ButtonExit" )
+pathToTextElement = PoolStringArray( "../die", "../endGame", "../../../pauseGame/pauseScene/pauseLabel", "../../../pauseGame/pauseScene/VBoxContainer/ButtonResume/", "../../../pauseGame/pauseScene/VBoxContainer/ButtonExit" )
 textToTranslate = PoolStringArray( "die", "end", "pauseMenu3", "pauseMenu1", "pauseMenu2" )
 
 [node name="cube" type="MeshInstance" parent="."]

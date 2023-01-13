@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://TheConfessionFullRegular-8qGz.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Thanks.cs" type="Script" id=2]
+[ext_resource path="res://Prefabs/TranslateNode.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -41,6 +42,10 @@ tracks/0/keys = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
+
+[node name="Translate" parent="." instance=ExtResource( 3 )]
+pathToTextElement = PoolStringArray( "../background/Label" )
+textToTranslate = PoolStringArray( "thanks" )
 
 [node name="background" type="ColorRect" parent="."]
 anchor_right = 1.0

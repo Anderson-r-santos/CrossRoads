@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://videos/main_menu.webm" type="VideoStream" id=1]
 [ext_resource path="res://textures/smoke_menu.png" type="Texture" id=2]
@@ -6,11 +6,12 @@
 [ext_resource path="res://00233_7days.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://textures/menuBorder.png" type="Texture" id=5]
 [ext_resource path="res://Prefabs/TranslateNode.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/languageMenu.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("particlesSmoke/Particles2D:position")
+tracks/0/path = NodePath("menu/particlesSmoke/Particles2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -27,7 +28,7 @@ resource_name = "particles_swing"
 length = 0.5
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("particlesSmoke/Particles2D:position")
+tracks/0/path = NodePath("menu/particlesSmoke/Particles2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -91,21 +92,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
 
-[node name="VideoPlayer" type="VideoPlayer" parent="."]
+[node name="languageMenu" parent="." instance=ExtResource( 7 )]
+
+[node name="menu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VideoPlayer" type="VideoPlayer" parent="menu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 stream = ExtResource( 1 )
 autoplay = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="menu"]
+root_node = NodePath("../..")
 autoplay = "particles_swing"
 anims/RESET = SubResource( 2 )
 anims/particles_swing = SubResource( 3 )
 
-[node name="particlesSmoke" type="Node2D" parent="."]
+[node name="particlesSmoke" type="Node2D" parent="menu"]
 position = Vector2( -100, 1011 )
 
-[node name="Particles2D" type="Particles2D" parent="particlesSmoke"]
+[node name="Particles2D" type="Particles2D" parent="menu/particlesSmoke"]
 position = Vector2( -116, 786 )
 amount = 10
 lifetime = 3.0
@@ -115,7 +124,7 @@ local_coords = false
 process_material = SubResource( 1 )
 texture = ExtResource( 2 )
 
-[node name="Particles2D2" type="Particles2D" parent="particlesSmoke"]
+[node name="Particles2D2" type="Particles2D" parent="menu/particlesSmoke"]
 position = Vector2( 1962, 44 )
 amount = 10
 lifetime = 5.0
@@ -125,17 +134,17 @@ local_coords = false
 process_material = SubResource( 4 )
 texture = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="menu"]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -572.0
 margin_top = 243.0
-margin_right = -295.0
+margin_right = -264.0
 margin_bottom = -186.0
 custom_constants/separation = 43
 
-[node name="Button1" type="Button" parent="VBoxContainer"]
+[node name="Button1" type="Button" parent="menu/VBoxContainer"]
 margin_right = 308.0
 margin_bottom = 30.0
 custom_colors/font_color = Color( 1, 0.974462, 0.709961, 1 )
@@ -143,7 +152,7 @@ custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
 text = "novo jogo"
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="Button2" type="Button" parent="menu/VBoxContainer"]
 margin_top = 73.0
 margin_right = 308.0
 margin_bottom = 103.0
@@ -152,7 +161,7 @@ custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
 text = "Settings"
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="Button3" type="Button" parent="menu/VBoxContainer"]
 margin_top = 146.0
 margin_right = 308.0
 margin_bottom = 176.0
@@ -161,15 +170,15 @@ custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
 text = "exit"
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="menu/VBoxContainer"]
 margin_top = 219.0
 margin_right = 308.0
 margin_bottom = 219.0
 texture = ExtResource( 5 )
 expand = true
 
-[node name="Translate" parent="." instance=ExtResource( 6 )]
+[node name="Translate" parent="menu" instance=ExtResource( 6 )]
 
-[connection signal="pressed" from="VBoxContainer/Button1" to="." method="changeToNewGameScene"]
-[connection signal="pressed" from="VBoxContainer/Button2" to="." method="changeToSettingsScene"]
-[connection signal="pressed" from="VBoxContainer/Button3" to="." method="exitGame"]
+[connection signal="pressed" from="menu/VBoxContainer/Button1" to="." method="changeToNewGameScene"]
+[connection signal="pressed" from="menu/VBoxContainer/Button2" to="." method="changeToSettingsScene"]
+[connection signal="pressed" from="menu/VBoxContainer/Button3" to="." method="exitGame"]

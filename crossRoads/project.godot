@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Cross Roads"
-run/main_scene="res://Prefabs/languageMenu.tscn"
+run/main_scene="res://Scenes/mainMenu.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -64,7 +64,7 @@ run={
 
 [locale]
 
-translations=PoolStringArray( "res://translation/language_game.csv", "res://translation/language_game.en_US.translation", "res://translation/language_game.pt_BR.translation" )
+translations=PoolStringArray( "res://translation/language_game.en_US.translation", "res://translation/language_game.pt_BR.translation", "res://translation/language_game.csv" )
 locale_filter=[ 0, [ "en_US", "pt_BR" ] ]
 
 [mono]

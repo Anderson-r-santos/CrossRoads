@@ -18,38 +18,16 @@ public class language_game_UI : Node
     string [] textToTranslate;
     public override void _Ready()
     {
-        TranslationServer.SetLocale("pt_BR");
         setTextInTextField();
-        // setuptextMainMenu();
-        // setupPauseMenuText();
-
     }
     
     public void setLanguage(string language)
     {
+        TranslationServer.SetLocale(language);
+        GetNode<Control>("../../languageMenu").Visible = false;
+        setTextInTextField();
 
     }
-    /// <summary>
-    /// coloca o texto traduzido em um botão ou label
-    /// </summary>
-    /// <param name="arrayWithPathAndText">uma matriz com [caminho para o botão/label , o texto do botão/label]</param>
-    /// <param name="isButton">verifica se é um botão,caso contrário,assume que é uma label</param>
-    // private void assignButtonText(string [,] arrayWithPathAndText,bool isButton = true)
-    // {
-    //     for(int y = 0 ; y < arrayWithPathAndText.GetLength(1) ; y++)
-    //     {
-    //         for(int x = 0 ; x < arrayWithPathAndText.GetLength(0) ; x++)
-    //         {
-    //             if(isButton)
-    //             {
-                    
-    //                 GetNode<Button>(arrayWithPathAndText[x,0]).Text = Tr(arrayWithPathAndText[x,1]);
-    //             }else{
-    //                 GetNode<Label>(arrayWithPathAndText[x,0]).Text = Tr(arrayWithPathAndText[x,1]);
-    //             }
-    //         }  
-    //     }
-    // }
 
     private void setTextInTextField()
     {
@@ -66,35 +44,5 @@ public class language_game_UI : Node
        }
     }
 
-    /// <summary>
-    /// passa uma matriz contendo o texto traduzido do menu principal
-    /// </summary>
-    public  void setuptextMainMenu()
-    {
-        string[,] buttonText = {
-                                    {"",""},
-                                    {"","mainMenu2"},
-                                    {"../VBoxContainer/Button3","mainMenu3"},
-                                };
-       // assignButtonText(buttonText);
-
-    }
-
-    /// <summary>
-    /// passa o texto traduzido do menu de pause
-    /// </summary>
-    private void setupPauseMenuText()
-    {
-        string[,] buttonsText = {
-                                    {"../Player/pauseGame/pauseScene/VBoxContainer/ButtonResume","pauseMenu1"},
-                                    {"../Player/pauseGame/pauseScene/VBoxContainer/ButtonExit","pauseMenu2"},
-                                };
-                                
-        string[,] labelsText = {{"../Player/pauseGame/pauseScene/pauseLabel", "pauseMenu3"}};
-
-        // assignButtonText(buttonsText);
-        // assignButtonText(labelsText,false);
-
-    }
 
 }
