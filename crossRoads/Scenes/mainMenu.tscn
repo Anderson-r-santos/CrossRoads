@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://videos/main_menu.webm" type="VideoStream" id=1]
 [ext_resource path="res://textures/smoke_menu.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/mainMenu.cs" type="Script" id=3]
 [ext_resource path="res://00233_7days.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://textures/menuBorder.png" type="Texture" id=5]
+[ext_resource path="res://Prefabs/TranslateNode.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -134,7 +135,7 @@ margin_right = -295.0
 margin_bottom = -186.0
 custom_constants/separation = 43
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Button1" type="Button" parent="VBoxContainer"]
 margin_right = 308.0
 margin_bottom = 30.0
 custom_colors/font_color = Color( 1, 0.974462, 0.709961, 1 )
@@ -151,7 +152,7 @@ custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
 text = "Settings"
 
-[node name="Button4" type="Button" parent="VBoxContainer"]
+[node name="Button3" type="Button" parent="VBoxContainer"]
 margin_top = 146.0
 margin_right = 308.0
 margin_bottom = 176.0
@@ -167,6 +168,8 @@ margin_bottom = 219.0
 texture = ExtResource( 5 )
 expand = true
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="changeToNewGameScene"]
+[node name="Translate" parent="." instance=ExtResource( 6 )]
+
+[connection signal="pressed" from="VBoxContainer/Button1" to="." method="changeToNewGameScene"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="changeToSettingsScene"]
-[connection signal="pressed" from="VBoxContainer/Button4" to="." method="exitGame"]
+[connection signal="pressed" from="VBoxContainer/Button3" to="." method="exitGame"]

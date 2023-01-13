@@ -9,6 +9,7 @@ public class Player : KinematicBody
     private Timer timerIncreaseTemperature;  // tempo que a temperatuda corporal decai
     private Timer timerDecreaseTemperature;
     public Timer timerUmbrellaRay; //tempo em que fica ativo o ray que detecta o inmigo
+    private Timer timerRegenLife;
     private int amountDamageLeft = 4;
     private int lifeTotal;
 
@@ -56,6 +57,10 @@ public class Player : KinematicBody
 
     public override void _Ready()
     {
+
+        GetNode<AnimationPlayer>("meshPlayer/AnimationPlayerTemperature").Play("RESET");   
+
+
         currentMoveSpeed = moveSpeed;
         defaultGravity = gravity * 5;
         currentGravity = defaultGravity;
@@ -70,9 +75,9 @@ public class Player : KinematicBody
 
         AnimationPlayerActions = GetNode<AnimationPlayer>("AnimationPlayerActions");
         animationPlayer = GetNode<AnimationPlayer>("meshPlayer/AnimationPlayer");
-        animationPlayerUI = GetNode<AnimationPlayer>("Camera/AnimationPlayerUI");
+        animationPlayerUI = GetNode<AnimationPlayer>("Camera/PlayerUI/AnimationPlayerUI");
 
-        countDegrees = GetNode<Label>("meshPlayer/Armature/Skeleton/BoneAttachBriefCase/CountDegrees/Viewport/Label");
+        countDegrees = GetNode<Label>("meshPlayer/Armature/Skeleton/BoneAttachBriefCase/Viewport/Label");
 
         verticalBarTemperature = GetNode<MeshInstance>("meshPlayer/Armature/Skeleton/BoneAttachBriefCase/barTemperatureIndicator");
 
@@ -82,6 +87,7 @@ public class Player : KinematicBody
         timerIncreaseTemperature = GetNode<Timer>("TimerIncreaseTemperature");
         timerDecreaseTemperature = GetNode<Timer>("TimerDecreaseTemperature");
         timerUmbrellaRay = GetNode<Timer>("TimerUmbrellaRay");
+        timerRegenLife = GetNode<Timer>("TimerRegenLife");
 
         scSenario = GetParent().GetNode<cenario>("cenarioInicial");
         outRoad = GetTree().Root.GetNode<AudioStreamPlayer2D>("rootTree/cenarioInicial/outRoad");
@@ -97,8 +103,21 @@ public class Player : KinematicBody
         currentAmountDegrees = defaultAmountDegrees;
 
         tentaclesInsideBody.Visible = false;
+        showControlsUI();
 
     }
+
+
+    private async void showControlsUI()
+    {
+        Control ControlsUI = GetNode<Control>("Camera/PlayerUI/ControlsUI");
+        ControlsUI.Visible = true;
+        await(ToSignal(GetTree().CreateTimer(4f),"timeout"));
+        ControlsUI.QueueFree();
+
+    }
+
+
     /// <summary>
     /// muda visualmente a qnt de graus atual da maleta
     /// </summary>
@@ -251,9 +270,9 @@ public class Player : KinematicBody
     /// ao chegar em uma area exibe um video dando dicas
     /// </summary>
     /// <param name="video"></param>
-    public void showTip(VideoStreamWebm video)
+    public void showTip(VideoStreamWebm video,string titleVideo)
     {
-        GetNode<Tips>("Camera/PlayerUI/TipVideo").showTipsVideo(video);
+        GetNode<Tips>("Camera/PlayerUI/TipVideo").showTipsVideo(video,titleVideo);
     }
 
     /// <summary>
@@ -326,6 +345,7 @@ public class Player : KinematicBody
             {
                 amountDamageLeft -= damage;
                 animationPlayerUI.Play("damageReceiver");
+                timerRegenLife.Start();
 
             }
             else
@@ -347,7 +367,7 @@ public class Player : KinematicBody
     }
 
     /// <summary>
-    /// faz os tentaculos aparece em posições diferentes,e que as animações nao fica iguais ou sincronizadas
+    /// faz os tentaculos aparecer em posições diferentes,e executa as animações de formas NÂO sincronizadas
     /// </summary>
     /// <returns></returns>
     public async void ariseTentaclesInsideBody()
@@ -371,9 +391,21 @@ public class Player : KinematicBody
     /// </summary>
     private void restartScene()
     {
+
         GetTree().ReloadCurrentScene();
+         
     }
-    
+
+    /// <summary>
+    /// depois do jogador tomar dano,aguarda 4 seg e regenera a vida total
+    /// </summary>
+    private void regenLife()
+    {
+        if(amountDamageLeft < lifeTotal)
+        {
+            amountDamageLeft = lifeTotal;
+        }
+    }
     /// <summary>
     ///verifica se as teclas de movimentação estao sendo pressionada
     /// </summary>

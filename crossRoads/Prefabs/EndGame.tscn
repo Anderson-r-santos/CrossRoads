@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/EndGame.cs" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 30, 10, 30 )
+extents = Vector3( 44.2248, 10, 135.044 )
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )

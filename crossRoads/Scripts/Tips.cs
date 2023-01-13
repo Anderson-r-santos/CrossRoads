@@ -23,8 +23,9 @@ public class Tips : Control
     /// mostra uma dica em video
     /// </summary>
     /// <param name="video"></param>
-    public void showTipsVideo(VideoStreamWebm video)
+    public void showTipsVideo(VideoStreamWebm video , string titleVideo)
     {
+        GetNode<Label>("tipVideo/titleVideo").Text = titleVideo;
         videoPlayer.Stream = video;
         scMainScene.pauseGame();
         uiTipsVideo.Visible = true;
@@ -60,7 +61,7 @@ public class Tips : Control
         {
             await ToSignal(GetTree().CreateTimer(0.1f),"timeout");
             messageLabel.VisibleCharacters +=1;
-           backGroundMsg.MarginRight += 600/lengthCharacter;
+           backGroundMsg.MarginRight = messageLabel.MarginRight - messageLabel.MarginLeft / messageLabel.VisibleCharacters;
             
         }
         hideMessage();

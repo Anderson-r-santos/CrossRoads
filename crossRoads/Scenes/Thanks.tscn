@@ -58,7 +58,7 @@ margin_right = 690.0
 margin_bottom = -147.0
 custom_fonts/font = SubResource( 1 )
 text = "obrigado por testar meu jogo agora ele e da comunidade
-sinta-se a vontade para modifica-lo  :)"
+sinta-se a vontade para modifica-lo,apenas dêe os creditos  :)"
 align = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

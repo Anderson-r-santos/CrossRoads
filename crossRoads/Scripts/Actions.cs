@@ -121,8 +121,7 @@ public class Actions : Node
     public void die(bool dieByTentacle = false)
     {
         if(!playerDie){
-            GD.Print("O JOGADOR ESTA MORTO!!!!");
-    
+            GetNode<Label>("../Camera/PlayerUI/die").Visible = true;
             if(!dieByTentacle){
                 animPlayer.Play("Die");
 

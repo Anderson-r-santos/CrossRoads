@@ -70,12 +70,12 @@ transform = Transform( 1, 0, 0, 0, 1, -1.64203e-15, 0, -1.64203e-15, 1, 0, 0, 0 
 material/0 = SubResource( 1 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.87752, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.3861, 0 )
 bone_name = "Bone.001"
 
 [node name="RayCast" type="RayCast" parent="Armature/Skeleton/BoneAttachment" index="0"]
 enabled = true
-cast_to = Vector3( 0, 2, 0 )
+cast_to = Vector3( 0, 4, 0 )
 
 [node name="AnimationPlayer" parent="." index="1"]
 anims/swing-loop = SubResource( 6 )

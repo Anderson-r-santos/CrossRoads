@@ -14,9 +14,6 @@ emission_energy = 4.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="ViewportTexture" id=21]
-viewport_path = NodePath("Armature/Skeleton/BoneAttachBriefCase/CountDegrees/Viewport")
-
 [sub_resource type="DynamicFont" id=22]
 size = 60
 outline_size = 2
@@ -24,6 +21,9 @@ outline_color = Color( 0, 0.294118, 0.0901961, 1 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
+
+[sub_resource type="ViewportTexture" id=21]
+viewport_path = NodePath("Armature/Skeleton/BoneAttachBriefCase/Viewport")
 
 [sub_resource type="Image" id=35]
 data = {
@@ -1201,6 +1201,30 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector3( -3.53557e-06, 4.65464e-07, -15 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Armature/Skeleton/BoneAttachBriefCase/barTemperatureIndicator:material/0:emission")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 1, 0, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Armature/Skeleton/BoneAttachBriefCase/barTemperatureIndicator:material/0")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ SubResource( 19 ) ]
+}
 
 [sub_resource type="Animation" id=28]
 resource_name = "countBackToBrief"
@@ -1425,11 +1449,11 @@ bones/37/bound_children = [ NodePath("BoneAttachment") ]
 bones/55/bound_children = [ NodePath("BoneAttachBriefCase") ]
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="6"]
-transform = Transform( 1, 4.26326e-14, -1.11945e-06, 1.41563e-07, 0.991972, 0.126457, 1.11046e-06, -0.126457, 0.991972, -2.29542, 0.97393, 5.0323 )
+transform = Transform( 1, 0, -1.11945e-06, 0, 1, 0, 1.11945e-06, 0, 1, -0.137645, 1.17086, 4.09197 )
 bone_name = "umbrella_pole"
 
 [node name="BoneAttachBriefCase" type="BoneAttachment" parent="Armature/Skeleton" index="7"]
-transform = Transform( 1, 0, -2.38419e-07, 0, -1, 0, -2.38419e-07, 0, -1, -4.27169, -0.521239, 4.04787 )
+transform = Transform( 1, 0, -2.38419e-07, 0, -1, 0, -2.38419e-07, 0, -1, -4.91331, -0.300533, 4.14708 )
 bone_name = "briefCase"
 
 [node name="barTemperatureIndicator" type="MeshInstance" parent="Armature/Skeleton/BoneAttachBriefCase" index="0"]
@@ -1437,19 +1461,12 @@ transform = Transform( 1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, -0.009912
 mesh = SubResource( 18 )
 material/0 = SubResource( 19 )
 
-[node name="CountDegrees" type="Sprite3D" parent="Armature/Skeleton/BoneAttachBriefCase" index="1"]
-transform = Transform( 0.0552291, 0, -0.998474, 0, 1, 0, 0.998474, 0, 0.0552291, -3.43971, 0.506573, 1.10752 )
-centered = false
-flip_h = true
-opacity = 0.01
-texture = SubResource( 21 )
-
-[node name="Viewport" type="Viewport" parent="Armature/Skeleton/BoneAttachBriefCase/CountDegrees" index="0"]
+[node name="Viewport" type="Viewport" parent="Armature/Skeleton/BoneAttachBriefCase" index="1"]
 size = Vector2( 200, 100 )
 transparent_bg = true
 gui_disable_input = true
 
-[node name="Label" type="Label" parent="Armature/Skeleton/BoneAttachBriefCase/CountDegrees/Viewport" index="0"]
+[node name="Label" type="Label" parent="Armature/Skeleton/BoneAttachBriefCase/Viewport" index="0"]
 margin_right = 40.0
 margin_bottom = 14.0
 input_pass_on_modal_close_click = false
@@ -1460,7 +1477,14 @@ text = "11 ° c
 "
 align = 2
 
-[node name="line" type="Sprite3D" parent="Armature/Skeleton/BoneAttachBriefCase/CountDegrees" index="1"]
+[node name="CountDegrees" type="Sprite3D" parent="Armature/Skeleton/BoneAttachBriefCase" index="2"]
+transform = Transform( 0.0552291, 0, -0.998474, 0, 1, 0, 0.998474, 0, 0.0552291, -3.43971, 0.506573, 1.10752 )
+centered = false
+flip_h = true
+opacity = 0.01
+texture = SubResource( 21 )
+
+[node name="line" type="Sprite3D" parent="Armature/Skeleton/BoneAttachBriefCase/CountDegrees" index="0"]
 transform = Transform( 0.00965926, 0.258819, 8.12388e-09, -0.00258819, 0.965926, 6.17073e-08, 8.12397e-11, -6.17073e-08, 1, 2.30363, 0.121406, 0.0280228 )
 flip_h = true
 double_sided = false

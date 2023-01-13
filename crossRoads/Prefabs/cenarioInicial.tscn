@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Prefabs/cenario1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/cenario.cs" type="Script" id=2]
@@ -11,6 +11,12 @@ extents = Vector3( 1, 2.01276, 1.12864 )
 
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 50, 1, 100 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 142.274, 5.59593, 1 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 113.987, 5.59593, 1 )
 
 [node name="cenarioInicial" type="Spatial"]
 script = ExtResource( 2 )
@@ -100,5 +106,35 @@ shape = SubResource( 5 )
 [node name="CollisionShape11" type="CollisionShape" parent="groundGasStation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -402.316, -22.2422, -80.1907 )
 shape = SubResource( 5 )
+
+[node name="borderEnd" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -988.799, -20.7196, 175.597 )
+
+[node name="StaticBody" type="StaticBody" parent="borderEnd"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="borderEnd/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 36.955 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="borderEnd/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -228.843, 0, 36.955 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="borderEnd/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.62939e-06, -393.061 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="borderEnd/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -228.843, -7.62939e-06, -393.061 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="borderEnd/StaticBody"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -369.263, 0, -75.6042 )
+shape = SubResource( 7 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="borderEnd/StaticBody"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -369.263, 0, -302.709 )
+shape = SubResource( 7 )
 
 [connection signal="timeout" from="TimerToInstanceHand" to="." method="instanceHand"]

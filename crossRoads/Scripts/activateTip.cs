@@ -28,13 +28,13 @@ public class activateTip : Spatial
     /// <param name="body"></param>
     private void playerEnteredArea(Node body)
     {
-        if(!varMsgInLanguageFile.Empty()){
+        if(videoTip == null){
            
             scPlayer.showTip(Tr(varMsgInLanguageFile));
        
        }else{
             
-            scPlayer.showTip(videoTip);
+            scPlayer.showTip(videoTip,Tr(varMsgInLanguageFile));
 
         }
         deleteArea();

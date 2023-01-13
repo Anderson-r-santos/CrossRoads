@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/meshPlayer.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Scripts/PauseGame.cs" type="Script" id=13]
 [ext_resource path="res://Scenes/pauseScene.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/UI/tipsShortVideo.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Prefabs/TranslateNode.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -139,16 +140,10 @@ tracks/0/keys = {
 [sub_resource type="CapsuleShape" id=1]
 height = 4.93118
 
-[sub_resource type="Animation" id=18]
-length = 0.001
-
-[sub_resource type="Animation" id=12]
-resource_name = "damageReceiver"
-
 [sub_resource type="DynamicFont" id=20]
 size = 128
 outline_size = 10
-outline_color = Color( 0.945098, 1, 0, 0.658824 )
+outline_color = Color( 1, 0, 0, 0.658824 )
 extra_spacing_char = 13
 font_data = ExtResource( 4 )
 
@@ -235,7 +230,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.00583
 shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -5.16436e-08, 1.4189e-07, 2.30926e-14, 0.939693, 0.34202, -1.50996e-07, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 )
+transform = Transform( -1, 2.99004e-08, -8.21506e-08, 2.30926e-14, 0.939693, 0.34202, 8.74228e-08, 0.34202, -0.939693, -4.03331, 7.27692, -11.1257 )
 current = true
 
 [node name="RayCast" type="RayCast" parent="Camera"]
@@ -245,11 +240,6 @@ cast_to = Vector3( 0, 0, -25 )
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
-
-[node name="AnimationPlayerUI" type="AnimationPlayer" parent="Camera"]
-root_node = NodePath("../..")
-anims/RESET = SubResource( 18 )
-anims/damageReceiver = SubResource( 12 )
 
 [node name="PlayerUI" parent="Camera" instance=ExtResource( 6 )]
 pause_mode = 2
@@ -273,6 +263,27 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 20 )
 text = "Mission complete
 "
+
+[node name="die" type="Label" parent="Camera/PlayerUI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -472.0
+margin_top = -139.5
+margin_right = 472.0
+margin_bottom = 139.5
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 0.556863 )
+custom_colors/font_color_shadow = Color( 1, 0.67451, 0.67451, 1 )
+custom_fonts/font = SubResource( 20 )
+text = "you die
+"
+align = 1
+
+[node name="Translate" parent="Camera/PlayerUI" instance=ExtResource( 16 )]
+pathToTextElement = PoolStringArray( "../die", "../end", "../../../pauseGame/pauseScene/pauseLabel", "../../../pauseGame/pauseScene/VBoxContainer/ButtonResume/", "../../../pauseGame/pauseScene/VBoxContainer/ButtonExit" )
+textToTranslate = PoolStringArray( "die", "end", "pauseMenu3", "pauseMenu1", "pauseMenu2" )
 
 [node name="cube" type="MeshInstance" parent="."]
 visible = false
@@ -348,7 +359,12 @@ script = ExtResource( 13 )
 [node name="pauseScene" parent="pauseGame" instance=ExtResource( 14 )]
 visible = false
 
+[node name="TimerRegenLife" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
 [connection signal="timeout" from="TimerRestartScene" to="." method="restartScene"]
 [connection signal="timeout" from="TimerIncreaseTemperature" to="playerState" method="endTimerIncreaseTemperature"]
 [connection signal="timeout" from="TimerDecreaseTemperature" to="playerState" method="endTimerDecreaseTemperature"]
 [connection signal="timeout" from="TimerUmbrellaRay" to="." method="endTimerRayUmbrellaEnable"]
+[connection signal="timeout" from="TimerRegenLife" to="." method="regenLife"]

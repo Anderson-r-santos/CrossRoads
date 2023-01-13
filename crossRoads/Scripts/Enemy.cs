@@ -19,7 +19,8 @@ public class Enemy : Spatial
     private Particles damageParticles;
     private int lifeEnemy = 3;
     private float defautPathOffset;
-    
+    private AudioStreamPlayer3D audioEnemyArea;
+    private AudioStreamPlayer3D audioEnemyReceiveDamage;
 
     private Vector3 closePoint;
 
@@ -51,6 +52,8 @@ public class Enemy : Spatial
         enemyAnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         damageParticles = GetNode<Particles>("mesh/ParticlesDamage");
         defautPathOffset = pathPatrol.Offset;
+        audioEnemyArea = GetNode<AudioStreamPlayer3D>("enemyArea");
+        audioEnemyReceiveDamage = GetNode<AudioStreamPlayer3D>("enemyScream");
     }
 
 
@@ -59,6 +62,7 @@ public class Enemy : Spatial
     /// </summary>
     public void takeDamage()
     {
+        audioEnemyReceiveDamage.Play();
         LookAt(scPlayer.Transform.origin,Vector3.Up);
         GD.Print("inimigo acertado");
         if(lifeEnemy > 0)
@@ -81,6 +85,7 @@ public class Enemy : Spatial
         MeshInstance meshEnemy = GetNode<MeshInstance>("mesh");
         meshEnemy.Translate(Vector3.Zero);
         playerInsideArea = false;
+        audioEnemyArea.Stop();
     }
     /// <summary>
     /// segue o jogador se ele estiver com o guarda chuvas aberto,perseguindo a luz que existe na ponta
@@ -137,6 +142,7 @@ public class Enemy : Spatial
     {
         if(player.Name == "Player")
         {
+            audioEnemyArea.Play();
             playerInsideArea = true;
             scPlayer.enemyClose();
             GD.Print("body enter area " + player.Name);

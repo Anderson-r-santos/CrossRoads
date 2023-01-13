@@ -109,12 +109,7 @@ theme = SubResource( 3 )
 custom_fonts/font = SubResource( 2 )
 text = "Ok"
 
-[node name="Button2" type="Button" parent="tipVideo/VideoPlayer"]
-margin_right = 12.0
-margin_bottom = 20.0
-text = "botao2"
-
-[node name="Label" type="Label" parent="tipVideo"]
+[node name="titleVideo" type="Label" parent="tipVideo"]
 margin_left = 947.0
 margin_top = 249.0
 margin_right = 1757.0
@@ -177,4 +172,4 @@ custom_fonts/font = SubResource( 6 )
 anims/RESET = SubResource( 8 )
 anims/openMessageLabel = SubResource( 9 )
 
-[connection signal="pressed" from="tipVideo/VideoPlayer/Button" to="." method="deleteTipsVideo"]
+[connection signal="pressed" from="tipVideo/VideoPlayer/Button" to="." method="hideTipsVideo"]

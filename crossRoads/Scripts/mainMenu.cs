@@ -11,14 +11,13 @@ public class mainMenu : Control
     private PackedScene mainScene = GD.Load<PackedScene>("res://Scenes/mainScene.scn");
     private PackedScene settingsScene = GD.Load<PackedScene>("res://Scenes/settingsScene.tscn");
     private Control settingsMenu;
-    private Viewport menuScene;
     private Button returnToMenuButton;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         video = GetNode<VideoPlayer>("VideoPlayer");
-        menuScene = GetTree().Root;
+
 
     }
     /// <summary>
@@ -43,11 +42,12 @@ public class mainMenu : Control
     /// </summary>
     private void changeToSettingsScene()
     {
-        Control rootSceneMenu = (Control)GetTree().Root.GetChild(0);
-        rootSceneMenu.Visible = false;
-        settingsMenu = (Control)settingsScene.Instance();
+        // Control rootSceneMenu = (Control)GetTree().Root.GetChild(0);
+        // rootSceneMenu.Visible = false;
+        Visible = false;
+        settingsMenu = settingsScene.Instance<GameSettings>();
         GetTree().Root.AddChild (settingsMenu);
-        settingsMenu.GetNode<Button>("Button").Connect("pressed",this,"returnToMenu");
+        settingsMenu.GetNode<Button>("VBoxContainer/Button").Connect("pressed",this,"returnToMenu");
 
         
     }

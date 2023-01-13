@@ -14,7 +14,7 @@ public class cenario : Spatial
     private Vector3 initPos;
     bool startedTimer = false;
     private float rotation;
-    private RayCast ray;
+
     private KinematicBody player;
 
     public override void _Ready()
@@ -61,7 +61,7 @@ public class cenario : Spatial
       node.Translate(initPos);
       node.RotateY(rotation);
       rotation+=10;
-      ray = node.GetNode<RayCast>("Armature/Skeleton/BoneAttachment/KinematicBody/RayCast");
+
       animPlayer.Play("agarrar");
       
     }
@@ -73,7 +73,6 @@ public class cenario : Spatial
     public void deleteHand(Node hand)
     {
         hand.QueueFree();
-        ray = null;
     }
 
 
@@ -88,21 +87,6 @@ public class cenario : Spatial
         
         
     }
- // Called every frame. 'delta' is the elapsed time since the previous frame.
- public override void _Process(float delta)
- {
-
-    if(ray != null)
-    {
-        if(ray.IsColliding())
-        
-        {
-            KinematicBody player = (KinematicBody)ray.GetCollider();
-            if(player.Name == "Player"){
-                ray = null;
-                playerState.CurrentStatePlayer = playerState.STATE_PLAYER.RECEIVE_DAMAGE_HAND_GROUND;
-            }
-        }
     }
- }
-}
+ // Called every frame. 'delta' is the elapsed time since the previous frame.
+

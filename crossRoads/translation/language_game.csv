@@ -7,13 +7,14 @@ pauseMenu1,resume game,voltar para o jogo
 pauseMenu2,Exit Game,sair do jogo
 pauseMenu3,game paused,jogo pausado
 ,,
+die,you die,voce morreu
+end,mission complete,missao cumprida
 ,,
 ,,
 ,,
 ,,
-,,
-,,
-,,
+mainMission,find the location of the briefcase delivery,encontre o local da entrega da maleta
 tip1,stay on the road,Não saia da estrada
-tip2,,procure pelo local de entrega do pacote
-tip3,,alguns locais podem iteragir com o guarda chuvas
+tip2,enemies are attracted to light,inimigos sao atraidos pela luz
+tip3,some locations may interact with the umbrella,alguns locais podem iteragir com o guarda chuvas
+tip4,,

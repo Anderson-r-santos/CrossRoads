@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Materials/blackFire_horizonal.tres" type="QuadMesh" id=1]
+[ext_resource path="res://Sounds/monster.ogg" type="AudioStream" id=2]
 [ext_resource path="res://Scripts/Enemy.cs" type="Script" id=3]
-[ext_resource path="res://Sounds/enemyStayed.ogg" type="AudioStream" id=4]
 [ext_resource path="res://textures/DamageEnemy.png" type="Texture" id=5]
 [ext_resource path="res://Sounds/enemyScream.ogg" type="AudioStream" id=6]
 
@@ -237,11 +237,10 @@ anims/damageTake = SubResource( 14 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="enemyStayed" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 4 )
-unit_db = 50.0
+[node name="enemyArea" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )
+unit_db = 35.0
 unit_size = 0.1
-autoplay = true
 
 [node name="enemyScream" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 6 )
