@@ -10,7 +10,8 @@ public class intro : Node
     }
     public override void _Input(InputEvent @event)
     {
-        if(Input.IsKeyPressed((int)KeyList.Enter) && isCanJumpIntro)
+        VideoPlayer videoPlayer = GetNode<VideoPlayer>("Control/VideoPlayer");
+        if(Input.IsKeyPressed((int)KeyList.Enter) && isCanJumpIntro || !videoPlayer.IsPlaying())
         {
             changeToMenuScene();
         }

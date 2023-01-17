@@ -346,14 +346,14 @@ shape = SubResource( 19 )
 collision_layer = 256
 
 [node name="CollisionShape" type="CollisionShape" parent="road/StaticBody" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.235847, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 shape = SubResource( 30 )
 
 [node name="StaticBody2" type="StaticBody" parent="ground_dirty" index="0"]
 collision_layer = 32
 
 [node name="CollisionShape" type="CollisionShape" parent="ground_dirty/StaticBody2" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.275841, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.055, 0.012, 0 )
 shape = SubResource( 31 )
 
 [node name="StaticBody" type="StaticBody" parent="ground_concrete_stopBus" index="0"]

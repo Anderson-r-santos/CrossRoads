@@ -172,7 +172,7 @@ public class Actions : Node
 
     public async void getCollectible ()
     {
-        Control collectibleUI = GetNode<Control>("../Camera/PlayerUI    /collectible");
+        Control collectibleUI = GetNode<Control>("../Camera/PlayerUI/collectible");
         collectibleUI.Visible = true;
         await ToSignal(GetTree().CreateTimer(2f),"timeout");
         collectibleUI.Visible = false;

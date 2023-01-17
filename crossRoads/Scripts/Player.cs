@@ -10,7 +10,7 @@ public class Player : KinematicBody
     private Timer timerDecreaseTemperature;
     public Timer timerUmbrellaRay; //tempo em que fica ativo o ray que detecta o inmigo
     private Timer timerRegenLife;
-    private int amountDamageLeft = 4;
+    private int amountDamageLeft = 5;
     private int lifeTotal;
 
     //movimentacao

@@ -363,6 +363,10 @@ autostart = true
 [node name="TimerUmbrellaRay" type="Timer" parent="."]
 one_shot = true
 
+[node name="TimerRegenLife" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
 [node name="Sounds" type="Node" parent="."]
 
 [node name="rain" type="AudioStreamPlayer2D" parent="Sounds"]
@@ -394,10 +398,6 @@ script = ExtResource( 13 )
 
 [node name="pauseScene" parent="pauseGame" instance=ExtResource( 14 )]
 visible = false
-
-[node name="TimerRegenLife" type="Timer" parent="."]
-wait_time = 4.0
-one_shot = true
 
 [connection signal="timeout" from="TimerRestartScene" to="." method="restartScene"]
 [connection signal="timeout" from="TimerIncreaseTemperature" to="playerState" method="endTimerIncreaseTemperature"]
